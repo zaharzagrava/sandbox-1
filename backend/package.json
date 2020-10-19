@@ -12,9 +12,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cross-env": "^7.0.2",
-    "nodemon": "^2.0.4",
-    "ts-node-dev": "^1.0.0-pre.63",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.7",
@@ -22,10 +19,16 @@
     "@types/knex": "^0.16.1",
     "@types/lodash": "^4.14.161",
     "@types/node": "^14.11.7",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.4",
+    "sequelize-cli": "^6.2.0",
     "ts-node": "^9.0.0",
+    "ts-node-dev": "^1.0.0-pre.63",
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -35,6 +38,7 @@
     "firebase-admin": "^9.2.0",
     "knex": "^0.21.5",
     "lodash": "^4.17.20",
+    "multer": "^1.4.2",
     "pg": "^8.4.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5"
