@@ -8,7 +8,7 @@ export type DatabaseConfig = {
 
 const commonConfig: Options = {
   username: 'postgres',
-  password: 'password',
+  password: 'og',
   host: 'localhost',
   port: 5432,
   dialect: 'postgres',

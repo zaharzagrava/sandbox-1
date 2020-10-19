@@ -7,7 +7,10 @@
     "docker-start": "node ./app.js",
     "start": "node ./build/app.js",
     "dev": "ts-node-dev --respawn ./src/app.ts",
-    "build": "npx tsc -p ."
+    "build": "npx tsc -p .",
+    "db:create": "node_modules/.bin/ts-node node_modules/.bin/sequelize db:create",
+    "db:migrate": "node_modules/.bin/ts-node node_modules/.bin/sequelize db:migrate",
+    "db:drop": "node_modules/.bin/ts-node node_modules/.bin/sequelize db:drop"
   },
   "author": "",
   "license": "ISC",

@@ -1,6 +1,10 @@
 import fs from 'fs';
+import { forOwn } from 'lodash';
 import path from 'path';
 import { Sequelize } from 'sequelize';
+
+// allowNull: false
+// type: DataTypes.BIGINT
 
 import sequelizeConfig from '../../config/sequelize.config';
 
