@@ -1,3 +1,5 @@
+import { Model } from 'sequelize';
+
 // export interface ClientDT {
 //   id: number;
 //   full_name: string;
@@ -23,6 +25,11 @@
 // export interface CookiesDT {
 //   idToken: string;
 // }
+
+type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
+type Constructor<T> = new () => T;
+export type NonAbstractTypeOfModel<T> = Constructor<T> &
+  NonAbstract<typeof Model>;
 
 export interface ClientDTO {
   id: number;

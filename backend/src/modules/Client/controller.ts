@@ -1,21 +1,28 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import ClientService from './service';
 
 export default class ClientController {
   constructor() {}
 
-  static async getAll(request: Request, response: Response) {
+  static async getAll(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
     try {
-      await ClientService.getAll((error: any, data: any) => {
-        if (error) {
-          return response.status(error.status).send(error);
-        }
+      // console.log('getAll');
+      // await ClientService.getAll((error: any, data: any) => {
+      //   if (error) {
+      //     return response.status(error.status).send(error);
+      //   }
 
-        return response.status(200).json(data);
-      });
+      //   return response.status(200).json(data);
+      // });
+
+      throw new Error('TETSTEST');
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 }

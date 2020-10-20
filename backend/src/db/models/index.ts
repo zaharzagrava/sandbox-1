@@ -2,7 +2,11 @@ import fs from 'fs';
 import { forOwn } from 'lodash';
 import path from 'path';
 import { Model, Sequelize } from 'sequelize';
-import { ClientDTO, CreateClientDTO } from 'src/interfaces';
+import {
+  ClientDTO,
+  CreateClientDTO,
+  NonAbstractTypeOfModel,
+} from 'src/interfaces';
 import Client from './Client';
 
 // allowNull: false

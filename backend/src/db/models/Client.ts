@@ -1,11 +1,13 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-import { ClientDTO, CreateClientDTO } from 'src/interfaces';
+import {
+  ClientDTO,
+  CreateClientDTO,
+  NonAbstractTypeOfModel,
+} from 'src/interfaces';
 
-export default class Client
-  extends Model<ClientDTO, CreateClientDTO>
-  implements ClientDTO {
+export default class Client extends Model<ClientDTO, CreateClientDTO> {
   public id!: number;
   public full_name!: string;
   public username!: string;
@@ -27,7 +29,7 @@ export default class Client
     super();
   }
 
-  static initModel(sequelize: Sequelize): Model<ClientDTO, CreateClientDTO> {
+  static initModel(sequelize: Sequelize): NonAbstractTypeOfModel<Client> {
     return this.init(
       {
         full_name: {
@@ -106,7 +108,7 @@ export default class Client
           },
         },
       }
-    );
+    ) as any;
   }
 
   authenticate(password: string) {
