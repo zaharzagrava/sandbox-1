@@ -26,6 +26,13 @@ import { Model } from 'sequelize';
 //   idToken: string;
 // }
 
+export interface ErrorType {
+  status: number;
+  message: string;
+}
+
+export type Callback<T> = (error: ErrorType | null, data?: T) => void;
+
 type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
 type Constructor<T> = new () => T;
 export type NonAbstractTypeOfModel<T> = Constructor<T> &
@@ -54,5 +61,5 @@ export interface CreateClientDTO {
   email: string;
   phone_number?: string;
   gender?: string;
-  password: () => string;
+  password: string;
 }

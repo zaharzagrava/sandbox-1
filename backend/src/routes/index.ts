@@ -1,6 +1,7 @@
 import { Application, NextFunction, Router } from 'express';
 
 import ClientController from '../modules/Client/controller';
+import ClientMiddleware from '../modules/Client/middleware';
 
 export default class Routes {
   constructor(private app: Application) {
@@ -12,13 +13,13 @@ export default class Routes {
   private init() {
     this.app.get('/clients', ClientController.getAll);
 
-    this.app.get('/clients:id', async (req, res) => {
-      /* Get info about client */
-    });
+    this.app.get('/clients:id');
 
-    this.app.post('/clients', async (req, res) => {
-      /* Create new client */
-    });
+    this.app.post(
+      '/clients',
+      ClientMiddleware.validateCreate,
+      ClientController.create
+    );
 
     this.app.delete('/clients:id', async (req, res) => {
       /* Delete client from DB */

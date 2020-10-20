@@ -22,6 +22,8 @@ export default class App {
   }
 
   private initRequsetMiddleware() {
+    this.app.use(express.json());
+
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       console.log('@req.url');
       console.log(req.url);
@@ -39,7 +41,6 @@ export default class App {
       (error: Error, req: Request, res: Response, next: NextFunction) => {
         console.log('@error');
         console.log(error);
-        console.log(typeof error);
 
         // res.status(500).json(error);
         res.status(404).send({
