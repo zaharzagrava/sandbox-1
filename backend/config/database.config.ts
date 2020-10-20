@@ -20,10 +20,12 @@ export const databaseConfig: DatabaseConfig = {
   development: {
     ...commonConfig,
     database: 'instagram-like-app_development',
+    dialect: 'postgres',
   },
   test: {
     ...commonConfig,
     database: 'instagram-like-app_test',
+    dialect: 'postgres',
   },
   production: {
     ...commonConfig,
@@ -32,5 +34,6 @@ export const databaseConfig: DatabaseConfig = {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
     database: process.env.DB_NAME_PRODUCTION,
+    dialect: 'postgres',
   },
 };

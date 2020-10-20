@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "docker-start": "node ./app.js",
-    "start": "node ./build/app.js",
-    "dev": "ts-node-dev --respawn ./src/app.ts",
+    "babel:build": "nodemon --exec babel-node config/sequelize.config.ts --out-file config/sequelize.config.js",
+    "docker-start": "node ./server.js",
+    "start": "node ./build/server.js",
+    "dev": "ts-node-dev --respawn ./src/server.ts",
     "build": "npx tsc -p .",
     "db:create": "node_modules/.bin/ts-node node_modules/.bin/sequelize db:create",
     "db:migrate": "node_modules/.bin/ts-node node_modules/.bin/sequelize db:migrate",
@@ -15,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.12.1",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.7",
@@ -22,6 +24,8 @@
     "@types/knex": "^0.16.1",
     "@types/lodash": "^4.14.161",
     "@types/node": "^14.11.7",
+    "@types/validator": "^13.1.0",
+    "babel-register": "^6.26.0",
     "cross-env": "^7.0.2",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0",
@@ -30,6 +34,9 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
     "@types/bcrypt": "^3.0.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
