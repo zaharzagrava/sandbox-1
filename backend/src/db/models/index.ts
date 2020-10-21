@@ -1,37 +1,20 @@
-import fs from 'fs';
-import { forOwn } from 'lodash';
-import path from 'path';
-import { Model, Sequelize } from 'sequelize';
-import {
-  ClientDTO,
-  CreateClientDTO,
-  NonAbstractTypeOfModel,
-} from 'src/interfaces';
-import Client from './Client';
-
-// allowNull: false
-// type: DataTypes.BIGINT
+import { DataTypes, Sequelize } from 'sequelize';
 
 const sequelizeConfig = require('../../../config/sequelize.config');
 
 const sequelize = new Sequelize(sequelizeConfig);
 
-const models = {
-  Client: Client.initModel(sequelize),
-};
+export default sequelize;
 
-Object.keys(models).forEach((modelName: any) => {
-  // @ts-ignore
-  if (models[modelName].associate) {
-    // @ts-ignore
-    models[modelName].associate(models);
-  }
-});
+// Tables (models) first
+export { Client } from './Client';
+export { Comment } from './Comment';
+export { Hashtag } from './Hashtag';
+export { Post } from './Post';
+export { Tag } from './Tag';
 
-const db = {
-  ...models,
-  sequelize,
-  Sequelize,
-};
-
-export default db;
+// Junciton tables (models) second
+export { HashtagTextsource } from './HashtagTextsource';
+export { TagTextsource } from './TagTextsource';
+export { ClientPost } from './ClientPost';
+export { ClientComment } from './ClientComment';

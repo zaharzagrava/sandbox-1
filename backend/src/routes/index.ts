@@ -3,6 +3,12 @@ import { Application, NextFunction, Router } from 'express';
 import ClientController from '../modules/Client/controller';
 import ClientMiddleware from '../modules/Client/middleware';
 
+// import ClientMiddleware from '../modules/Client/middleware';
+// import ClientMiddleware from '../modules/Client/middleware';
+
+// import ClientMiddleware from '../modules/Client/middleware';
+// import ClientMiddleware from '../modules/Client/middleware';
+
 export default class Routes {
   constructor(private app: Application) {
     this.app = app;
@@ -11,9 +17,19 @@ export default class Routes {
   }
 
   private init() {
-    this.app.get('/clients', ClientController.getAll);
+    /* Clients */
 
-    this.app.get('/clients:id');
+    this.app.get(
+      '/clients',
+      // ClientMiddleware.validateGetAll,
+      ClientController.getAll
+    );
+
+    // this.app.get(
+    //   '/clients:id',
+    //   ClientMiddleware.validateGet,
+    //   ClientController.get
+    // );
 
     this.app.post(
       '/clients',
@@ -21,32 +37,84 @@ export default class Routes {
       ClientController.create
     );
 
-    this.app.delete('/clients:id', async (req, res) => {
-      /* Delete client from DB */
-    });
+    // this.app.delete(
+    //   '/clients:id',
+    //   ClientMiddleware.validateDelete,
+    //   ClientController.delete
+    // );
 
-    this.app.put('/clients:id', async (req, res) => {
-      /* Update info about requested client */
-    });
+    // this.app.put(
+    //   '/clients:id',
+    //   ClientMiddleware.validateUpdate,
+    //   ClientController.update
+    // );
 
-    this.app.get('/post:id', async (req, res) => {
-      /* Get info about department */
-    });
+    // /* Posts */
 
-    this.app.get('/post', async (req, res) => {
-      /* Get info about departments */
-    });
+    // this.app.get(
+    //   '/clients',
+    //   PostMIddleware.validateGetAll,
+    //   ClientController.getAll
+    // );
 
-    this.app.post('/post', async (req, res) => {
-      /* Create new department */
-    });
+    // this.app.get(
+    //   '/clients:id',
+    //   PostMIddleware.validateGet,
+    //   ClientController.get
+    // );
 
-    this.app.delete('/post:id', async (req, res) => {
-      /* Delete department */
-    });
+    // this.app.post(
+    //   '/clients',
+    //   PostMIddleware.validateCreate,
+    //   ClientController.create
+    // );
 
-    this.app.put('/post:id', async (req, res) => {
-      /* Update info about department */
-    });
+    // this.app.delete(
+    //   '/clients:id',
+    //   PostMIddleware.validateDelete,
+    //   ClientController.delete
+    // );
+
+    // this.app.put(
+    //   '/clients:id',
+    //   PostMIddleware.validateUpdate,
+    //   ClientController.update
+    // );
+
+    // /* Comments */
+
+    // this.app.get(
+    //   '/clients',
+    //   CommentMiddleware.validateGetAll,
+    //   ClientController.getAll
+    // );
+
+    // this.app.get(
+    //   '/clients:id',
+    //   CommentMiddleware.validateGet,
+    //   ClientController.get
+    // );
+
+    // this.app.post(
+    //   '/clients',
+    //   CommentMiddleware.validateCreate,
+    //   ClientController.create
+    // );
+
+    // this.app.delete(
+    //   '/clients:id',
+    //   CommentMiddleware.validateDelete,
+    //   ClientController.delete
+    // );
+
+    // this.app.put(
+    //   '/clients:id',
+    //   CommentMiddleware.validateUpdate,
+    //   ClientController.update
+    // );
+
+    /* Hashtags */
+
+    /* Tags */
   }
 }

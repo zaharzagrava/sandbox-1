@@ -12,7 +12,7 @@ const commonConfig: Options = {
   host: 'localhost',
   port: 5432,
   dialect: 'postgres',
-  logging: false,
+  logging: console.log,
   operatorsAliases: Op,
 };
 

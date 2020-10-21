@@ -40,7 +40,7 @@ create table hashtag (
  "updatedAt" date
 );
  
-create table hashtag_text (
+create table hashtag_textsources (
  id bigserial primary key,
  hashtag_id bigint not null references client(id) ON DELETE CASCADE,
  client_id bigint not null references client(id) ON DELETE CASCADE,
@@ -53,7 +53,7 @@ create table hashtag_text (
  "updatedAt" date
 );
  
-create table tag_text (
+create table tag_textsources (
  id bigserial primary key,
  tag_id bigint not null references tag(id) ON DELETE CASCADE,
  client_id bigint not null references client(id) ON DELETE CASCADE,
