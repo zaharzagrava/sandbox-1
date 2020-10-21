@@ -1,9 +1,8 @@
 import {
   Callback,
-  ClientDTO,
-  ClientGetDeletePutParams,
+  ClientGetDeleteUpdateParams,
   ClientModel,
-  ClientPut,
+  ClientUpdate,
   CreateClientDTO,
 } from '../../interfaces/';
 import sequelize, { Client } from '../../db/models/';
@@ -13,7 +12,7 @@ export default class ClientService {
   constructor() {}
 
   static async get(
-    params: ClientGetDeletePutParams,
+    params: ClientGetDeleteUpdateParams,
     callback: Callback<ClientModel>
   ): Promise<void> {
     const client = await Client.findOne<ClientModel>({
@@ -52,7 +51,7 @@ export default class ClientService {
   }
 
   static async delete(
-    params: ClientGetDeletePutParams,
+    params: ClientGetDeleteUpdateParams,
     callback: Callback<null>
   ): Promise<void> {
     const client = await Client.findOne<ClientModel>({
@@ -79,8 +78,8 @@ export default class ClientService {
   }
 
   static async update(
-    params: ClientGetDeletePutParams,
-    body: ClientPut,
+    params: ClientGetDeleteUpdateParams,
+    body: ClientUpdate,
     callback: Callback<ClientModel>
   ): Promise<void> {
     const client = await Client.findOne<ClientModel>({

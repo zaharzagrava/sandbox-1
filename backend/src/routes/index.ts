@@ -1,4 +1,6 @@
 import { Application, NextFunction, Router } from 'express';
+import PostController from '../modules/Post/controller';
+import PostMiddleware from '../modules/Post/middleware';
 
 import ClientController from '../modules/Client/controller';
 import ClientMiddleware from '../modules/Client/middleware';
@@ -41,41 +43,37 @@ export default class Routes {
 
     this.app.put(
       '/clients/:id',
-      ClientMiddleware.validatePut,
+      ClientMiddleware.validateUpdate,
       ClientController.update
     );
 
-    // /* Posts */
+    /* Posts */
 
-    // this.app.get(
-    //   '/clients',
-    //   PostMIddleware.validateGetAll,
-    //   ClientController.getAll
-    // );
+    this.app.get('/posts', PostController.getAll);
 
-    // this.app.get(
-    //   '/clients:id',
-    //   PostMIddleware.validateGet,
-    //   ClientController.get
-    // );
+    this.app.get(
+      '/posts/:id',
+      PostMiddleware.validateGetDelete,
+      PostController.get
+    );
 
-    // this.app.post(
-    //   '/clients',
-    //   PostMIddleware.validateCreate,
-    //   ClientController.create
-    // );
+    this.app.post(
+      '/posts',
+      PostMiddleware.validateCreate,
+      PostController.create
+    );
 
-    // this.app.delete(
-    //   '/clients:id',
-    //   PostMIddleware.validateDelete,
-    //   ClientController.delete
-    // );
+    this.app.delete(
+      '/posts/:id',
+      PostMiddleware.validateGetDelete,
+      PostController.delete
+    );
 
-    // this.app.put(
-    //   '/clients:id',
-    //   PostMIddleware.validateUpdate,
-    //   ClientController.update
-    // );
+    this.app.put(
+      '/posts/:id',
+      PostMiddleware.validateUpdate,
+      PostController.update
+    );
 
     // /* Comments */
 

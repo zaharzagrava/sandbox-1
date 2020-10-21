@@ -1,7 +1,7 @@
-import { Callback } from '../../interfaces';
+import { Callback, ClientGetDeleteUpdateParams } from '../../interfaces';
 import Joi from 'joi';
 
-export default class ClientValidator {
+export default class PostValidator {
   constructor() {}
 
   private static validateGetDeleteUpdateSchemaParams = Joi.object({
@@ -35,18 +35,12 @@ export default class ClientValidator {
     callback(null, null);
   }
 
-  private static validateCreateSchema = Joi.object({
-    username: Joi.string().alphanum().min(1).max(30).required(),
-    email: Joi.string().email().required(),
-    password: Joi.string()
-      .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
-      .min(6)
-      .max(255)
-      .required(),
+  private static validateUpdateCreateSchema = Joi.object({
+    full_text: Joi.string().min(0).max(2200).required(),
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {
-    const response = this.validateCreateSchema.validate(reqBody);
+    const response = this.validateUpdateCreateSchema.validate(reqBody);
 
     if (response.error) {
       callback({
@@ -66,22 +60,6 @@ export default class ClientValidator {
       callback(null, null);
     }
   }
-
-  private static validateUpdateSchema = Joi.object({
-    username: Joi.string().alphanum().min(1).max(30).required(),
-    email: Joi.string().email().min(1).max(255).required(),
-    password: Joi.string()
-      .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
-      .min(6)
-      .max(255)
-      .required(),
-    full_name: Joi.string().min(1).max(255).required(),
-    website: Joi.string().min(1).max(255).required(),
-    bio: Joi.string().min(1).max(150).required(),
-    avatar: Joi.string().min(1).max(255).required(),
-    phone_number: Joi.string().min(1).max(255).email().required(),
-    gender: Joi.string().min(1).max(255).required(),
-  });
 
   static validateUpdate(
     reqParams: any,
@@ -109,7 +87,7 @@ export default class ClientValidator {
       return;
     }
 
-    response = this.validateUpdateSchema.validate(reqBody);
+    response = this.validateUpdateCreateSchema.validate(reqBody);
 
     callback(null, null);
   }

@@ -160,9 +160,25 @@ export type TagModel = Model<TagDTO, CreateTagDTO>;
 export type HashtagModel = Model<HashtagDTO, CreateHashtagDTO>;
 export type PostModel = Model<PostDTO, CreatePostDTO>;
 
-/* Client REST API Arguments */
-export interface ClientGetDeletePutParams {
+/* --- Client REST API Arguments --- */
+
+/* Client */
+export interface ClientGetDeleteUpdateParams {
   id: number;
 }
 
-export type ClientPut = Partial<ClientDTO>;
+export type ClientUpdate = Partial<ClientDTO>;
+
+/* Post */
+export interface PostGetDeleteUpdateParams {
+  id: number;
+}
+
+export type PostUpdate = Partial<PostDTO>;
+
+/* Comment */
+export interface CommentGetDeleteUpdateParams {
+  id: number;
+}
+
+export type CommentUpdate = Partial<CommentDTO>;

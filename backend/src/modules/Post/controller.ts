@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { ClientGetDeleteUpdateParams, ErrorType } from '../../interfaces/';
-import ClientService from './service';
-import ClientValidator from './validations';
+import { PostGetDeleteUpdateParams } from '../../interfaces/';
+import PostService from './service';
 
-export default class ClientController {
+export default class PostController {
   constructor() {}
 
   static async getAll(
@@ -13,7 +12,7 @@ export default class ClientController {
     next: NextFunction
   ) {
     try {
-      await ClientService.getAll((error, data) => {
+      await PostService.getAll((error, data) => {
         if (error) {
           response.status(error.status).send(error);
           return;
@@ -28,8 +27,8 @@ export default class ClientController {
 
   static async get(request: Request, response: Response, next: NextFunction) {
     try {
-      await ClientService.get(
-        (request.params as unknown) as ClientGetDeleteUpdateParams,
+      await PostService.get(
+        (request.params as unknown) as PostGetDeleteUpdateParams,
         (error, data) => {
           if (error) {
             response.status(error.status).send(error);
@@ -50,7 +49,7 @@ export default class ClientController {
     next: NextFunction
   ) {
     try {
-      await ClientService.create(request.body, (error, data) => {
+      await PostService.create(request.body, (error, data) => {
         if (error) {
           response.status(error.status).send(error);
           return;
@@ -70,8 +69,8 @@ export default class ClientController {
     next: NextFunction
   ) {
     try {
-      await ClientService.delete(
-        (request.params as unknown) as ClientGetDeleteUpdateParams,
+      await PostService.delete(
+        (request.params as unknown) as PostGetDeleteUpdateParams,
         (error, data) => {
           if (error) {
             response.status(error.status).send(error);
@@ -93,8 +92,8 @@ export default class ClientController {
     next: NextFunction
   ) {
     try {
-      await ClientService.update(
-        (request.params as unknown) as ClientGetDeleteUpdateParams,
+      await PostService.update(
+        (request.params as unknown) as PostGetDeleteUpdateParams,
         request.body,
         (error, data) => {
           if (error) {
