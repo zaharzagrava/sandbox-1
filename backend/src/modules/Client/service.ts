@@ -1,30 +1,111 @@
 import {
   Callback,
   ClientDTO,
+  ClientGetDeletePutParams,
   ClientModel,
+  ClientPut,
   CreateClientDTO,
-} from 'src/interfaces';
+} from '../../interfaces/';
 import sequelize, { Client } from '../../db/models/';
 import { Request, Response } from 'express';
 
 export default class ClientService {
   constructor() {}
 
+  static async get(
+    params: ClientGetDeletePutParams,
+    callback: Callback<ClientModel>
+  ): Promise<void> {
+    const client = await Client.findOne<ClientModel>({
+      where: {
+        id: params.id,
+      },
+    });
+
+    if (!client) {
+      callback({
+        status: 400,
+        message: `Client #${params.id} does not exist`,
+      });
+      return;
+    }
+
+    callback(null, client);
+  }
+
   static async getAll(callback: Callback<ClientModel[]>): Promise<void> {
-    const instances = await Client.findAll<ClientModel>();
-    callback(null, instances);
+    const clients = await Client.findAll<ClientModel>();
+    callback(null, clients);
   }
 
   static async create(
-    createClientDTD: CreateClientDTO,
+    body: CreateClientDTO,
     callback: Callback<ClientModel>
   ): Promise<void> {
     const newClient = await Client.create<ClientModel>({
-      email: createClientDTD.email,
-      password: createClientDTD.password,
-      username: createClientDTD.username,
+      email: body.email,
+      password: body.password,
+      username: body.username,
     });
 
     callback(null, newClient);
+  }
+
+  static async delete(
+    params: ClientGetDeletePutParams,
+    callback: Callback<null>
+  ): Promise<void> {
+    const client = await Client.findOne<ClientModel>({
+      where: {
+        id: params.id,
+      },
+    });
+
+    if (!client) {
+      callback({
+        status: 400,
+        message: `Client #${params.id} does not exist`,
+      });
+      return;
+    }
+
+    await Client.destroy<any>({
+      where: {
+        id: params.id,
+      },
+    });
+
+    callback(null, null);
+  }
+
+  static async update(
+    params: ClientGetDeletePutParams,
+    body: ClientPut,
+    callback: Callback<ClientModel>
+  ): Promise<void> {
+    const client = await Client.findOne<ClientModel>({
+      where: {
+        id: params.id,
+      },
+    });
+
+    if (!client) {
+      callback({
+        status: 400,
+        message: `Client #${params.id} does not exist`,
+      });
+      return;
+    }
+
+    const [_, updatedClient] = await Client.update<ClientModel>(body, {
+      where: {
+        id: params.id,
+      },
+      returning: true,
+    });
+
+    console.log(JSON.stringify(updatedClient[0]));
+
+    callback(null, updatedClient[0]);
   }
 }

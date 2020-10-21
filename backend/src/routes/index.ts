@@ -19,17 +19,13 @@ export default class Routes {
   private init() {
     /* Clients */
 
-    this.app.get(
-      '/clients',
-      // ClientMiddleware.validateGetAll,
-      ClientController.getAll
-    );
+    this.app.get('/clients', ClientController.getAll);
 
-    // this.app.get(
-    //   '/clients:id',
-    //   ClientMiddleware.validateGet,
-    //   ClientController.get
-    // );
+    this.app.get(
+      '/clients/:id',
+      ClientMiddleware.validateGetDelete,
+      ClientController.get
+    );
 
     this.app.post(
       '/clients',
@@ -37,17 +33,17 @@ export default class Routes {
       ClientController.create
     );
 
-    // this.app.delete(
-    //   '/clients:id',
-    //   ClientMiddleware.validateDelete,
-    //   ClientController.delete
-    // );
+    this.app.delete(
+      '/clients/:id',
+      ClientMiddleware.validateGetDelete,
+      ClientController.delete
+    );
 
-    // this.app.put(
-    //   '/clients:id',
-    //   ClientMiddleware.validateUpdate,
-    //   ClientController.update
-    // );
+    this.app.put(
+      '/clients/:id',
+      ClientMiddleware.validatePut,
+      ClientController.update
+    );
 
     // /* Posts */
 

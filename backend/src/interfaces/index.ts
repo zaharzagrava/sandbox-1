@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model, Optional } from 'sequelize';
 
 // export interface ClientDT {
 //   id: number;
@@ -159,3 +159,10 @@ export type CommentModel = Model<CommentDTO, CreateCommentDTO>;
 export type TagModel = Model<TagDTO, CreateTagDTO>;
 export type HashtagModel = Model<HashtagDTO, CreateHashtagDTO>;
 export type PostModel = Model<PostDTO, CreatePostDTO>;
+
+/* Client REST API Arguments */
+export interface ClientGetDeletePutParams {
+  id: number;
+}
+
+export type ClientPut = Partial<ClientDTO>;

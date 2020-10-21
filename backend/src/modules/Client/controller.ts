@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { ErrorType } from '../../interfaces/';
+import { ClientGetDeletePutParams, ErrorType } from '../../interfaces/';
 import ClientService from './service';
 import ClientValidator from './validations';
 
@@ -26,6 +26,24 @@ export default class ClientController {
     }
   }
 
+  static async get(request: Request, response: Response, next: NextFunction) {
+    try {
+      await ClientService.get(
+        (request.params as unknown) as ClientGetDeletePutParams,
+        (error, data) => {
+          if (error) {
+            response.status(error.status).send(error);
+            return;
+          }
+
+          response.status(200).json(data);
+        }
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async create(
     request: Request,
     response: Response,
@@ -40,6 +58,53 @@ export default class ClientController {
 
         response.status(200).json(data);
       });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async delete(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    try {
+      await ClientService.delete(
+        (request.params as unknown) as ClientGetDeletePutParams,
+        (error, data) => {
+          if (error) {
+            response.status(error.status).send(error);
+            return;
+          }
+
+          response.status(200).json(data);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async update(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    try {
+      await ClientService.update(
+        (request.params as unknown) as ClientGetDeletePutParams,
+        request.body,
+        (error, data) => {
+          if (error) {
+            response.status(error.status).send(error);
+            return;
+          }
+
+          response.status(200).json(data);
+        }
+      );
     } catch (error) {
       console.log(error);
       next(error);
