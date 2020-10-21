@@ -111,6 +111,25 @@ export default class ClientValidator {
 
     response = this.validateUpdateSchema.validate(reqBody);
 
+    if (response.error) {
+      callback({
+        status: 400,
+        message: response.error.details
+          .map((detail) => detail.message)
+          .join(' '),
+      });
+      return;
+    }
+    if (response.errors) {
+      callback({
+        status: 400,
+        message: response.errors.details
+          .map((detail) => detail.message)
+          .join(' '),
+      });
+      return;
+    }
+
     callback(null, null);
   }
 }

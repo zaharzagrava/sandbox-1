@@ -1,15 +1,13 @@
 import { Application, NextFunction, Router } from 'express';
-import PostController from '../modules/Post/controller';
-import PostMiddleware from '../modules/Post/middleware';
 
 import ClientController from '../modules/Client/controller';
 import ClientMiddleware from '../modules/Client/middleware';
 
-// import ClientMiddleware from '../modules/Client/middleware';
-// import ClientMiddleware from '../modules/Client/middleware';
+import PostController from '../modules/Post/controller';
+import PostMiddleware from '../modules/Post/middleware';
 
-// import ClientMiddleware from '../modules/Client/middleware';
-// import ClientMiddleware from '../modules/Client/middleware';
+import CommentController from '../modules/Comment/controller';
+import CommentMiddleware from '../modules/Comment/middleware';
 
 export default class Routes {
   constructor(private app: Application) {
@@ -75,37 +73,33 @@ export default class Routes {
       PostController.update
     );
 
-    // /* Comments */
+    /* Comments */
 
-    // this.app.get(
-    //   '/clients',
-    //   CommentMiddleware.validateGetAll,
-    //   ClientController.getAll
-    // );
+    this.app.get('/comments', PostController.getAll);
 
-    // this.app.get(
-    //   '/clients:id',
-    //   CommentMiddleware.validateGet,
-    //   ClientController.get
-    // );
+    this.app.get(
+      '/comments/:id',
+      CommentMiddleware.validateGetDelete,
+      CommentController.get
+    );
 
-    // this.app.post(
-    //   '/clients',
-    //   CommentMiddleware.validateCreate,
-    //   ClientController.create
-    // );
+    this.app.post(
+      '/comments',
+      CommentMiddleware.validateCreate,
+      CommentController.create
+    );
 
-    // this.app.delete(
-    //   '/clients:id',
-    //   CommentMiddleware.validateDelete,
-    //   ClientController.delete
-    // );
+    this.app.delete(
+      '/comments/:id',
+      CommentMiddleware.validateGetDelete,
+      CommentController.delete
+    );
 
-    // this.app.put(
-    //   '/clients:id',
-    //   CommentMiddleware.validateUpdate,
-    //   ClientController.update
-    // );
+    this.app.put(
+      '/comments/:id',
+      CommentMiddleware.validateUpdate,
+      CommentController.update
+    );
 
     /* Hashtags */
 

@@ -1,7 +1,7 @@
-import { Callback, ClientGetDeleteUpdateParams } from '../../interfaces';
+import { Callback } from '../../interfaces';
 import Joi from 'joi';
 
-export default class PostValidator {
+export default class CommentValidator {
   constructor() {}
 
   private static validateGetDeleteUpdateSchemaParams = Joi.object({
@@ -36,7 +36,7 @@ export default class PostValidator {
   }
 
   private static validateUpdateCreateSchema = Joi.object({
-    full_text: Joi.string().min(0).max(2200).required(),
+    full_text: Joi.string().min(0).max(300).required(),
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {
@@ -86,6 +86,9 @@ export default class PostValidator {
       });
       return;
     }
+
+    console.log('@body');
+    console.log(reqBody);
 
     response = this.validateUpdateCreateSchema.validate(reqBody);
 
