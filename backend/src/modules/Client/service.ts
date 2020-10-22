@@ -103,8 +103,6 @@ export default class ClientService {
       returning: true,
     });
 
-    console.log(JSON.stringify(updatedClient[0]));
-
     callback(null, updatedClient[0]);
   }
 }

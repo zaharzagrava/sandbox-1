@@ -58,9 +58,9 @@ export const Client = sequelize.define<ClientModel>(
     password: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      // get() {
-      //   return () => this.getDataValue('password');
-      // },
+      get() {
+        return () => this.getDataValue('password');
+      },
     },
   },
   {

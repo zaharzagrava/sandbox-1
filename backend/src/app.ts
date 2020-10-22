@@ -2,6 +2,9 @@ import { error } from 'console';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import Routes from './routes/';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import SessionController from './modules/Session/controller';
+import SessionMiddleware from './modules/Session/middleware';
 // has to be before every custom module
 
 // need to import to create relations between models
@@ -24,7 +27,9 @@ export default class App {
 
   private initRequsetMiddleware() {
     this.app.use(bodyParser.json());
+    this.app.use(cookieParser());
 
+    // logging
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       console.log('@req.url');
       console.log(req.url);

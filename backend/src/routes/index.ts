@@ -9,6 +9,9 @@ import PostMiddleware from '../modules/Post/middleware';
 import CommentController from '../modules/Comment/controller';
 import CommentMiddleware from '../modules/Comment/middleware';
 
+import SessionController from '../modules/Session/controller';
+import SessionMiddleware from '../modules/Session/middleware';
+
 export default class Routes {
   constructor(private app: Application) {
     this.app = app;
@@ -17,6 +20,19 @@ export default class Routes {
   }
 
   private init() {
+    /* Session */
+    this.app.post(
+      '/session',
+      SessionMiddleware.validateLogin,
+      SessionController.login
+    );
+    this.app.delete(
+      '/session',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
+      SessionController.logout
+    );
+
     /* Clients */
 
     this.app.get('/clients', ClientController.getAll);
@@ -35,12 +51,16 @@ export default class Routes {
 
     this.app.delete(
       '/clients/:id',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       ClientMiddleware.validateGetDelete,
       ClientController.delete
     );
 
     this.app.put(
       '/clients/:id',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       ClientMiddleware.validateUpdate,
       ClientController.update
     );
@@ -57,18 +77,24 @@ export default class Routes {
 
     this.app.post(
       '/posts',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       PostMiddleware.validateCreate,
       PostController.create
     );
 
     this.app.delete(
       '/posts/:id',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       PostMiddleware.validateGetDelete,
       PostController.delete
     );
 
     this.app.put(
       '/posts/:id',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       PostMiddleware.validateUpdate,
       PostController.update
     );
@@ -85,18 +111,24 @@ export default class Routes {
 
     this.app.post(
       '/comments',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       CommentMiddleware.validateCreate,
       CommentController.create
     );
 
     this.app.delete(
       '/comments/:id',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       CommentMiddleware.validateGetDelete,
       CommentController.delete
     );
 
     this.app.put(
       '/comments/:id',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
       CommentMiddleware.validateUpdate,
       CommentController.update
     );

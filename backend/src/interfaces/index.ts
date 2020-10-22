@@ -182,3 +182,14 @@ export interface CommentGetDeleteUpdateParams {
 }
 
 export type CommentUpdate = Partial<CommentDTO>;
+
+/* Session */
+export interface SessionLogin {
+  email: string;
+  password: string;
+}
+
+export interface SessionData {
+  id: number;
+  email: string;
+}

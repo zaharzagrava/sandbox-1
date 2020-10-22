@@ -15,6 +15,7 @@ export default class CommentService {
     callback: Callback<CommentModel>
   ): Promise<void> {
     const comment = await Comment.findOne<CommentModel>({
+      attributes: ['id', 'full_text'],
       where: {
         id: params.id,
       },
