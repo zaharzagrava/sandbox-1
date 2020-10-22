@@ -189,7 +189,7 @@ export interface SessionLogin {
   password: string;
 }
 
-export interface SessionData {
+export interface AccessTokenData {
   id: number;
   email: string;
 }

@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '.';
 import { ClientModel } from '../../interfaces';
+import bcrypt from 'bcrypt';
 
 export const Client = sequelize.define<ClientModel>(
   'clients',
@@ -68,9 +69,30 @@ export const Client = sequelize.define<ClientModel>(
     timestamps: true,
     freezeTableName: true,
     tableName: 'clients',
+    hooks: {
+      beforeCreate: async (model: any) => {
+        if (model.changed('password')) {
+          model.password = bcrypt.hashSync(
+            model.password(),
+            Number(process.env.BCRYPT_SALT_ROUNDS)
+          );
+        }
+      },
+      beforeUpdate: async (model: any) => {
+        if (model.changed('password')) {
+          model.password = bcrypt.hashSync(
+            model.password(),
+            Number(process.env.BCRYPT_SALT_ROUNDS)
+          );
+        }
+      },
+    },
   }
 );
 
-// authenticate(password: string) {
-//   return bcrypt.compareSync(password, this.password());
-// }
+Client.prototype.authenticate = function authenticate(
+  password: string,
+  hashedPassword: string
+) {
+  return bcrypt.compareSync(password, hashedPassword);
+};
