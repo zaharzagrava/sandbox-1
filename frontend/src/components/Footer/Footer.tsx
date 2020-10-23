@@ -6,63 +6,44 @@ interface Props {}
 
 function Footer({}: Props): ReactElement {
   return (
-    <ul className={styles.container}>
-      <li>
-        <a href="" className={styles.link}>
-          ABOUT
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          HELP
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          PRESS
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          API
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          JOBS
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          PRIVACY
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          TERMS
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          LOCATIONS
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          TOP ACCOUNTS
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          HASHTAGS
-        </a>
-      </li>
-      <li>
-        <a href="" className={styles.link}>
-          LANGUAGE
-        </a>
-      </li>
-    </ul>
+    <div className={styles.container}>
+      <ul className={styles.list}>
+        <li className={styles.link}>
+          <a href="">ABOUT</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">HELP</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">PRESS</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">API</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">JOBS</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">PRIVACY</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">TERMS</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">LOCATIONS</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">TOP ACCOUNTS</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">HASHTAGS</a>
+        </li>
+        <li className={styles.link}>
+          <a href="">LANGUAGE</a>
+        </li>
+      </ul>{' '}
+      <p className={styles.copyright}>© 2020 Instagram from Facebook</p>
+    </div>
   );
 }
 

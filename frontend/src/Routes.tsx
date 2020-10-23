@@ -24,7 +24,12 @@ function Routes({}: Props): ReactElement {
     dispatch(sessionActions.getSession());
   }, []);
 
-  if (loading) return <LoadingLogo />;
+  if (loading)
+    return (
+      <Page>
+        <LoadingLogo />
+      </Page>
+    );
 
   // For now, consider that error can happen only if the client is not logged in
   if (error)
