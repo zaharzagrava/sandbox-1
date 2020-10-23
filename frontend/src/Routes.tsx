@@ -5,11 +5,11 @@ import { Route, Switch } from 'react-router';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import LoadingLogo from './components/LoadingLogo/LoadingLogo';
-import Login from './components/Login/Login';
 import Page from './components/Page/Page';
 import Profile from './components/Profile/Profile';
-import Register from './components/Register/Register';
+import Settings from './components/Settings/Settings';
 import { sessionActions } from './store/Session';
+import ClientImage from './components/ClientImage/ClientImage';
 
 interface Props {}
 
@@ -35,7 +35,9 @@ function Routes({}: Props): ReactElement {
   if (error)
     return (
       <Page>
-        <Register />
+        <Header />
+        <Settings />
+        <Settings />
         <Footer />
       </Page>
     );

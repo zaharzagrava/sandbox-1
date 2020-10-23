@@ -1,6 +1,11 @@
 import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { usersActions } from '../../store/Users';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import styles from './Header.module.scss';
+import ClientImage from '../ClientImage/ClientImage';
 
 interface Props {}
 
@@ -8,12 +13,33 @@ function Header({}: Props): ReactElement {
   const dispatch = useDispatch();
 
   return (
-    <>
-      <button onClick={() => dispatch(usersActions.getUsers({ id: 3 }))}>
-        LOAD
-      </button>
-      <div>Hello Header</div>
-    </>
+    <div className={styles.container}>
+      <div>
+        <h1 className={styles.header}>
+          <NavLink to="/">Instagram</NavLink>
+        </h1>
+      </div>
+      <div>
+        <input placeholder="Search" />
+      </div>
+      <div className={styles.icon_container}>
+        <div>
+          <FontAwesomeIcon icon="home" className={styles.icon} />
+        </div>
+        <div>
+          <FontAwesomeIcon icon="envelope" className={styles.icon} />
+        </div>
+        <div>
+          <FontAwesomeIcon icon="compass" className={styles.icon} />
+        </div>
+        <div>
+          <FontAwesomeIcon icon="heart" className={styles.icon} />
+        </div>
+        <div className={styles.icon}>
+          <ClientImage />
+        </div>
+      </div>
+    </div>
   );
 }
 

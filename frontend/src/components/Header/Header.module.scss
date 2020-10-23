@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(38, 38, 38, 0.2);
+}
+
+.container > *,
+.contaienr > *:active {
+  margin: 5px;
+}
+
+.header {
+  font-size: 24px;
+}
+
+.icon {
+  display: inline-block;
+  margin: 10px;
+  font-size: 25px;
+  width: 25px;
+  height: 25px;
+}
+
+.icon_container {
+  display: flex;
+}
+
+// .img_container {
+//   display: inline-block;
+//   margin: 10px;
+
+// }
