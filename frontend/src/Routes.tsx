@@ -35,7 +35,7 @@ function Routes({}: Props): ReactElement {
   if (error)
     return (
       <Page>
-        <Login />
+        <Register />
         <Footer />
       </Page>
     );
@@ -45,6 +45,7 @@ function Routes({}: Props): ReactElement {
       <Header />
       <Switch>
         <Route path="/" exact component={Profile} />
+        <Route path="/profile" exact component={Profile} />
       </Switch>
       <Footer />
     </Page>

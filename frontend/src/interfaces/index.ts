@@ -12,8 +12,9 @@ export interface ClientDTO {
 }
 
 export interface CreateClientDTO {
-  username: string;
   email: string;
+  full_name: string;
+  username: string;
   password: string;
 }
 
