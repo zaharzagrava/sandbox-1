@@ -1,0 +1,9 @@
+.btn {
+  border-radius: 5px;
+  background-color: #0095f6;
+  color: #ffffff;
+  padding: 8px;
+  &:hover {
+    cursor: pointer;
+  }
+}

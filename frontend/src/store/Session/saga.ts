@@ -5,7 +5,7 @@ import { sessionConstants, sessionActions } from '.';
 
 function* getSession(payload: any) {
   try {
-    yield new Promise((res) => setTimeout(res, 1000));
+    // yield new Promise((res) => setTimeout(res, 1000));
 
     const response = yield call(api.session.get, payload.accessToken);
 

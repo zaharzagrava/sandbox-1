@@ -24,7 +24,6 @@ export const sessionReducer = (state = initialState, action: any) => {
     case sessionConstants.GET_SESSION_SUCCESS:
       return { ...state, user, loading: false };
     case sessionConstants.GET_SESSION_FAILED:
-      console.log('@1');
       return { ...state, error, loading: false };
 
     case sessionConstants.CREATE_SESSION_REQUEST:

@@ -1,11 +1,18 @@
 import React, { ReactElement } from 'react';
+import Form from './Form/Form';
 
 import styles from './Login.module.scss';
+import RegisterPrompt from './RegisterPrompt/RegisterPrompt';
 
 interface Props {}
 
-function Login({}: Props): ReactElement {
-  return <div className={styles.container}></div>;
-}
+const Login = (props: Props) => {
+  return (
+    <div className={styles.container}>
+      <Form className={styles.form} />
+      <RegisterPrompt className={styles.form} />
+    </div>
+  );
+};
 
 export default Login;

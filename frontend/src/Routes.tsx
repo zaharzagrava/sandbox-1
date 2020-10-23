@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import LoadingLogo from './components/LoadingLogo/LoadingLogo';
 import Login from './components/Login/Login';
+import Page from './components/Page/Page';
 import Profile from './components/Profile/Profile';
 import Register from './components/Register/Register';
 import { sessionActions } from './store/Session';
@@ -28,20 +29,20 @@ function Routes({}: Props): ReactElement {
   // For now, consider that error can happen only if the client is not logged in
   if (error)
     return (
-      <>
+      <Page>
         <Login />
         <Footer />
-      </>
+      </Page>
     );
 
   return (
-    <>
+    <Page>
       <Header />
       <Switch>
         <Route path="/" exact component={Profile} />
       </Switch>
       <Footer />
-    </>
+    </Page>
   );
 }
 

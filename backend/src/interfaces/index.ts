@@ -1,31 +1,5 @@
 import { Model, Optional } from 'sequelize';
 
-// export interface ClientDT {
-//   id: number;
-//   full_name: string;
-//   username: string;
-//   website: string;
-//   bio: string;
-//   email: string;
-//   phone_number: string;
-//   gender: string;
-//   password: string;
-//   confirmed_at?: Date;
-// }
-
-// export interface TaskDT {
-//   id: number;
-//   title: string;
-//   task_description: string;
-//   is_done: boolean;
-//   task_priority: number;
-//   due_date: Date;
-// }
-
-// export interface CookiesDT {
-//   idToken: string;
-// }
-
 export interface ErrorType {
   status: number;
   message: string;
@@ -159,8 +133,6 @@ export type CommentModel = Model<CommentDTO, CreateCommentDTO>;
 export type TagModel = Model<TagDTO, CreateTagDTO>;
 export type HashtagModel = Model<HashtagDTO, CreateHashtagDTO>;
 export type PostModel = Model<PostDTO, CreatePostDTO>;
-
-/* --- Client REST API Arguments --- */
 
 /* Client */
 export interface ClientGetDeleteUpdateParams {

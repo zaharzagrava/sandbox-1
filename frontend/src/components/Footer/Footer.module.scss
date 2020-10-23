@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  padding: 15px;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  justify-content: space-evenly;
+  list-style-type: none;
+}
+
+.link {
+  font-size: 12px;
+}
