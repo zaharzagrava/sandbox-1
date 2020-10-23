@@ -3,6 +3,18 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { api } from '../../services/api';
 import { usersConstants, usersActions } from '.';
 
+function* fetchUsers(payload: any) {
+  try {
+    const response = yield call(api.users.getAll, payload.params);
+
+    // @ts-ignore
+    yield put(usersActions.getUsersSuccess(response.data));
+  } catch (error) {
+    // @ts-ignore
+    yield put(usersActions.getUserFailed(error.response.data));
+  }
+}
+
 function* fetch(payload: any) {
   try {
     const response = yield call(api.users.get, payload.id);
@@ -56,4 +68,6 @@ export function* usersSaga() {
   yield takeLatest(usersConstants.CREATE_USER_REQUEST, create);
   yield takeLatest(usersConstants.UPDATE_USER_REQUEST, update);
   yield takeLatest(usersConstants.DESTROY_USER_REQUEST, destroy);
+
+  yield takeLatest(usersConstants.GET_USERS_REQUEST, fetchUsers);
 }

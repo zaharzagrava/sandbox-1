@@ -1,4 +1,4 @@
-import { Application, NextFunction, Router } from 'express';
+import { Application, NextFunction, response, Router } from 'express';
 
 import ClientController from '../modules/Client/controller';
 import ClientMiddleware from '../modules/Client/middleware';
@@ -21,6 +21,18 @@ export default class Routes {
 
   private init() {
     /* Session */
+    this.app.get(
+      '/session',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
+      function returnUser() {
+        response.status(200).json({
+          id: 2,
+          email: 'teset',
+          username: 'testy',
+        });
+      }
+    );
     this.app.post(
       '/session',
       SessionMiddleware.validateLogin,

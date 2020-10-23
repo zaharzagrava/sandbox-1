@@ -1,20 +1,19 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { usersActions } from './store/Users';
 
-function App() {
-  const dispatch = useDispatch();
+// --- Importing Redux
+import { Provider } from 'react-redux';
+import { store } from './store/';
+import Routes from './Routes';
+import { BrowserRouter } from 'react-router-dom';
 
+function App() {
   return (
-    <div>
-      {/* <button onClick={() => dispatch(usersActions.getUser(1))}>
-        Increment after 1 second
-      </button>{' '}
-      <button onClick={undefined}>Increment</button>{' '}
-      <button onClick={undefined}>Decrement</button>
-      <hr />
-      <div>Clicked: {null} times</div> */}
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </Provider>
   );
 }
 

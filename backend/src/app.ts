@@ -1,13 +1,8 @@
-import { error } from 'console';
-import express, { Application, NextFunction, Request, Response } from 'express';
+import { Application, NextFunction, Request, Response } from 'express';
 import Routes from './routes/';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import SessionController from './modules/Session/controller';
-import SessionMiddleware from './modules/Session/middleware';
-// has to be before every custom module
-
-// need to import to create relations between models
+import cors from 'cors';
 
 export default class App {
   constructor(private port: number | undefined, private app: Application) {
@@ -26,10 +21,34 @@ export default class App {
   }
 
   private initRequsetMiddleware() {
+    /* Setting up cors */
+    const whitelist = [
+      'http://localhost:3000', // for dev
+
+      undefined, // for postman agent
+    ];
+
+    const corsOptions = {
+      origin: function (origin: any, callback: any) {
+        console.log('@origin');
+        console.log(origin);
+
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+    };
+    this.app.use(cors(corsOptions));
+
+    /* Setting up json */
     this.app.use(bodyParser.json());
+    /* Setting up cookies */
     this.app.use(cookieParser());
 
-    // logging
+    /* Setting up logging */
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       console.log('@req.url');
       console.log(req.url);
