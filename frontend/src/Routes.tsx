@@ -27,7 +27,10 @@ function Routes({}: Props): ReactElement {
   if (loading)
     return (
       <Page>
-        <LoadingLogo />
+        {/* <LoadingLogo /> */}
+        <Header />
+        <Settings />
+        <Footer />
       </Page>
     );
 
@@ -36,7 +39,6 @@ function Routes({}: Props): ReactElement {
     return (
       <Page>
         <Header />
-        <Settings />
         <Settings />
         <Footer />
       </Page>

@@ -1,3 +1,15 @@
+/* Routes */
+export enum RouteURLs {
+  ACCOUNTS_EDIT = '/accounts/edit',
+  PASSWORD_CHANGE = '/accounts/password/change',
+  MANAGE_ACCESS = '/accounts/manage_access',
+  EMAILS_SETTINGS = '/accounts/emails',
+  PUSH_NOTIFICATIONS = '/accounts/push_notifications',
+  CONTACT_HISTORY = '/accounts/contact_history',
+  PRIVACY_AND_SECURITY = '/accounts/privacy_and_security',
+  EMAILS_SENT = '/accounts/emails/sent',
+}
+
 /* Server data types */
 export interface ClientDTO {
   id: number;
