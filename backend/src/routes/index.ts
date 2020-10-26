@@ -25,13 +25,7 @@ export default class Routes {
       '/session',
       SessionMiddleware.validateVerify,
       SessionController.verify,
-      function returnUser() {
-        response.status(200).json({
-          id: 2,
-          email: 'teset',
-          username: 'testy',
-        });
-      }
+      SessionController.get
     );
     this.app.post(
       '/session',

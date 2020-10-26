@@ -4,6 +4,24 @@ import SessionService from './service';
 export default class SessionController {
   constructor() {}
 
+  static async get(request: Request, response: Response, next: NextFunction) {
+    try {
+      await SessionService.get(
+        response.locals.accessTokenData,
+        (error, data) => {
+          if (error) {
+            response.status(error.status).send(error);
+            return;
+          }
+
+          response.status(200).json(data);
+        }
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async login(request: Request, response: Response, next: NextFunction) {
     try {
       await SessionService.login(request.body, (error, data) => {
@@ -54,7 +72,7 @@ export default class SessionController {
             return;
           }
 
-          response.locals.sessionData = data;
+          response.locals.accessTokenData = data;
           next();
         }
       );

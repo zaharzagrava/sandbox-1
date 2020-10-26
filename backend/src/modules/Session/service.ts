@@ -12,6 +12,27 @@ import bcrypt from 'bcrypt';
 export default class SessionService {
   constructor() {}
 
+  static async get(
+    accessTokenData: AccessTokenData,
+    callback: Callback<ClientModel>
+  ): Promise<void> {
+    const client = await Client.findOne<ClientModel>({
+      where: {
+        id: accessTokenData.id,
+      },
+    });
+
+    if (!client) {
+      callback({
+        status: 400,
+        message: `Client #${accessTokenData.id} does not exist`,
+      });
+      return;
+    }
+
+    callback(null, client);
+  }
+
   static async login(
     sessionLogin: SessionLogin,
     callback: Callback<{ client: ClientModel; accessToken: string }>
@@ -54,11 +75,11 @@ export default class SessionService {
     accessToken: string,
     callback: Callback<string | object>
   ) {
-    let sessionData = jwt.verify(
+    let accessTokenData = jwt.verify(
       accessToken,
       String(process.env.ACCESS_TOKEN_SECRET)
     );
 
-    callback(null, sessionData);
+    callback(null, accessTokenData);
   }
 }
