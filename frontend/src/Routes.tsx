@@ -38,7 +38,7 @@ function Routes({}: Props): ReactElement {
   return (
     <Page>
       <Header />
-      <Profile id={1} tab={ProfileTabs.POSTS} />
+      <PostList />
       <Footer />
     </Page>
   );

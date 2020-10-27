@@ -23,9 +23,9 @@ const Header = ({}: Props) => {
         <input placeholder="Search" />
       </div>
       <div className={styles.icon_container}>
-        <div>
+        <NavLink to="/" className={styles.home}>
           <FontAwesomeIcon icon="home" className={styles.icon} />
-        </div>
+        </NavLink>
         <div>
           <FontAwesomeIcon icon="envelope" className={styles.icon} />
         </div>
@@ -35,9 +35,9 @@ const Header = ({}: Props) => {
         <div>
           <FontAwesomeIcon icon="heart" className={styles.icon} />
         </div>
-        <div className={styles.icon}>
+        <NavLink to="/test_user" className={styles.icon}>
           <ClientImage />
-        </div>
+        </NavLink>
       </div>
     </div>
   );
