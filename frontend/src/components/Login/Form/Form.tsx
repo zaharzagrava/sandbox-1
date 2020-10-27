@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
-import { SessionPost } from '../../../interfaces';
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { sessionActions } from '../../../store/Session';
-import FormError from '../../FormError/FormError';
 
 import styles from './Form.module.scss';
+import { SessionPost } from '../../../interfaces';
 import Button from '../../Button/Button';
+import { sessionActions } from '../../../store/Session';
+import FormError from '../../FormError/FormError';
 
 interface Props {
   className: string;

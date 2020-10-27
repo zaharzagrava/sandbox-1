@@ -44,6 +44,11 @@ export interface CommentDTO {
   full_text: string;
 }
 
+export interface CommentDerivative {
+  likes: number;
+  author: ClientDTO;
+}
+
 export interface CreateCommentDTO {
   full_text: string;
 }
@@ -52,6 +57,12 @@ export interface CreateCommentDTO {
 export interface PostDTO {
   id?: number;
   full_text: string;
+  multimedia: string[];
+}
+
+export interface PostDerivative {
+  likes: number;
+  author: ClientDTO;
 }
 
 export interface CreatePostDTO {

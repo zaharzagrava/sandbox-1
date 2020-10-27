@@ -1,6 +1,6 @@
 import React from 'react';
-import { ClientDTO } from '../../../interfaces';
 
+import { ClientDTO } from '../../../interfaces';
 import styles from './ClientInfo.module.scss';
 import ClientImage from '../../ClientImage/ClientImage';
 

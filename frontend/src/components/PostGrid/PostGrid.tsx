@@ -2,7 +2,6 @@ import React from 'react';
 
 import { PostDTO } from '../../interfaces';
 import styles from './PostGrid.module.scss';
-
 import imga from './imga.png';
 
 interface Props {

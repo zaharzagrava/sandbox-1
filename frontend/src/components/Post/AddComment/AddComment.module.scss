@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 18px;
+
+  border-style: solid;
+  border-width: 0px 1px 1px 0px;
+  border-color: #dbdbdb;
+}

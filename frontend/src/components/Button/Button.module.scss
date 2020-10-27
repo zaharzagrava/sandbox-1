@@ -8,3 +8,12 @@
     cursor: pointer;
   }
 }
+
+.btn_second,
+.btn_second:active {
+  color: #0095f6;
+  font-weight: bold;
+  &:hover {
+    cursor: pointer;
+  }
+}

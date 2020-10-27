@@ -4,8 +4,8 @@ interface Props {
   children: React.ReactNode;
 }
 
-function FormError({ children }: Props): ReactElement {
+const FormError = ({ children }: Props) => {
   return <div style={{ color: 'red' }}>{children}</div>;
-}
+};
 
 export default FormError;

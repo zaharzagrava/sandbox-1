@@ -54,22 +54,27 @@ const Profile = (props: Props) => {
             posts={[
               {
                 full_text: 'thateha eh aeth aet haet haeth asf',
+                multimedia: ['./imga.png'],
                 id: 1,
               },
               {
                 full_text: 'thateha eh aeth aet haet haeth asf',
+                multimedia: ['./imga.png'],
                 id: 2,
               },
               {
                 full_text: 'thateha eh aeth aet haet haeth asf',
+                multimedia: ['./imga.png'],
                 id: 3,
               },
               {
                 full_text: 'thateha eh aeth aet haet haeth asf',
+                multimedia: ['./imga.png'],
                 id: 4,
               },
               {
                 full_text: 'thateha eh aeth aet haet haeth asf',
+                multimedia: ['./imga.png'],
                 id: 5,
               },
             ]}

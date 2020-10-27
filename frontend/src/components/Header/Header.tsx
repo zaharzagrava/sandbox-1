@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { usersActions } from '../../store/Users';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './Header.module.scss';
+import { usersActions } from '../../store/Users';
 import ClientImage from '../ClientImage/ClientImage';
 
 interface Props {}
 
-function Header({}: Props): ReactElement {
+const Header = ({}: Props) => {
   const dispatch = useDispatch();
 
   return (
@@ -41,6 +41,6 @@ function Header({}: Props): ReactElement {
       </div>
     </div>
   );
-}
+};
 
 export default Header;
