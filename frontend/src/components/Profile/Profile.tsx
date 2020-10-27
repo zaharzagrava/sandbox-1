@@ -38,9 +38,10 @@ const Profile = (props: Props) => {
         }}
       />
       <div className={styles.tabbar}>
-        {tabs.map((elem) => {
+        {tabs.map((elem, index) => {
           return (
             <Tab
+              key={index}
               name={elem.name}
               setcurrTab={(e) => setcurrTab(elem.name)}
               isActive={currTab === elem.name}

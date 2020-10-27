@@ -57,7 +57,7 @@ const Footer = ({}: Props) => {
       <ul className={styles.list}>
         {links.map((link, index) => {
           return (
-            <li className={styles.link}>
+            <li key={index} className={styles.link}>
               <a href="">{link.name}</a>
             </li>
           );

@@ -16,7 +16,9 @@ const Header = ({}: Props) => {
     <div className={styles.container}>
       <div>
         <h1 className={styles.header}>
-          <NavLink to="/">Instagram</NavLink>
+          <NavLink to="/" className={styles.link}>
+            Instagram
+          </NavLink>
         </h1>
       </div>
       <div>
