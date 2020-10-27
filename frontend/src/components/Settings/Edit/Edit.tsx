@@ -1,25 +1,15 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import * as yup from 'yup';
 import { ClientDTO } from '../../../interfaces';
 import ClientImage from '../../ClientImage/ClientImage';
 import FormError from '../../FormError/FormError';
 import styles from './Edit.module.scss';
+import { AppState } from '../../../store/typedef';
 
 interface Props {}
-
-let initialValues: ClientDTO = {
-  // only to stop ts from throwing error
-  id: -1,
-  full_name: '',
-  username: '',
-  website: '',
-  bio: '',
-  email: '',
-  phone_number: '',
-  gender: '',
-};
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -47,7 +37,35 @@ const validationSchema = yup.object({
 });
 
 const Edit = (props: Props) => {
+  // const currUser = useSelector<AppState, ClientDTO>(
+  //   (state) => state.session.user
+  // );
+
   const onSubmit = () => {};
+
+  // let initialValues: ClientDTO = {
+  //   // only to stop ts from throwing error
+  //   id: -1,
+  //   full_name: currUser.full_name,
+  //   username: currUser.username,
+  //   website: currUser.website,
+  //   bio: currUser.bio,
+  //   email: currUser.email,
+  //   phone_number: currUser.phone_number,
+  //   gender: currUser.gender,
+  // };
+
+  let initialValues: ClientDTO = {
+    // only to stop ts from throwing error
+    id: -1,
+    full_name: '',
+    username: '',
+    website: '',
+    bio: '',
+    email: '',
+    phone_number: '',
+    gender: '',
+  };
 
   return (
     <div>

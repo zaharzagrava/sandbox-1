@@ -41,7 +41,13 @@ const ManageAccess = (props: Props) => {
       <div className={styles.inner_container}>
         <div className={styles.tabbar}>
           {tabs.map((elem, index) => {
-            return <Tab name={elem.name} setCurrID={(e) => setCurrID(index)} />;
+            return (
+              <Tab
+                name={elem.name}
+                setCurrID={(e) => setCurrID(index)}
+                isActive={currID === elem.id}
+              />
+            );
           })}
         </div>
         <div className={styles.chosen_tab}>

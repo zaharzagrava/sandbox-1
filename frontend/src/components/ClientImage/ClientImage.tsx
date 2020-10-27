@@ -5,11 +5,9 @@ import styles from './ClientImage.module.scss';
 
 interface Props {
   src?: string;
-  width?: number;
-  height?: number;
 }
 
-const ClientImage = ({ src, width, height }: Props) => {
+const ClientImage = ({ src }: Props) => {
   // const defaultClientImageURL = '/images/defaultClientImage'
 
   return (

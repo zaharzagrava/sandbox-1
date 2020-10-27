@@ -3,11 +3,11 @@ import { sessionConstants } from '.';
 export type State = {
   user: any;
   loading: boolean;
-  error: null | string;
+  error: { status: number; message: string };
 };
 
 const initialState = {
-  // placeholder for the currenty logged in user
+  // currenty logged in user
   user: null,
   // is session loading
   loading: true,

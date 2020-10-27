@@ -4,7 +4,7 @@ import styles from './Tab.module.scss';
 
 interface Props {
   name: string;
-  setCurrID: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  setcurrTab: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   isActive: boolean;
 }
 
@@ -12,7 +12,7 @@ const Tab = (props: Props) => {
   return (
     <div
       className={`${styles.tab} ${props.isActive && styles.active_tab}`}
-      onClick={props.setCurrID}
+      onClick={props.setcurrTab}
     >
       {props.name}
     </div>

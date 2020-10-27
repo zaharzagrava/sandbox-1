@@ -1,3 +1,11 @@
+/* Profile Tabs */
+export enum ProfileTabs {
+  POSTS = 'POSTS',
+  IGTV = 'IGTV',
+  TAGGED = 'TAGGED',
+  SAVED = 'SAVED',
+}
+
 /* Routes */
 export enum RouteURLs {
   ACCOUNTS_EDIT = '/accounts/edit',

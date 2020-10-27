@@ -64,13 +64,20 @@ const Settings = (props: Props) => {
       <div className={styles.inner_container}>
         <div className={styles.tabbar}>
           {tabs.map((elem) => {
-            return <Tab name={elem.name} url={elem.url} />;
+            return <Tab name={elem.name} url={elem.url} key={elem.name} />;
           })}
         </div>
         <div className={styles.chosen_tab}>
           <Switch>
             {tabs.map((elem) => {
-              return <Route path={elem.url} exact component={elem.component} />;
+              return (
+                <Route
+                  path={elem.url}
+                  exact
+                  component={elem.component}
+                  key={elem.name}
+                />
+              );
             })}
           </Switch>
         </div>

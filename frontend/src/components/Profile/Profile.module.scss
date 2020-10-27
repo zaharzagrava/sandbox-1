@@ -1,0 +1,18 @@
+.container {
+  flex-grow: 1;
+
+  width: 100%;
+  max-width: 935px;
+  margin: 0px auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.tabbar {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+
+  margin-bottom: 15px;
+}

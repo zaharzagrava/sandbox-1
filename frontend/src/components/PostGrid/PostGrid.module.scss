@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.post {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: calc((100% - 30px) / 3);
+  text-align: center;
+  background-color: green;
+}
+
+.last_post {
+  margin-right: 0px;
+}
+
+@media all and (max-width: 720px) {
+  .post {
+    background-color: green;
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 8px;
+  }
+}
