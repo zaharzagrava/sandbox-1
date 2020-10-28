@@ -73,6 +73,7 @@ export default class SessionController {
           }
 
           response.locals.accessTokenData = data;
+
           next();
         }
       );

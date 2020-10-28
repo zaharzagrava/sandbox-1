@@ -1,25 +1,16 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '.';
-import { ClientPostModel, TableNames } from '../../interfaces';
+import { PostCommentModel, TableNames } from '../../interfaces';
 import { Post } from './Post';
-import { Client } from './Client';
+import { Comment } from './Comment';
 
-export const ClientPost = sequelize.define<ClientPostModel>(
-  TableNames.CLIENTS_POSTS,
+export const PostComment = sequelize.define<PostCommentModel>(
+  TableNames.POSTS_COMMENTS,
   {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
-    },
-
-    client_id: {
-      type: DataTypes.BIGINT,
-      references: {
-        model: TableNames.CLIENTS,
-        key: 'id',
-      },
-      allowNull: false,
     },
 
     post_id: {
@@ -31,14 +22,13 @@ export const ClientPost = sequelize.define<ClientPostModel>(
       allowNull: false,
     },
 
-    is_liked: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-    },
-
-    is_author: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
+    comment_id: {
+      type: DataTypes.BIGINT,
+      references: {
+        model: TableNames.COMMENTS,
+        key: 'id',
+      },
+      allowNull: false,
     },
 
     createdAt: {
@@ -52,18 +42,18 @@ export const ClientPost = sequelize.define<ClientPostModel>(
     },
   },
   {
-    modelName: TableNames.CLIENTS_POSTS,
+    modelName: TableNames.POSTS_COMMENTS,
     timestamps: true,
     freezeTableName: true,
-    tableName: TableNames.CLIENTS_POSTS,
+    tableName: TableNames.POSTS_COMMENTS,
   }
 );
 
-Client.belongsToMany(Post, {
-  through: ClientPost,
-  foreignKey: 'client_id',
-});
-Post.belongsToMany(Client, {
-  through: ClientPost,
+Post.belongsToMany(Comment, {
+  through: PostComment,
   foreignKey: 'post_id',
+});
+Comment.belongsToMany(Post, {
+  through: PostComment,
+  foreignKey: 'comment_id',
 });

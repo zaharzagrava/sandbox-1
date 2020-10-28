@@ -36,7 +36,7 @@ export default class PostValidator {
   }
 
   private static validateUpdateCreateSchema = Joi.object({
-    full_text: Joi.string().min(0).max(2200).required(),
+    full_text: Joi.string().min(0).max(2200),
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {

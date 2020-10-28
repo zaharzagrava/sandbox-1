@@ -15,6 +15,16 @@ export const Tag = sequelize.define<TagModel>(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   {
     modelName: TableNames.TAGS,

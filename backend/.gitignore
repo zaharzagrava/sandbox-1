@@ -117,3 +117,6 @@ dist
 
 # credentials
 credentials/
+
+# public/uploads
+public/uploads

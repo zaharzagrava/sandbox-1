@@ -63,6 +63,16 @@ export const Client = sequelize.define<ClientModel>(
         return () => this.getDataValue('password');
       },
     },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   {
     modelName: 'clients',

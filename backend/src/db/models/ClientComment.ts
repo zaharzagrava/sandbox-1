@@ -1,10 +1,10 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '.';
-import { TableNames } from '../../interfaces';
+import { ClientCommentModel, TableNames } from '../../interfaces';
 import { Client } from './Client';
 import { Comment } from './Comment';
 
-export const ClientComment = sequelize.define(
+export const ClientComment = sequelize.define<ClientCommentModel>(
   TableNames.CLIENTS_COMMENTS,
   {
     id: {
@@ -40,6 +40,16 @@ export const ClientComment = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   {
     modelName: TableNames.CLIENTS_COMMENTS,
@@ -55,5 +65,5 @@ Client.belongsToMany(Comment, {
 });
 Comment.belongsToMany(Client, {
   through: ClientComment,
-  foreignKey: 'task_id',
+  foreignKey: 'comment_id',
 });

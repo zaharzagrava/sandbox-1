@@ -13,6 +13,21 @@ export const Post = sequelize.define<PostModel>(
 
     full_text: {
       type: DataTypes.STRING(2200),
+      allowNull: true,
+    },
+
+    multimedia: {
+      type: DataTypes.ARRAY(DataTypes.STRING(255)),
+      allowNull: false,
+    },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
   },

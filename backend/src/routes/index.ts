@@ -21,6 +21,7 @@ export default class Routes {
 
   private init() {
     /* Session */
+
     this.app.get(
       '/session',
       SessionMiddleware.validateVerify,
@@ -52,6 +53,7 @@ export default class Routes {
     this.app.post(
       '/clients',
       ClientMiddleware.validateCreate,
+      ClientMiddleware.uploads.avatar,
       ClientController.create
     );
 
@@ -68,6 +70,7 @@ export default class Routes {
       SessionMiddleware.validateVerify,
       SessionController.verify,
       ClientMiddleware.validateUpdate,
+      ClientMiddleware.uploads.avatar,
       ClientController.update
     );
 
@@ -86,6 +89,7 @@ export default class Routes {
       SessionMiddleware.validateVerify,
       SessionController.verify,
       PostMiddleware.validateCreate,
+      PostMiddleware.uploads.multimedia,
       PostController.create
     );
 
@@ -102,6 +106,7 @@ export default class Routes {
       SessionMiddleware.validateVerify,
       SessionController.verify,
       PostMiddleware.validateUpdate,
+      PostMiddleware.uploads.multimedia,
       PostController.update
     );
 

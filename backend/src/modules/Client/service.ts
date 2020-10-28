@@ -5,8 +5,7 @@ import {
   ClientUpdate,
   CreateClientDTO,
 } from '../../interfaces/';
-import sequelize, { Client } from '../../db/models/';
-import { Request, Response } from 'express';
+import { Client } from '../../db/models/';
 
 export default class ClientService {
   constructor() {}

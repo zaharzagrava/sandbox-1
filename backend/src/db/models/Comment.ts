@@ -15,6 +15,16 @@ export const Comment = sequelize.define<CommentModel>(
       type: DataTypes.STRING(300),
       allowNull: false,
     },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   {
     modelName: TableNames.COMMENTS,

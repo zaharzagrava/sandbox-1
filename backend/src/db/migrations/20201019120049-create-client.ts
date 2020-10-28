@@ -104,6 +104,11 @@ export default {
 
       full_text: {
         type: Sequelize.STRING(2200),
+        allowNull: true,
+      },
+
+      multimedia: {
+        type: Sequelize.ARRAY(Sequelize.STRING(255)),
         allowNull: false,
       },
 

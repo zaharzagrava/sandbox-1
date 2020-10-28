@@ -1,3 +1,4 @@
+import { number } from 'joi';
 import { Model, Optional } from 'sequelize';
 
 export interface ErrorType {
@@ -22,20 +23,25 @@ export enum TableNames {
   TAGS_TEXTSOURCES = 'tags_textsources',
   CLIENTS_POSTS = 'clients_posts',
   CLIENTS_COMMENTS = 'clients_comments',
+  POSTS_COMMENTS = 'posts_comments',
 }
 
-/* client */
+/* Client */
+
+// What backend receives from db
 export interface ClientDTO {
   id: number;
-  full_name: string;
+  full_name: string | null;
   username: string;
-  website: string;
-  bio: string;
-  avatar: string;
+  website: string | null;
+  bio: string | null;
+  avatar: string | null;
   email: string;
-  phone_number: string;
-  gender: string;
+  phone_number: string | null;
+  gender: string | null;
   password: () => string;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
 export interface CreateClientDTO {
@@ -64,15 +70,21 @@ export enum ClientFieldNames {
   PASSWORD = 'password',
 }
 
-/* comment */
+/* Comment */
+
+// What backend receives from db
 export interface CommentDTO {
   id: number;
   full_text: string;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
-export interface CreateCommentDTO {
+export interface CreateComment {
   id?: number;
   full_text: string;
+
+  post_id: number;
 }
 
 export enum CommentFieldNames {
@@ -80,15 +92,21 @@ export enum CommentFieldNames {
   FULL_TEXT = 'full_text',
 }
 
-/* post */
+/* Post */
+
+// What backend receives from db
 export interface PostDTO {
   id: number;
-  full_text: string;
+  full_text: string | null;
+  multimedia: string[];
+  updatedAt: Date;
+  createdAt: Date;
 }
 
-export interface CreatePostDTO {
+export interface CreatePost {
   id?: number;
-  full_text: string;
+  full_text: string | null;
+  multimedia: string[];
 }
 
 export enum PostFieldNames {
@@ -96,13 +114,17 @@ export enum PostFieldNames {
   FULL_TEXT = 'full_text',
 }
 
-/* tag */
+/* Tag */
+
+// What backend receives from db
 export interface TagDTO {
   id: number;
   full_text: string;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
-export interface CreateTagDTO {
+export interface CreateTag {
   id?: number;
   full_text: string;
 }
@@ -112,13 +134,17 @@ export enum TagFieldNames {
   FULL_TEXT = 'full_text',
 }
 
-/* hashtag */
+/* Hashtag */
+
+// What backend receives from db
 export interface HashtagDTO {
   id: number;
   full_text: string;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
-export interface CreateHashtagDTO {
+export interface CreateHashtag {
   id?: number;
   full_text: string;
 }
@@ -128,11 +154,69 @@ export enum HashtagFieldNames {
   FULL_TEXT = 'full_text',
 }
 
+/* ClientComment */
+
+// What backend receives from db
+export interface ClientCommentDTO {
+  id: number;
+  client_id: number;
+  comment_id: number;
+  is_liked: boolean | null;
+  is_author: boolean | null;
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+export interface CreateClientComment {
+  client_id: number;
+  comment_id: number;
+  is_author: boolean;
+}
+
+/* ClientPost */
+
+// What backend receives from db
+export interface ClientPostDTO {
+  id: number;
+  client_id: number;
+  post_id: number;
+  is_liked: boolean | null;
+  is_author: boolean | null;
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+export interface CreateClientPost {
+  client_id: number;
+  post_id: number;
+  is_author: boolean;
+}
+
+/* PostComment */
+
+// What backend receives from db
+export interface PostCommentDTO {
+  id: number;
+  post_id: number;
+  comment_id: number;
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+export interface CreatePostComment {
+  post_id: number;
+  comment_id: number;
+}
+
 export type ClientModel = Model<ClientDTO, CreateClientDTO>;
-export type CommentModel = Model<CommentDTO, CreateCommentDTO>;
-export type TagModel = Model<TagDTO, CreateTagDTO>;
-export type HashtagModel = Model<HashtagDTO, CreateHashtagDTO>;
-export type PostModel = Model<PostDTO, CreatePostDTO>;
+export type CommentModel = Model<CommentDTO, CreateComment>;
+export type TagModel = Model<TagDTO, CreateTag>;
+export type HashtagModel = Model<HashtagDTO, CreateHashtag>;
+export type PostModel = Model<PostDTO, CreatePost>;
+
+export type ClientCommentModel = Model<ClientCommentDTO, CreateClientComment>;
+export type ClientPostModel = Model<ClientPostDTO, CreateClientPost>;
+export type PostCommentModel = Model<PostCommentDTO, CreatePostComment>;
 
 /* Client */
 export interface ClientGetDeleteUpdateParams {

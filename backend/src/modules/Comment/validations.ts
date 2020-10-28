@@ -37,6 +37,7 @@ export default class CommentValidator {
 
   private static validateUpdateCreateSchema = Joi.object({
     full_text: Joi.string().min(0).max(300).required(),
+    post_id: Joi.number().required(),
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {

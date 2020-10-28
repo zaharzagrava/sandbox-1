@@ -1,11 +1,16 @@
 import {
   Callback,
-  CreateCommentDTO,
+  CreateComment,
   CommentGetDeleteUpdateParams,
   CommentModel,
   CommentUpdate,
+  ClientCommentModel,
+  CommentDTO,
+  AccessTokenData,
+  PostCommentModel,
 } from '../../interfaces/';
-import { Comment } from '../../db/models/';
+import { ClientComment, Comment } from '../../db/models/';
+import { PostComment } from '../../db/models/PostComment';
 
 export default class CommentService {
   constructor() {}
@@ -38,11 +43,24 @@ export default class CommentService {
   }
 
   static async create(
-    body: CreateCommentDTO,
+    body: CreateComment,
+    accessTokenData: AccessTokenData,
     callback: Callback<CommentModel>
   ): Promise<void> {
-    const newComment = await Comment.create<CommentModel>({
+    const newComment = (await Comment.create<CommentModel>({
       full_text: body.full_text,
+      post_id: body.post_id,
+    })) as CommentModel & CommentDTO;
+
+    ClientComment.create<ClientCommentModel>({
+      comment_id: newComment.id,
+      client_id: accessTokenData.id,
+      is_author: true,
+    });
+
+    PostComment.create<PostCommentModel>({
+      comment_id: newComment.id,
+      post_id: body.post_id,
     });
 
     callback(null, newComment);

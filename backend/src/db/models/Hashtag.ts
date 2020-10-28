@@ -15,6 +15,16 @@ export const Hashtag = sequelize.define<HashtagModel>(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   {
     modelName: TableNames.HASHTAGS,

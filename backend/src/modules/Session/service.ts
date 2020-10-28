@@ -6,8 +6,10 @@ import {
   AccessTokenData,
   SessionLogin,
   Callback,
+  PostCommentModel,
 } from '../../interfaces';
 import bcrypt from 'bcrypt';
+import { PostComment } from 'src/db/models/PostComment';
 
 export default class SessionService {
   constructor() {}
@@ -75,10 +77,10 @@ export default class SessionService {
     accessToken: string,
     callback: Callback<string | object>
   ) {
-    let accessTokenData = jwt.verify(
+    let accessTokenData: AccessTokenData = jwt.verify(
       accessToken,
       String(process.env.ACCESS_TOKEN_SECRET)
-    );
+    ) as AccessTokenData;
 
     callback(null, accessTokenData);
   }

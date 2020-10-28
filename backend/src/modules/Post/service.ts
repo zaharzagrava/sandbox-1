@@ -1,11 +1,14 @@
 import {
+  AccessTokenData,
   Callback,
-  CreatePostDTO,
+  ClientPostModel,
+  CreatePost,
+  PostDTO,
   PostGetDeleteUpdateParams,
   PostModel,
   PostUpdate,
 } from '../../interfaces/';
-import { Post } from '../../db/models/';
+import { ClientPost, Post } from '../../db/models/';
 
 export default class PostService {
   constructor() {}
@@ -37,11 +40,19 @@ export default class PostService {
   }
 
   static async create(
-    body: CreatePostDTO,
+    body: CreatePost,
+    accessTokenData: AccessTokenData,
     callback: Callback<PostModel>
   ): Promise<void> {
-    const newPost = await Post.create<PostModel>({
+    const newPost = (await Post.create<PostModel>({
       full_text: body.full_text,
+      multimedia: body.multimedia,
+    })) as PostModel & PostDTO;
+
+    ClientPost.create<ClientPostModel>({
+      post_id: newPost.id,
+      client_id: accessTokenData.id,
+      is_author: true,
     });
 
     callback(null, newPost);
@@ -99,8 +110,6 @@ export default class PostService {
       },
       returning: true,
     });
-
-    console.log(JSON.stringify(updatedPost[0]));
 
     callback(null, updatedPost[0]);
   }

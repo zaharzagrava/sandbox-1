@@ -1,6 +1,5 @@
-import { Application, NextFunction, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import Routes from './routes/';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -24,7 +23,6 @@ export default class App {
     /* Setting up cors */
     const whitelist = [
       'http://localhost:3000', // for dev
-
       undefined, // for postman agent
     ];
 
@@ -44,9 +42,11 @@ export default class App {
     this.app.use(cors(corsOptions));
 
     /* Setting up json */
-    this.app.use(bodyParser.json());
+    this.app.use(express.json());
     /* Setting up cookies */
     this.app.use(cookieParser());
+    /* Setting up static files serving */
+    this.app.use(express.static('./public'));
 
     /* Setting up logging */
     this.app.use((req: Request, res: Response, next: NextFunction) => {

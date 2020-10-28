@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 
 import { ClientGetDeleteUpdateParams, ErrorType } from '../../interfaces/';
 import ClientService from './service';
-import ClientValidator from './validations';
 
 export default class ClientController {
   constructor() {}

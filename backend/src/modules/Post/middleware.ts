@@ -1,7 +1,35 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
+
 import PostValidator from './validations';
+import multer from 'multer';
+import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class PostMiddleware {
+  public static storage = multer.diskStorage({
+    destination: './public/uploads',
+
+    filename: (req: Request, file: Express.Multer.File, callback) => {
+      const fileName = `${uuidv4()}${path.extname(file.originalname)}`;
+
+      if (!Array.isArray(req.body.multimedia)) req.body.multimedia = [];
+      req.body.multimedia.push(fileName);
+
+      console.log('@req.body.multimedia');
+      console.log(req.body.multimedia);
+
+      callback(null, fileName);
+    },
+  });
+
+  public static uploads: {
+    multimedia: RequestHandler;
+  } = {
+    multimedia: multer({
+      storage: PostMiddleware.storage,
+    }).array('multimedia', 10),
+  };
+
   constructor() {}
 
   static validateGetDelete(req: Request, res: Response, next: NextFunction) {

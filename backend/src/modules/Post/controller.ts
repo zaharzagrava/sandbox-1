@@ -49,14 +49,18 @@ export default class PostController {
     next: NextFunction
   ) {
     try {
-      await PostService.create(request.body, (error, data) => {
-        if (error) {
-          response.status(error.status).send(error);
-          return;
-        }
+      await PostService.create(
+        request.body,
+        response.locals.accessTokenData,
+        (error, data) => {
+          if (error) {
+            response.status(error.status).send(error);
+            return;
+          }
 
-        response.status(200).json(data);
-      });
+          response.status(200).json(data);
+        }
+      );
     } catch (error) {
       console.log(error);
       next(error);
