@@ -32,11 +32,20 @@ export default class PostService {
       },
       include: [
         {
-          model: ClientPost,
+          model: Comment,
           required: true,
-          where: {
-            is_author: true,
-          },
+          include: [
+            {
+              model: Client,
+              required: true,
+              through: { where: { is_author: true } },
+            },
+          ],
+        },
+        {
+          model: Client,
+          required: true,
+          through: { where: { is_author: true } },
         },
       ],
     })) as any;
@@ -49,25 +58,9 @@ export default class PostService {
       return;
     }
 
-    const comments = (await Comment.findAll<CommentModel>({
-      include: [
-        {
-          model: Post,
-          required: true,
-          where: {
-            id: post.id,
-          },
-        },
-        {
-          model: Client,
-          required: true,
-        },
-      ],
-    })) as any;
-
     const commentsData: any = [];
-    for (let i = 0; i < comments.length; i++) {
-      const comment = comments[i];
+    for (let i = 0; i < post.comments.length; i++) {
+      const comment = post.comments[i];
 
       commentsData.push({
         id: comment.id,
@@ -89,26 +82,65 @@ export default class PostService {
 
   static async getAll(
     params: PostGetAllParams,
-    callback: Callback<PostModel[]>
+    callback: Callback<GetPostResponse[]>
   ): Promise<void> {
     const sequelizeParams: any = {};
 
+    sequelizeParams.include = [
+      {
+        model: Comment,
+        required: true,
+        include: [
+          {
+            model: Client,
+            required: true,
+            through: { where: { is_author: true } },
+          },
+        ],
+      },
+      {
+        model: Client,
+        required: true,
+        through: { where: { is_author: true } },
+      },
+    ];
+
     if (params.client_id) {
-      sequelizeParams.include = [
-        {
-          model: Client,
-          required: true,
-          through: { where: { client_id: params.client_id } },
-        },
-      ];
+      sequelizeParams.include[1].through.where.client_id = params.client_id;
     }
 
-    console.log('@params');
-    console.log(params);
+    console.log('@sequelizeParams');
+    console.log(JSON.stringify(sequelizeParams, undefined, 2));
 
-    const posts = await Post.findAll<PostModel>(sequelizeParams);
+    const posts = (await Post.findAll<PostModel>(sequelizeParams)) as any;
 
-    callback(null, posts);
+    const postsResponse = [];
+    for (let i = 0; i < posts.length; i++) {
+      const post = posts[i];
+
+      const commentsData: any = [];
+      for (let i = 0; i < post.comments.length; i++) {
+        const comment = post.comments[i];
+
+        commentsData.push({
+          id: comment.id,
+          full_text: comment.full_text,
+          author: comment.clients[0],
+        });
+      }
+
+      postsResponse.push({
+        id: post.id,
+        full_text: post.full_text,
+        multimedia: post.multimedia,
+        updatedAt: post.updatedAt,
+        createdAt: post.createdAt,
+        author: post.clients[0],
+        comments: commentsData,
+      });
+    }
+
+    callback(null, postsResponse);
   }
 
   static async create(

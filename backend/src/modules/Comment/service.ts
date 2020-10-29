@@ -9,6 +9,8 @@ import {
   AccessTokenData,
   PostCommentModel,
   ClientModel,
+  CommentCreateParams,
+  CreateCommentResponse,
 } from '../../interfaces/';
 import { Client, ClientComment, Comment } from '../../db/models/';
 import { PostComment } from '../../db/models/PostComment';
@@ -45,26 +47,38 @@ export default class CommentService {
 
   static async create(
     body: CreateComment,
+    params: CommentCreateParams,
     accessTokenData: AccessTokenData,
-    callback: Callback<CommentModel>
+    callback: Callback<CreateCommentResponse>
   ): Promise<void> {
     const newComment = (await Comment.create<CommentModel>({
       full_text: body.full_text,
-      post_id: body.post_id,
     })) as CommentModel & CommentDTO;
 
-    ClientComment.create<ClientCommentModel>({
+    await ClientComment.create<ClientCommentModel>({
       comment_id: newComment.id,
       client_id: accessTokenData.id,
       is_author: true,
     });
 
-    PostComment.create<PostCommentModel>({
+    await PostComment.create<PostCommentModel>({
       comment_id: newComment.id,
-      post_id: body.post_id,
+      post_id: params.post_id,
     });
 
-    callback(null, newComment);
+    const author = (await Client.findOne<ClientModel>({
+      where: {
+        id: accessTokenData.id,
+      },
+    })) as any;
+
+    callback(null, {
+      id: newComment.id,
+      full_text: newComment.full_text,
+      createdAt: newComment.createdAt,
+      updatedAt: newComment.updatedAt,
+      author: author,
+    });
   }
 
   static async delete(

@@ -8,8 +8,14 @@ interface Props {
   post: PostDTO;
 }
 
-const PostAbstract = (props: Props) => {
-  return <img src={imga} alt="" />;
+const PostAbstract = ({ post }: Props) => {
+  return (
+    <img
+      className={styles.post_abstract}
+      src={`http://localhost:4000/uploads/${post.multimedia[0]}`}
+      alt=""
+    />
+  );
 };
 
 export default PostAbstract;

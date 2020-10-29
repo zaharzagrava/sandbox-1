@@ -88,8 +88,6 @@ export interface CommentRD {
 export interface CreateComment {
   id?: number;
   full_text: string;
-
-  post_id: number;
 }
 
 export enum CommentFieldNames {
@@ -267,6 +265,19 @@ export interface CommentGetDeleteUpdateParams {
 }
 
 export type CommentUpdate = Partial<CommentDTO>;
+
+export type CommentCreateParams = {
+  post_id: number;
+};
+
+export interface CreateCommentResponse {
+  id: number;
+  full_text: string | null;
+  updatedAt: Date;
+  createdAt: Date;
+
+  author: ClientDTO;
+}
 
 /* Session */
 export interface SessionLogin {

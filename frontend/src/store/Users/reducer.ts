@@ -25,36 +25,36 @@ export const usersReducer = (state = initialState, action: any) => {
     case usersConstants.GET_USER_REQUEST:
       return { ...state, loading: true, error: null };
     case usersConstants.GET_USER_SUCCESS:
-      return { ...state, user, loading: false };
-    case usersConstants.GET_USER_FAILED:
+      return { ...state, user, loading: false, error: null };
+    case usersConstants.GET_USER_FAILURE:
       return { ...state, error, loading: false };
 
     case usersConstants.CREATE_USER_REQUEST:
       return { ...state, loading: true, error: null };
     case usersConstants.CREATE_USER_SUCCESS:
-      return { ...state, user, loading: false };
-    case usersConstants.CREATE_USER_FAILED:
+      return { ...state, user, loading: false, error: null };
+    case usersConstants.CREATE_USER_FAILURE:
       return { ...state, error, loading: false };
 
     case usersConstants.UPDATE_USER_REQUEST:
       return { ...state, loading: true, error: null };
     case usersConstants.UPDATE_USER_SUCCESS:
-      return { ...state, loading: false };
-    case usersConstants.UPDATE_USER_FAILED:
+      return { ...state, loading: false, error: null };
+    case usersConstants.UPDATE_USER_FAILURE:
       return { ...state, error, loading: false };
 
     case usersConstants.DESTROY_USER_REQUEST:
       return { ...state, loading: true, error: null };
     case usersConstants.DESTROY_USER_SUCCESS:
-      return { ...state, loading: false };
-    case usersConstants.DESTROY_USER_FAILED:
+      return { ...state, loading: false, error: null };
+    case usersConstants.DESTROY_USER_FAILURE:
       return { ...state, error, loading: false };
 
     case usersConstants.GET_USERS_REQUEST:
       return { ...state, loading: true, error: null };
     case usersConstants.GET_USERS_SUCCESS:
-      return { ...state, users, loading: false };
-    case usersConstants.GET_USERS_FAILED:
+      return { ...state, users, loading: false, error: null };
+    case usersConstants.GET_USERS_FAILURE:
       return { ...state, error, loading: false };
 
     default:

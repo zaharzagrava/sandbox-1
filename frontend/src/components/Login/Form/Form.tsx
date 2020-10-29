@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Form.module.scss';
 import { SessionPost } from '../../../interfaces';
@@ -29,9 +29,12 @@ const validationSchema = yup.object({
 
 const Form = (props: Props) => {
   const dispatch = useDispatch();
+  const error = useSelector(
+    (state) => state.session.errors.CREATE_SESSION_REQUEST
+  );
 
   async function onSubmit(values: SessionPost) {
-    // dispatch(sessionActions.createSession(values));
+    dispatch(sessionActions.createSession(values));
   }
 
   return (
@@ -65,6 +68,8 @@ const Form = (props: Props) => {
             name="password"
           />
           <Button type="submit">Log In</Button>
+
+          <FormError>{error && error.message}</FormError>
         </FormikForm>
       </Formik>
     </>

@@ -9,7 +9,7 @@ import LoadingLogo from './components/LoadingLogo/LoadingLogo';
 import Page from './components/Page/Page';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
-import { sessionActions } from './store/Session';
+import { sessionActions, sessionConstants } from './store/Session';
 import ClientImage from './components/ClientImage/ClientImage';
 import PostList from './components/PostList/PostList';
 import Login from './components/Login/Login';
@@ -26,8 +26,12 @@ function Routes({}: Props): ReactElement {
   const history = useHistory();
 
   const currentUser = useSelector((state) => state.session.user);
-  const loading = useSelector((state) => state.session.loading);
-  const error = useSelector((state) => state.session.error);
+  const loading = useSelector(
+    (state) => state.session.loadings.GET_SESSION_REQUEST
+  );
+  const error = useSelector(
+    (state) => state.session.errors.GET_SESSION_REQUEST
+  );
 
   const dispatch = useDispatch();
 
@@ -42,48 +46,38 @@ function Routes({}: Props): ReactElement {
       </Page>
     );
 
-  if (error && !error.message.includes(`"accessToken" is required`))
-    return (
-      <Page>
-        <div>{error.message}</div>
-      </Page>
-    );
+  if (error) {
+    // Redirects for unauthorized user
+    for (let i = 0; i < privateURLs.length; i++) {
+      const regex = privateURLs[i];
 
-  // if (error) {
-  //   // Redirects for unauthorized user
-
-  //   for (let i = 0; i < privateURLs.length; i++) {
-  //     const regex = privateURLs[i];
-
-  //     if (regex.test(window.location.href)) {
-  //       history.push('/');
-  //       return (
-  //         <Page>
-  //           <LoadingLogo />
-  //         </Page>
-  //       );
-  //     }
-  //   }
-  // } else {
-  //   // Redirects for authorized user
-
-  //   if (window.location.href === '/signup') {
-  //     history.push('/');
-  //     return (
-  //       <Page>
-  //         <LoadingLogo />
-  //       </Page>
-  //     );
-  //   }
-  // }
+      if (regex.test(window.location.href)) {
+        history.push('/');
+        return (
+          <Page>
+            <LoadingLogo />
+          </Page>
+        );
+      }
+    }
+  } else if (!error) {
+    // Redirects for authorized user
+    if (window.location.href === '/signup') {
+      history.push('/');
+      return (
+        <Page>
+          <LoadingLogo />
+        </Page>
+      );
+    }
+  }
 
   return (
     <Page>
       <Header />
       <Switch>
-        {/* {error && <Route path="/" exact component={Login} />} */}
-        {/* {!error && <Route path="/" exact component={PostList} />} */}
-        <Route path="/" exact component={PostList} />
+        {error && <Route path="/" exact component={Login} />}
+        {!error && <Route path="/" exact component={PostList} />}
 
         <Route
           path="/p/:postid"

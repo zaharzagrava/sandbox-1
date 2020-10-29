@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ProfileTabs } from '../../interfaces';
+import { postsActions } from '../../store/Posts';
 import PostGrid from '../PostGrid/PostGrid';
 import ClientInfo from './ClientInfo/ClientInfo';
 import styles from './Profile.module.scss';
@@ -12,19 +13,23 @@ interface Props {
   tab: ProfileTabs;
 }
 
-const Profile = (props: Props) => {
-  // const currUser = useSelector((state) => state.session.user);
-  const currUser = {
-    id: 1,
-  };
-  const [currTab, setcurrTab] = useState(props.tab);
+const Profile = ({ id, tab }: Props) => {
+  const dispatch = useDispatch();
+  const currUser = useSelector((state) => state.session.user);
+  const [currTab, setcurrTab] = useState(tab);
+
+  const posts = useSelector((state) => state.posts.posts);
+
+  useEffect(() => {
+    dispatch(postsActions.getPosts({ client_id: id }));
+  }, []);
 
   const tabs = [
     { name: ProfileTabs.POSTS },
     { name: ProfileTabs.IGTV },
     { name: ProfileTabs.TAGGED },
   ];
-  if (currUser.id === props.id) tabs.splice(2, 0, { name: ProfileTabs.SAVED });
+  if (currUser.id === id) tabs.splice(2, 0, { name: ProfileTabs.SAVED });
 
   return (
     <div className={styles.container}>
@@ -50,37 +55,7 @@ const Profile = (props: Props) => {
         })}
       </div>
       <div className={styles.chosen_tab}>
-        {currTab === ProfileTabs.POSTS && (
-          <PostGrid
-            posts={[
-              {
-                full_text: 'thateha eh aeth aet haet haeth asf',
-                multimedia: ['./imga.png'],
-                id: 1,
-              },
-              {
-                full_text: 'thateha eh aeth aet haet haeth asf',
-                multimedia: ['./imga.png'],
-                id: 2,
-              },
-              {
-                full_text: 'thateha eh aeth aet haet haeth asf',
-                multimedia: ['./imga.png'],
-                id: 3,
-              },
-              {
-                full_text: 'thateha eh aeth aet haet haeth asf',
-                multimedia: ['./imga.png'],
-                id: 4,
-              },
-              {
-                full_text: 'thateha eh aeth aet haet haeth asf',
-                multimedia: ['./imga.png'],
-                id: 5,
-              },
-            ]}
-          />
-        )}
+        {currTab === ProfileTabs.POSTS && <PostGrid posts={posts} />}
         {currTab === ProfileTabs.IGTV && (
           <div style={{ textAlign: 'center' }}>IGTV stub :)</div>
         )}

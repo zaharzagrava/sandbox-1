@@ -1,15 +1,8 @@
 import React from 'react';
 
-import {
-  ClientDTO,
-  CommentDerivative,
-  CommentDTO,
-  PostDerivative,
-  PostDTO,
-} from '../../interfaces';
+import { CommentDTO, PostDTO } from '../../interfaces';
 import Comment from './Comment/Comment';
 import styles from './Post.module.scss';
-import imga from './imga.png';
 import ClientImage from '../ClientImage/ClientImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Textsource from './Textsource/Textsource';
@@ -17,23 +10,16 @@ import AddComment from './AddComment/AddComment';
 
 interface Props {
   post: PostDTO;
-  postDerivative: PostDerivative;
   comments: CommentDTO[];
-  commentsDerivative: CommentDerivative[];
 }
 
-const Post = ({
-  post,
-  postDerivative,
-  comments,
-  commentsDerivative,
-}: Props) => {
+const Post = ({ post, comments }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
         <img
           className={styles.img}
-          src={imga}
+          src={`http://localhost:4000/uploads/${post.multimedia[0]}`}
           alt=""
           width={420}
           height={600}
@@ -46,7 +32,7 @@ const Post = ({
           </div>
           <div className={styles.client_info}>
             <a className={styles.username} href="">
-              {postDerivative.author.username}
+              {post.author.username}
             </a>
             <span>•</span>
             <button className={styles.follow}>Follow</button>
@@ -54,20 +40,11 @@ const Post = ({
           </div>
         </div>
         <div className={styles.full_text_container}>
-          <Textsource
-            author={postDerivative.author}
-            full_text={post.full_text}
-          />
+          <Textsource author={post.author} full_text={post.full_text} />
         </div>
         <div className={styles.comments}>
           {comments.map((comment, index) => {
-            return (
-              <Comment
-                key={index}
-                comment={comment}
-                commentDerivative={commentsDerivative[index]}
-              />
-            );
+            return <Comment key={index} comment={comment} />;
           })}
         </div>
         <div className={styles.stats}>
@@ -97,10 +74,13 @@ const Post = ({
               ></FontAwesomeIcon>
             </div>
           </div>
-          <div className={styles.likes}>8,232,123 likes</div>
-          <div className={styles.createdAt}>SEPTEMBER 21</div>
+          <div className={styles.likes}>1,000,000 likes</div>
+          <div className={styles.createdAt}>
+            {post.createdAt &&
+              new Date(post.createdAt).toLocaleDateString('en-US')}
+          </div>
         </div>
-        <AddComment />
+        <AddComment post_id={post.id as any} />
       </div>
     </div>
   );

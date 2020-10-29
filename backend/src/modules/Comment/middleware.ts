@@ -15,7 +15,7 @@ export default class CommentMiddleware {
   }
 
   static validateCreate(req: Request, res: Response, next: NextFunction) {
-    CommentValidator.validateCreate(req.body, (error) => {
+    CommentValidator.validateCreate(req.body, req.query, (error) => {
       if (error) {
         res.status(400).send(error);
       } else {

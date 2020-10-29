@@ -7,7 +7,7 @@ function* getSession(payload: any) {
   try {
     // yield new Promise((res) => setTimeout(res, 1000));
 
-    const response = yield call(api.session.get, payload.accessToken);
+    const response = yield call(api.session.get);
 
     // @ts-ignore
     yield put(sessionActions.getSessionSuccess(response.data));
@@ -21,13 +21,16 @@ function* getSession(payload: any) {
 
 function* createSession(payload: any) {
   try {
-    const response = yield call(api.session.create, payload.body);
+    const response = yield call(api.session.create, payload.loginData);
 
     // @ts-ignore
     yield put(sessionActions.createSessionSuccess(response.data));
+    yield put(sessionActions.getSessionSuccess(response.data));
   } catch (error) {
+    console.log('@error');
+    console.log(error);
     // @ts-ignore
-    yield put(sessionActions.createSessionFailed(error.response.data));
+    yield put(sessionActions.createSessionFailure(error.response.data));
   }
 }
 
@@ -39,7 +42,7 @@ function* destroySession() {
     yield put(sessionActions.destroySessionSuccess());
   } catch (error) {
     // @ts-ignore
-    yield put(sessionActions.destroySessionFailed(error.response.data));
+    yield put(sessionActions.destroySessioFailure(error.response.data));
   }
 }
 

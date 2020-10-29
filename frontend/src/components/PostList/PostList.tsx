@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postsActions } from '../../store/Posts';
 import Post from '../Post/Post';
 
 import styles from './PostList.module.scss';
@@ -6,43 +8,22 @@ import styles from './PostList.module.scss';
 interface Props {}
 
 const PostList = (props: Props) => {
+  const dispatch = useDispatch();
+
+  const currUser = useSelector((state) => state.session.user);
+  const posts = useSelector((state) => state.posts.posts);
+  console.log('12');
+  useEffect(() => {
+    // dispatch(postsActions.getPosts({ client_id: currUser.id }));
+    dispatch(postsActions.getPosts());
+  }, []);
+
   return (
     <div className={styles.container}>
-      {[1, 2, 3].map((post, index) => {
+      {posts.map((post, index) => {
         return (
-          <div className={styles.post}>
-            <Post
-              post={{
-                id: 1,
-                full_text:
-                  'Ariana Grande\'s new song "Positions" seems like it\'s all about boyfriend Dalton Gomez, but it definitely sounds like she included a dig at Pete Davidson in the lyrics 🤧 Link in bio for a deep dive',
-                multimedia: ['./imga.png'],
-              }}
-              postDerivative={{
-                author: { id: 1, username: 'zendaya' },
-                likes: 150,
-              }}
-              comments={[
-                {
-                  id: 1,
-                  full_text: `This is a first comment (😝 😜 🤪 🤨 🧐 🤓 😎 ) with a lot of emojis`,
-                },
-                {
-                  id: 1,
-                  full_text: `This is second text comment with 🤧`,
-                },
-              ]}
-              commentsDerivative={[
-                {
-                  author: { id: 2, username: 'Willy Vonka' },
-                  likes: 100,
-                },
-                {
-                  author: { id: 3, username: 'Zaratustra' },
-                  likes: 200,
-                },
-              ]}
-            />
+          <div className={styles.post} key={index}>
+            <Post post={post} comments={post.comments} />
           </div>
         );
       })}

@@ -29,6 +29,8 @@ export interface ClientDTO {
   email?: string;
   phone_number?: string;
   gender?: string;
+  updatedAt?: Date;
+  createdAt?: Date;
 }
 
 export interface CreateClientDTO {
@@ -42,10 +44,13 @@ export interface CreateClientDTO {
 export interface CommentDTO {
   id?: number;
   full_text: string;
+  updatedAt?: Date;
+  createdAt?: Date;
+
+  author: ClientDTO;
 }
 
 export interface CommentDerivative {
-  likes: number;
   author: ClientDTO;
 }
 
@@ -58,10 +63,13 @@ export interface PostDTO {
   id?: number;
   full_text: string;
   multimedia: string[];
+  updatedAt?: Date;
+  createdAt?: Date;
+
+  author: ClientDTO;
 }
 
 export interface PostDerivative {
-  likes: number;
   author: ClientDTO;
 }
 
@@ -73,6 +81,8 @@ export interface CreatePostDTO {
 export interface TagDTO {
   id?: number;
   full_text: string;
+  updatedAt?: Date;
+  createdAt?: Date;
 }
 
 export interface CreateTagDTO {
@@ -83,6 +93,8 @@ export interface CreateTagDTO {
 export interface HashtagDTO {
   id?: number;
   full_text: string;
+  updatedAt?: Date;
+  createdAt?: Date;
 }
 
 export interface CreateHashtagDTO {

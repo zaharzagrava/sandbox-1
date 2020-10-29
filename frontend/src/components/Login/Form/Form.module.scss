@@ -4,7 +4,8 @@
   justify-content: center;
 }
 
-.container > * {
+.container > *,
+.container > *:active {
   margin: 5px;
 }
 

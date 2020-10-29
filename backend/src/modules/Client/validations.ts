@@ -8,7 +8,7 @@ export default class ClientValidator {
     id: Joi.number().required(),
   });
 
-  static validateGetDelete(reqParams: any, callback: Callback<null>): void {
+  static validateGet(reqParams: any, callback: Callback<null>): void {
     const response = this.validateGetDeleteUpdateSchemaParams.validate(
       reqParams
     );

@@ -10,35 +10,48 @@ export const usersActions = {
     type: usersConstants.GET_USER_SUCCESS,
     user,
   }),
-  getUserFailed: (error: any) => ({
-    type: usersConstants.GET_USER_FAILED,
+  getUserFailure: (error: any) => ({
+    type: usersConstants.GET_USER_FAILURE,
+    error,
+  }),
+
+  /* Get multiple users */
+  getUsers: () => ({
+    type: usersConstants.GET_USERS_REQUEST,
+  }),
+  getUsersSuccess: (users: any) => ({
+    type: usersConstants.GET_USERS_SUCCESS,
+    users,
+  }),
+  getUsersFailure: (error: any) => ({
+    type: usersConstants.GET_USERS_FAILURE,
     error,
   }),
 
   /* Only current user */
-  createUser: (body: any) => ({
+  createUser: (user: any) => ({
     type: usersConstants.CREATE_USER_REQUEST,
-    body,
+    user,
   }),
-  createUserSuccess: (newUser: any) => ({
+  createUserSuccess: (user: any) => ({
     type: usersConstants.CREATE_USER_SUCCESS,
-    newUser,
+    user,
   }),
-  createUserFailed: (error: any) => ({
-    type: usersConstants.CREATE_USER_FAILED,
+  createUserFailure: (error: any) => ({
+    type: usersConstants.CREATE_USER_FAILURE,
     error,
   }),
 
-  updateUser: (body: any) => ({
+  updateUser: (user: any) => ({
     type: usersConstants.UPDATE_USER_REQUEST,
-    body,
+    user,
   }),
   updateUserSuccess: (user: any) => ({
     type: usersConstants.UPDATE_USER_SUCCESS,
     user,
   }),
-  updateUserFailed: (error: any) => ({
-    type: usersConstants.UPDATE_USER_FAILED,
+  updateUserFailure: (error: any) => ({
+    type: usersConstants.UPDATE_USER_FAILURE,
     error,
   }),
 
@@ -48,22 +61,8 @@ export const usersActions = {
   destroyUserSuccess: () => ({
     type: usersConstants.DESTROY_USER_SUCCESS,
   }),
-  destroyUserFailed: (error: any) => ({
-    type: usersConstants.DESTROY_USER_FAILED,
-    error,
-  }),
-
-  /* Get multiple users */
-  getUsers: (params: any) => ({
-    type: usersConstants.GET_USERS_REQUEST,
-    params,
-  }),
-  getUsersSuccess: (users: any) => ({
-    type: usersConstants.GET_USERS_SUCCESS,
-    users,
-  }),
-  getUsersFailed: (error: any) => ({
-    type: usersConstants.GET_USERS_FAILED,
+  destroyUserFailure: (error: any) => ({
+    type: usersConstants.DESTROY_USER_FAILURE,
     error,
   }),
 };

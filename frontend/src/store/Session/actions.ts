@@ -10,21 +10,21 @@ export const sessionActions = {
     user,
   }),
   getSessionFailure: (error: any) => ({
-    type: sessionConstants.GET_SESSION_FAILED,
+    type: sessionConstants.GET_SESSION_FAILURE,
     error,
   }),
 
   // login
-  createSession: (body: any) => ({
+  createSession: (loginData: any) => ({
     type: sessionConstants.CREATE_SESSION_REQUEST,
-    body,
+    loginData,
   }),
   createSessionSuccess: (user: any) => ({
     type: sessionConstants.CREATE_SESSION_SUCCESS,
     user,
   }),
   createSessionFailure: (error: any) => ({
-    type: sessionConstants.CREATE_SESSION_FAILED,
+    type: sessionConstants.CREATE_SESSION_FAILURE,
     error,
   }),
 
@@ -36,7 +36,7 @@ export const sessionActions = {
     type: sessionConstants.DESTROY_SESSION_SUCCESS,
   }),
   destroySessionFailure: (error: any) => ({
-    type: sessionConstants.DESTROY_SESSION_FAILED,
+    type: sessionConstants.DESTROY_SESSION_FAILURE,
     error,
   }),
 };

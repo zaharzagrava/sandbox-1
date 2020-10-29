@@ -46,7 +46,7 @@ export default class Routes {
 
     this.app.get(
       '/clients/:id',
-      ClientMiddleware.validateGetDelete,
+      ClientMiddleware.validateGet,
       ClientController.get
     );
 
@@ -58,10 +58,9 @@ export default class Routes {
     );
 
     this.app.delete(
-      '/clients/:id',
+      '/clients',
       SessionMiddleware.validateVerify,
       SessionController.verify,
-      ClientMiddleware.validateGetDelete,
       ClientController.delete
     );
 

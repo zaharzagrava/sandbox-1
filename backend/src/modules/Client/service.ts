@@ -1,4 +1,5 @@
 import {
+  AccessTokenData,
   Callback,
   ClientGetDeleteUpdateParams,
   ClientModel,
@@ -50,26 +51,26 @@ export default class ClientService {
   }
 
   static async delete(
-    params: ClientGetDeleteUpdateParams,
+    accessTokenData: AccessTokenData,
     callback: Callback<null>
   ): Promise<void> {
     const client = await Client.findOne<ClientModel>({
       where: {
-        id: params.id,
+        id: accessTokenData.id,
       },
     });
 
     if (!client) {
       callback({
         status: 400,
-        message: `Client #${params.id} does not exist`,
+        message: `Client #${accessTokenData.id} does not exist`,
       });
       return;
     }
 
     await Client.destroy<any>({
       where: {
-        id: params.id,
+        id: accessTokenData.id,
       },
     });
 
@@ -77,27 +78,27 @@ export default class ClientService {
   }
 
   static async update(
-    params: ClientGetDeleteUpdateParams,
+    accessTokenData: AccessTokenData,
     body: ClientUpdate,
     callback: Callback<ClientModel>
   ): Promise<void> {
     const client = await Client.findOne<ClientModel>({
       where: {
-        id: params.id,
+        id: accessTokenData.id,
       },
     });
 
     if (!client) {
       callback({
         status: 400,
-        message: `Client #${params.id} does not exist`,
+        message: `Client #${accessTokenData.id} does not exist`,
       });
       return;
     }
 
     const [_, updatedClient] = await Client.update<ClientModel>(body, {
       where: {
-        id: params.id,
+        id: accessTokenData.id,
       },
       returning: true,
     });

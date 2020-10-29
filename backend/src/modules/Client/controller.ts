@@ -70,7 +70,7 @@ export default class ClientController {
   ) {
     try {
       await ClientService.delete(
-        (request.params as unknown) as ClientGetDeleteUpdateParams,
+        response.locals.accessTokenData,
         (error, data) => {
           if (error) {
             response.status(error.status).send(error);
@@ -93,7 +93,7 @@ export default class ClientController {
   ) {
     try {
       await ClientService.update(
-        (request.params as unknown) as ClientGetDeleteUpdateParams,
+        response.locals.accessTokenData,
         request.body,
         (error, data) => {
           if (error) {

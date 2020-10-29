@@ -28,8 +28,8 @@ export default class ClientMiddleware {
 
   constructor() {}
 
-  static validateGetDelete(req: Request, res: Response, next: NextFunction) {
-    ClientValidator.validateGetDelete(req.params, (error) => {
+  static validateGet(req: Request, res: Response, next: NextFunction) {
+    ClientValidator.validateGet(req.params, (error) => {
       if (error) {
         res.status(400).send(error);
       } else {

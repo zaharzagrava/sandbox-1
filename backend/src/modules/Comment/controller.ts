@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { CommentGetDeleteUpdateParams } from '../../interfaces/';
+import {
+  CommentCreateParams,
+  CommentGetDeleteUpdateParams,
+} from '../../interfaces/';
 import CommentService from './service';
 
 export default class CommentController {
@@ -51,6 +54,7 @@ export default class CommentController {
     try {
       await CommentService.create(
         request.body,
+        (request.query as unknown) as CommentCreateParams,
         response.locals.accessTokenData,
         (error, data) => {
           if (error) {
@@ -62,7 +66,6 @@ export default class CommentController {
         }
       );
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -11,6 +11,7 @@ interface Props {}
 
 const Header = ({}: Props) => {
   const dispatch = useDispatch();
+  const currUser = useSelector((state) => state.session.user);
 
   return (
     <div className={styles.container}>
@@ -37,7 +38,7 @@ const Header = ({}: Props) => {
         <div>
           <FontAwesomeIcon icon="heart" className={styles.icon} />
         </div>
-        <NavLink to="/test_user" className={styles.icon}>
+        <NavLink to={`${currUser.id}`} className={styles.icon}>
           <ClientImage />
         </NavLink>
       </div>

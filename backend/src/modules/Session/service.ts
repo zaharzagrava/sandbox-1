@@ -45,8 +45,6 @@ export default class SessionService {
       },
     })) as ClientModel & ClientDTO;
 
-    Client.prototype.authenticate(sessionLogin.password, client.password());
-
     if (!client) {
       callback({
         status: 400,
@@ -54,6 +52,8 @@ export default class SessionService {
       });
       return;
     }
+
+    Client.prototype.authenticate(sessionLogin.password, client.password());
 
     const accessTokenData: AccessTokenData = {
       id: client.id,
