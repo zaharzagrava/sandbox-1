@@ -76,7 +76,11 @@ export default class Routes {
 
     /* Posts */
 
-    this.app.get('/posts', PostController.getAll);
+    this.app.get(
+      '/posts',
+      PostMiddleware.validateGetAll,
+      PostController.getAll
+    );
 
     this.app.get(
       '/posts/:id',

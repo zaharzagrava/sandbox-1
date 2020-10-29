@@ -80,6 +80,11 @@ export interface CommentDTO {
   createdAt: Date;
 }
 
+export interface CommentRD {
+  clients: ClientDTO[];
+  posts: PostDTO[];
+}
+
 export interface CreateComment {
   id?: number;
   full_text: string;
@@ -101,6 +106,11 @@ export interface PostDTO {
   multimedia: string[];
   updatedAt: Date;
   createdAt: Date;
+}
+
+export interface PostRD {
+  clients: ClientDTO[];
+  comments: PostDTO[];
 }
 
 export interface CreatePost {
@@ -226,11 +236,30 @@ export interface ClientGetDeleteUpdateParams {
 export type ClientUpdate = Partial<ClientDTO>;
 
 /* Post */
+export interface PostGetAllParams {
+  client_id: number;
+}
+
 export interface PostGetDeleteUpdateParams {
   id: number;
 }
 
 export type PostUpdate = Partial<PostDTO>;
+
+export interface GetPostResponse {
+  id: number;
+  full_text: string | null;
+  multimedia: string[];
+  updatedAt: Date;
+  createdAt: Date;
+
+  author: ClientDTO;
+  comments: {
+    id: number;
+    full_text: string;
+    author: ClientDTO;
+  }[];
+}
 
 /* Comment */
 export interface CommentGetDeleteUpdateParams {

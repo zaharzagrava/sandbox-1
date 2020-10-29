@@ -59,6 +59,20 @@ export const ClientPost = sequelize.define<ClientPostModel>(
   }
 );
 
+// ClientPost.belongsTo(Post, {
+//   foreignKey: 'post_id',
+// });
+// Post.hasMany(ClientPost, {
+//   foreignKey: { name: 'post_id' },
+// });
+
+// ClientPost.belongsTo(Client, {
+//   foreignKey: 'client_id',
+// });
+// Client.hasMany(ClientPost, {
+//   foreignKey: { name: 'client_id' },
+// });
+
 Client.belongsToMany(Post, {
   through: ClientPost,
   foreignKey: 'client_id',

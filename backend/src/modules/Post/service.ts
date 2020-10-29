@@ -2,26 +2,44 @@ import {
   AccessTokenData,
   Callback,
   ClientPostModel,
+  CommentDTO,
+  CommentModel,
+  CommentRD,
   CreatePost,
+  GetPostResponse,
   PostDTO,
   PostGetDeleteUpdateParams,
   PostModel,
   PostUpdate,
+  ClientDTO,
+  PostRD,
+  PostGetAllParams,
 } from '../../interfaces/';
-import { ClientPost, Post } from '../../db/models/';
+import { Client, ClientPost, Comment, Post } from '../../db/models/';
+import { Model } from 'sequelize/types';
+import { required } from 'joi';
 
 export default class PostService {
   constructor() {}
 
   static async get(
     params: PostGetDeleteUpdateParams,
-    callback: Callback<PostModel>
+    callback: Callback<GetPostResponse>
   ): Promise<void> {
-    const post = await Post.findOne<PostModel>({
+    const post = (await Post.findOne<PostModel>({
       where: {
         id: params.id,
       },
-    });
+      include: [
+        {
+          model: ClientPost,
+          required: true,
+          where: {
+            is_author: true,
+          },
+        },
+      ],
+    })) as any;
 
     if (!post) {
       callback({
@@ -31,11 +49,65 @@ export default class PostService {
       return;
     }
 
-    callback(null, post);
+    const comments = (await Comment.findAll<CommentModel>({
+      include: [
+        {
+          model: Post,
+          required: true,
+          where: {
+            id: post.id,
+          },
+        },
+        {
+          model: Client,
+          required: true,
+        },
+      ],
+    })) as any;
+
+    const commentsData: any = [];
+    for (let i = 0; i < comments.length; i++) {
+      const comment = comments[i];
+
+      commentsData.push({
+        id: comment.id,
+        full_text: comment.full_text,
+        author: comment.clients[0],
+      });
+    }
+
+    callback(null, {
+      id: post.id,
+      full_text: post.full_text,
+      multimedia: post.multimedia,
+      updatedAt: post.updatedAt,
+      createdAt: post.createdAt,
+      author: post.clients[0],
+      comments: commentsData,
+    });
   }
 
-  static async getAll(callback: Callback<PostModel[]>): Promise<void> {
-    const posts = await Post.findAll<PostModel>();
+  static async getAll(
+    params: PostGetAllParams,
+    callback: Callback<PostModel[]>
+  ): Promise<void> {
+    const sequelizeParams: any = {};
+
+    if (params.client_id) {
+      sequelizeParams.include = [
+        {
+          model: Client,
+          required: true,
+          through: { where: { client_id: params.client_id } },
+        },
+      ];
+    }
+
+    console.log('@params');
+    console.log(params);
+
+    const posts = await Post.findAll<PostModel>(sequelizeParams);
+
     callback(null, posts);
   }
 

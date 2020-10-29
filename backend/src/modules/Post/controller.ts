@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { PostGetDeleteUpdateParams } from '../../interfaces/';
+import { PostGetDeleteUpdateParams, PostGetAllParams } from '../../interfaces/';
 import PostService from './service';
 
 export default class PostController {
@@ -12,14 +12,17 @@ export default class PostController {
     next: NextFunction
   ) {
     try {
-      await PostService.getAll((error, data) => {
-        if (error) {
-          response.status(error.status).send(error);
-          return;
-        }
+      await PostService.getAll(
+        (request.query as unknown) as PostGetAllParams,
+        (error, data) => {
+          if (error) {
+            response.status(error.status).send(error);
+            return;
+          }
 
-        response.status(200).json(data);
-      });
+          response.status(200).json(data);
+        }
+      );
     } catch (error) {
       next(error);
     }

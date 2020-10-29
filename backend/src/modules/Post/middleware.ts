@@ -32,6 +32,16 @@ export default class PostMiddleware {
 
   constructor() {}
 
+  static validateGetAll(req: Request, res: Response, next: NextFunction) {
+    PostValidator.validateGetAll(req.query, (error) => {
+      if (error) {
+        res.status(400).send(error);
+      } else {
+        next();
+      }
+    });
+  }
+
   static validateGetDelete(req: Request, res: Response, next: NextFunction) {
     PostValidator.validateGetDelete(req.params, (error) => {
       if (error) {

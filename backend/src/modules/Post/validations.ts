@@ -4,6 +4,35 @@ import Joi from 'joi';
 export default class PostValidator {
   constructor() {}
 
+  private static validateGetAllSchemaParams = Joi.object({
+    client_id: Joi.number(),
+  });
+
+  static validateGetAll(reqParams: any, callback: Callback<null>): void {
+    const response = this.validateGetAllSchemaParams.validate(reqParams);
+
+    if (response.error) {
+      callback({
+        status: 400,
+        message: response.error.details
+          .map((detail) => detail.message)
+          .join(' '),
+      });
+      return;
+    }
+    if (response.errors) {
+      callback({
+        status: 400,
+        message: response.errors.details
+          .map((detail) => detail.message)
+          .join(' '),
+      });
+      return;
+    }
+
+    callback(null, null);
+  }
+
   private static validateGetDeleteUpdateSchemaParams = Joi.object({
     id: Joi.number().required(),
   });

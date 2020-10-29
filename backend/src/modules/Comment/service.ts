@@ -8,8 +8,9 @@ import {
   CommentDTO,
   AccessTokenData,
   PostCommentModel,
+  ClientModel,
 } from '../../interfaces/';
-import { ClientComment, Comment } from '../../db/models/';
+import { Client, ClientComment, Comment } from '../../db/models/';
 import { PostComment } from '../../db/models/PostComment';
 
 export default class CommentService {
@@ -19,12 +20,12 @@ export default class CommentService {
     params: CommentGetDeleteUpdateParams,
     callback: Callback<CommentModel>
   ): Promise<void> {
-    const comment = await Comment.findOne<CommentModel>({
+    const comment = (await Comment.findOne<CommentModel>({
       attributes: ['id', 'full_text'],
       where: {
         id: params.id,
       },
-    });
+    })) as CommentModel & CommentDTO;
 
     if (!comment) {
       callback({
