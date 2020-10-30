@@ -7,15 +7,6 @@ function* fetch(payload: any) {
   try {
     const response = yield call(api.posts.get, payload.id);
 
-    // const post = {
-    //   post: response.data,
-    //   postDerivative: {
-    //     author: response.data.author,
-    //   },
-    //   comments: response.data.comments,
-    //   commentsDerivative: response.data.comments,
-    // };
-
     // @ts-ignore
     yield put(postsActions.getPostSuccess(response.post));
   } catch (error) {
@@ -42,6 +33,7 @@ function* create(payload: any) {
 
     // @ts-ignore
     yield put(postsActions.createPostSuccess(response.data));
+    // yield put(postsActions.getPosts())
   } catch (error) {
     // @ts-ignore
     yield put(postsActions.createPostFailure(error.response.data));

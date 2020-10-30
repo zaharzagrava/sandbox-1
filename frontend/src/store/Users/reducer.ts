@@ -43,6 +43,13 @@ export const usersReducer = (state = initialState, action: any) => {
     case usersConstants.UPDATE_USER_FAILURE:
       return { ...state, error, loading: false };
 
+    case usersConstants.UPDATE_USER_PASSWORD_REQUEST:
+      return { ...state, loading: true, error: null };
+    case usersConstants.UPDATE_USER_PASSWORD_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case usersConstants.UPDATE_USER_PASSWORD_FAILURE:
+      return { ...state, error, loading: false };
+
     case usersConstants.DESTROY_USER_REQUEST:
       return { ...state, loading: true, error: null };
     case usersConstants.DESTROY_USER_SUCCESS:

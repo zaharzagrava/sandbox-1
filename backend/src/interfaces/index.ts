@@ -232,6 +232,24 @@ export interface ClientGetDeleteUpdateParams {
 }
 
 export type ClientUpdate = Partial<ClientDTO>;
+export interface ClientUpdatePassword {
+  old_password: string;
+  new_password: string;
+}
+
+export interface UpdateClientResponse {
+  id: number;
+  full_name: string | null;
+  username: string;
+  website: string | null;
+  bio: string | null;
+  avatar: string | null;
+  email: string;
+  phone_number: string | null;
+  gender: string | null;
+  updatedAt: Date;
+  createdAt: Date;
+}
 
 /* Post */
 export interface PostGetAllParams {

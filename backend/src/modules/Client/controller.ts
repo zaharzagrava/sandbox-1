@@ -109,4 +109,28 @@ export default class ClientController {
       next(error);
     }
   }
+
+  static async updatePassword(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    try {
+      await ClientService.updatePassword(
+        response.locals.accessTokenData,
+        request.body,
+        (error, data) => {
+          if (error) {
+            response.status(error.status).send(error);
+            return;
+          }
+
+          response.status(200).json(data);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }

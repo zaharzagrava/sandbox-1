@@ -69,6 +69,9 @@ export default class PostValidator {
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {
+    console.log('@3');
+    console.log(reqBody);
+
     const response = this.validateUpdateCreateSchema.validate(reqBody);
 
     if (response.error) {

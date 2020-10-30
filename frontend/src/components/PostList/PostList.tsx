@@ -12,9 +12,8 @@ const PostList = (props: Props) => {
 
   const currUser = useSelector((state) => state.session.user);
   const posts = useSelector((state) => state.posts.posts);
-  console.log('12');
+
   useEffect(() => {
-    // dispatch(postsActions.getPosts({ client_id: currUser.id }));
     dispatch(postsActions.getPosts());
   }, []);
 

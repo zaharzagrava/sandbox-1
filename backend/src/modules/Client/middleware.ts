@@ -50,9 +50,23 @@ export default class ClientMiddleware {
   }
 
   static validateUpdate(req: Request, res: Response, next: NextFunction) {
-    console.log('validateUpdate');
+    ClientValidator.validateUpdate(req.body, (error) => {
+      if (error) {
+        console.log(error);
 
-    ClientValidator.validateUpdate(req.params, req.body, (error) => {
+        res.status(400).send(error);
+      } else {
+        next();
+      }
+    });
+  }
+
+  static validateUpdatePassword(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    ClientValidator.validateUpdatePassword(req.body, (error) => {
       if (error) {
         console.log(error);
 

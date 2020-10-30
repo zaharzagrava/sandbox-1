@@ -88,7 +88,9 @@ export const Client = sequelize.define<ClientModel>(
           );
         }
       },
-      beforeUpdate: async (model: any) => {
+      beforeBulkUpdate: async (model: any) => {
+        // console.log('@model');
+        // console.log(model);
         if (model.changed('password')) {
           model.password = bcrypt.hashSync(
             model.password(),

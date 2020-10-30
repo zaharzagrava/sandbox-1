@@ -13,7 +13,7 @@ const Textsource = ({ author, full_text }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.client_image}>
-        <ClientImage />
+        <ClientImage src={author.avatar} />
       </div>
       <div className={styles.full_text_container}>
         <a className={styles.username} href="">

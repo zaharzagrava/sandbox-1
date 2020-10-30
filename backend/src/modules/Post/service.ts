@@ -33,7 +33,6 @@ export default class PostService {
       include: [
         {
           model: Comment,
-          required: true,
           include: [
             {
               model: Client,
@@ -89,7 +88,6 @@ export default class PostService {
     sequelizeParams.include = [
       {
         model: Comment,
-        required: true,
         include: [
           {
             model: Client,
@@ -106,11 +104,10 @@ export default class PostService {
     ];
 
     if (params.client_id) {
-      sequelizeParams.include[1].through.where.client_id = params.client_id;
+      sequelizeParams.include[1].through.where.client_id = Number(
+        params.client_id
+      );
     }
-
-    console.log('@sequelizeParams');
-    console.log(JSON.stringify(sequelizeParams, undefined, 2));
 
     const posts = (await Post.findAll<PostModel>(sequelizeParams)) as any;
 
@@ -148,6 +145,9 @@ export default class PostService {
     accessTokenData: AccessTokenData,
     callback: Callback<PostModel>
   ): Promise<void> {
+    console.log('body');
+    console.log(body);
+
     const newPost = (await Post.create<PostModel>({
       full_text: body.full_text,
       multimedia: body.multimedia,

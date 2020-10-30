@@ -1,10 +1,13 @@
 import {
   AccessTokenData,
   Callback,
+  ClientDTO,
   ClientGetDeleteUpdateParams,
   ClientModel,
   ClientUpdate,
+  ClientUpdatePassword,
   CreateClientDTO,
+  UpdateClientResponse,
 } from '../../interfaces/';
 import { Client } from '../../db/models/';
 
@@ -80,7 +83,7 @@ export default class ClientService {
   static async update(
     accessTokenData: AccessTokenData,
     body: ClientUpdate,
-    callback: Callback<ClientModel>
+    callback: Callback<UpdateClientResponse>
   ): Promise<void> {
     const client = await Client.findOne<ClientModel>({
       where: {
@@ -96,12 +99,56 @@ export default class ClientService {
       return;
     }
 
-    const [_, updatedClient] = await Client.update<ClientModel>(body, {
+    const [_, updatedClient] = (await Client.update<ClientModel>(body, {
       where: {
         id: accessTokenData.id,
       },
       returning: true,
-    });
+    })) as [number, (ClientModel & ClientDTO)[]];
+
+    callback(null, updatedClient[0]);
+  }
+
+  static async updatePassword(
+    accessTokenData: AccessTokenData,
+    body: ClientUpdatePassword,
+    callback: Callback<UpdateClientResponse>
+  ): Promise<void> {
+    const client = (await Client.findOne<ClientModel>({
+      where: {
+        id: accessTokenData.id,
+      },
+    })) as ClientModel & ClientDTO;
+
+    // if (!client) {
+    //   callback({
+    //     status: 400,
+    //     message: `Client #${accessTokenData.id} does not exist`,
+    //   });
+    //   return;
+    // }
+
+    // if (!Client.prototype.authenticate(body.old_password, client.password())) {
+    //   callback({
+    //     status: 400,
+    //     message: `Wrong old password`,
+    //   });
+    //   return;
+    // }
+
+    console.log('@body');
+    console.log(body);
+
+    const [_, updatedClient] = (await Client.update<ClientModel>(
+      // @ts-ignore
+      { password: '123' },
+      {
+        where: {
+          id: accessTokenData.id,
+        },
+        returning: true,
+      }
+    )) as [number, (ClientModel & ClientDTO)[]];
 
     callback(null, updatedClient[0]);
   }

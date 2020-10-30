@@ -6,6 +6,15 @@ import {
   faHeart,
   faBookmark,
   faComment,
+  faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHome, faEnvelope, faCompass, faHeart, faBookmark, faComment);
+library.add(
+  faHome,
+  faEnvelope,
+  faCompass,
+  faHeart,
+  faBookmark,
+  faComment,
+  faPlusCircle
+);

@@ -33,13 +33,6 @@ export interface ClientDTO {
   createdAt?: Date;
 }
 
-export interface CreateClientDTO {
-  email: string;
-  full_name: string;
-  username: string;
-  password: string;
-}
-
 /* comment */
 export interface CommentDTO {
   id?: number;
@@ -50,11 +43,7 @@ export interface CommentDTO {
   author: ClientDTO;
 }
 
-export interface CommentDerivative {
-  author: ClientDTO;
-}
-
-export interface CreateCommentDTO {
+export interface CommentCreate {
   full_text: string;
 }
 
@@ -69,12 +58,9 @@ export interface PostDTO {
   author: ClientDTO;
 }
 
-export interface PostDerivative {
-  author: ClientDTO;
-}
-
-export interface CreatePostDTO {
-  full_text: string;
+export interface PostCreate {
+  full_text?: string;
+  multimedia: FileList | null;
 }
 
 /* tag */
@@ -108,7 +94,30 @@ export interface ClientGetDeleteUpdateParams {
   id: number;
 }
 
-export type ClientUpdate = Partial<ClientDTO>;
+export interface ClientUpdate {
+  id: number;
+  full_name?: string;
+  username?: string;
+  website?: string;
+  bio?: string;
+  avatar?: File;
+  email?: string;
+  phone_number?: string;
+  gender?: string;
+}
+
+export interface ClientUpdatePassword {
+  old_password: string;
+  new_password: string;
+  confirm_new_password: string;
+}
+
+export interface ClientCreate {
+  email: string;
+  full_name: string;
+  username: string;
+  password: string;
+}
 
 /* Post */
 export interface PostGetDeleteUpdateParams {

@@ -6,14 +6,14 @@ import { useDispatch } from 'react-redux';
 import styles from './Form.module.scss';
 import Button from '../../Button/Button';
 import { sessionActions } from '../../../store/Session';
-import { CreateClientDTO, SessionPost } from '../../../interfaces';
+import { ClientCreate, SessionPost } from '../../../interfaces';
 import FormError from '../../FormError/FormError';
 
 interface Props {
   className: string;
 }
 
-const initialValues: CreateClientDTO = {
+const initialValues: ClientCreate = {
   email: '',
   full_name: '',
   username: '',

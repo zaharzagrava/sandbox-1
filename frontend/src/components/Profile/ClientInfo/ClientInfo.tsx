@@ -3,17 +3,23 @@ import React from 'react';
 import { ClientDTO } from '../../../interfaces';
 import styles from './ClientInfo.module.scss';
 import ClientImage from '../../ClientImage/ClientImage';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../store/typedef';
 
 interface Props {
   client: ClientDTO;
 }
 
 const ClientInfo = ({ client }: Props) => {
+  const currUser = useSelector<AppState, ClientDTO>(
+    (state) => state.session.user
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.client_image_container}>
         <div className={styles.client_image}>
-          <ClientImage />
+          <ClientImage src={currUser.avatar} />
         </div>
       </div>
 

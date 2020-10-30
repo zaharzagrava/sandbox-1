@@ -2,6 +2,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 
 import { api } from '../../services/api';
 import { usersConstants, usersActions } from '.';
+import { sessionActions } from '../Session';
 
 function* fetch(payload: any) {
   try {
@@ -45,9 +46,22 @@ function* update(payload: any) {
 
     // @ts-ignore
     yield put(usersActions.updateUserSuccess(response.data));
+    yield put(sessionActions.getSessionSuccess(response.data));
   } catch (error) {
     // @ts-ignore
     yield put(usersActions.updateUserFailure(error.response.data));
+  }
+}
+
+function* updatePassword(payload: any) {
+  try {
+    const response = yield call(api.users.updatePassword, payload.passwords);
+
+    // @ts-ignore
+    yield put(usersActions.updateUserPasswordSuccess());
+  } catch (error) {
+    // @ts-ignore
+    yield put(usersActions.updateUserPasswordFailure(error.response.data));
   }
 }
 
@@ -68,5 +82,6 @@ export function* usersSaga() {
   yield takeLatest(usersConstants.GET_USERS_REQUEST, fetchAll);
   yield takeLatest(usersConstants.CREATE_USER_REQUEST, create);
   yield takeLatest(usersConstants.UPDATE_USER_REQUEST, update);
+  yield takeLatest(usersConstants.UPDATE_USER_PASSWORD_REQUEST, updatePassword);
   yield takeLatest(usersConstants.DESTROY_USER_REQUEST, destroy);
 }

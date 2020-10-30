@@ -28,7 +28,7 @@ const Post = ({ post, comments }: Props) => {
       <div className={styles.right}>
         <div className={styles.header}>
           <div className={styles.client_image}>
-            <ClientImage />
+            <ClientImage src={post.author.avatar} />
           </div>
           <div className={styles.client_info}>
             <a className={styles.username} href="">

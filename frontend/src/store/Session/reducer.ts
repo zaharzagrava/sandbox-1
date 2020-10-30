@@ -1,7 +1,8 @@
 import { sessionConstants } from '.';
+import { ClientDTO } from '../../interfaces';
 
 export type State = {
-  user: any;
+  user: ClientDTO;
   loadings: {
     GET_SESSION_REQUEST: boolean;
     CREATE_SESSION_REQUEST: boolean;

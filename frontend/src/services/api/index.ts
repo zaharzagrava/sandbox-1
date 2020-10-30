@@ -13,6 +13,8 @@ export const api = {
     getAll: () => requestManager.get(`clients/`),
     create: (user: any) => requestManager.post(`clients`, { data: user }),
     update: (user: any) => requestManager.put(`clients`, { data: user }),
+    updatePassword: (passwords: any) =>
+      requestManager.put(`clients/password`, { data: passwords }),
     destroy: () => requestManager.delete(`clients`),
   },
   posts: {

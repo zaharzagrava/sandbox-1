@@ -65,12 +65,20 @@ export default class Routes {
     );
 
     this.app.put(
-      '/clients/:id',
+      '/clients',
       SessionMiddleware.validateVerify,
       SessionController.verify,
       ClientMiddleware.validateUpdate,
       ClientMiddleware.uploads.avatar,
       ClientController.update
+    );
+
+    this.app.put(
+      '/clients/password',
+      SessionMiddleware.validateVerify,
+      SessionController.verify,
+      ClientMiddleware.validateUpdatePassword,
+      ClientController.updatePassword
     );
 
     /* Posts */

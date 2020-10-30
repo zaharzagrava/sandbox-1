@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
-import { CreateCommentDTO } from '../../../interfaces';
+import { CommentCreate } from '../../../interfaces';
 import { commentsActions } from '../../../store/Comments';
 import Button from '../../Button/Button';
 import FormError from '../../FormError/FormError';
@@ -13,7 +13,7 @@ interface Props {
   post_id: number;
 }
 
-const initialValues: CreateCommentDTO = {
+const initialValues: CommentCreate = {
   full_text: '',
 };
 
@@ -27,7 +27,7 @@ const validationSchema = yup.object({
 const AddComment = ({ post_id }: Props) => {
   const dispatch = useDispatch();
 
-  async function onSubmit(values: CreateCommentDTO) {
+  async function onSubmit(values: CommentCreate) {
     dispatch(commentsActions.createComment(values, post_id));
   }
 

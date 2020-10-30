@@ -2,7 +2,6 @@ import React from 'react';
 
 import { PostDTO } from '../../interfaces';
 import styles from './PostGrid.module.scss';
-import imga from './imga.png';
 import PostAbstract from '../PostAbstract/PostAbstract';
 
 interface Props {
@@ -18,6 +17,7 @@ const PostGrid = ({ posts }: Props) => {
             className={`${styles.post} ${
               (index + 1) % 3 === 0 && styles.last_post
             }`}
+            key={post.id}
           >
             <PostAbstract post={post} />
           </div>

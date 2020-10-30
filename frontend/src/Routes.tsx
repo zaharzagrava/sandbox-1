@@ -9,8 +9,7 @@ import LoadingLogo from './components/LoadingLogo/LoadingLogo';
 import Page from './components/Page/Page';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
-import { sessionActions, sessionConstants } from './store/Session';
-import ClientImage from './components/ClientImage/ClientImage';
+import { sessionActions } from './store/Session';
 import PostList from './components/PostList/PostList';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
@@ -60,7 +59,7 @@ function Routes({}: Props): ReactElement {
         );
       }
     }
-  } else if (!error) {
+  } else {
     // Redirects for authorized user
     if (window.location.href === '/signup') {
       history.push('/');
@@ -74,7 +73,7 @@ function Routes({}: Props): ReactElement {
 
   return (
     <Page>
-      <Header />
+      {!error && <Header />}
       <Switch>
         {error && <Route path="/" exact component={Login} />}
         {!error && <Route path="/" exact component={PostList} />}

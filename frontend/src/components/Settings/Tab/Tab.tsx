@@ -8,10 +8,16 @@ interface Props {
   url: string;
 }
 
-const Tab = (props: Props) => {
+const Tab = ({ name, url }: Props) => {
   return (
-    <NavLink to={props.url}>
-      <div className={styles.tab}>{props.name}</div>
+    <NavLink to={url}>
+      <div
+        className={`${styles.tab} ${
+          window.location.href.includes(url) && styles.active_tab
+        }`}
+      >
+        {name}
+      </div>
     </NavLink>
   );
 };

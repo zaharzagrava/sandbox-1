@@ -55,6 +55,18 @@ export const usersActions = {
     error,
   }),
 
+  updateUserPassword: (passwords: any) => ({
+    type: usersConstants.UPDATE_USER_PASSWORD_REQUEST,
+    passwords,
+  }),
+  updateUserPasswordSuccess: () => ({
+    type: usersConstants.UPDATE_USER_PASSWORD_SUCCESS,
+  }),
+  updateUserPasswordFailure: (error: any) => ({
+    type: usersConstants.UPDATE_USER_PASSWORD_FAILURE,
+    error,
+  }),
+
   destroyUser: () => ({
     type: usersConstants.DESTROY_USER_REQUEST,
   }),

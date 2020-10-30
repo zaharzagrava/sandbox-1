@@ -12,7 +12,8 @@ interface Props {}
 const Header = ({}: Props) => {
   const dispatch = useDispatch();
   const currUser = useSelector((state) => state.session.user);
-
+  console.log('@currUser');
+  console.log(currUser);
   return (
     <div className={styles.container}>
       <div>
@@ -39,7 +40,7 @@ const Header = ({}: Props) => {
           <FontAwesomeIcon icon="heart" className={styles.icon} />
         </div>
         <NavLink to={`${currUser.id}`} className={styles.icon}>
-          <ClientImage />
+          <ClientImage src={currUser.avatar} />
         </NavLink>
       </div>
     </div>

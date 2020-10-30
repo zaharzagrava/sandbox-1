@@ -15,9 +15,6 @@ export default class PostMiddleware {
       if (!Array.isArray(req.body.multimedia)) req.body.multimedia = [];
       req.body.multimedia.push(fileName);
 
-      console.log('@req.body.multimedia');
-      console.log(req.body.multimedia);
-
       callback(null, fileName);
     },
   });

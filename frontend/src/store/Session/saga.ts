@@ -12,8 +12,6 @@ function* getSession(payload: any) {
     // @ts-ignore
     yield put(sessionActions.getSessionSuccess(response.data));
   } catch (error) {
-    console.log('@error');
-    console.log(error);
     // @ts-ignore
     yield put(sessionActions.getSessionFailure(error.response.data));
   }
@@ -27,8 +25,6 @@ function* createSession(payload: any) {
     yield put(sessionActions.createSessionSuccess(response.data));
     yield put(sessionActions.getSessionSuccess(response.data));
   } catch (error) {
-    console.log('@error');
-    console.log(error);
     // @ts-ignore
     yield put(sessionActions.createSessionFailure(error.response.data));
   }

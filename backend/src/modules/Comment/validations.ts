@@ -117,9 +117,6 @@ export default class CommentValidator {
       return;
     }
 
-    console.log('@body');
-    console.log(reqBody);
-
     response = this.validateUpdateCreateSchema.validate(reqBody);
 
     if (response.error) {

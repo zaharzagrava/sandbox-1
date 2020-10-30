@@ -1,9 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ProfileTabs } from '../../interfaces';
 import { postsActions } from '../../store/Posts';
 import PostGrid from '../PostGrid/PostGrid';
+import AddPost from './AddPost/AddPost';
 import ClientInfo from './ClientInfo/ClientInfo';
 import styles from './Profile.module.scss';
 import Tab from './Tab/Tab';
@@ -16,7 +18,9 @@ interface Props {
 const Profile = ({ id, tab }: Props) => {
   const dispatch = useDispatch();
   const currUser = useSelector((state) => state.session.user);
+
   const [currTab, setcurrTab] = useState(tab);
+  const [isAddPostOpen, setisAddPostOpen] = useState(false);
 
   const posts = useSelector((state) => state.posts.posts);
 
@@ -66,6 +70,16 @@ const Profile = ({ id, tab }: Props) => {
           <div style={{ textAlign: 'center' }}>TAGGED stub :)</div>
         )}
       </div>
+      <div className={styles.add_post_btn}>
+        <FontAwesomeIcon
+          icon="plus-circle"
+          className={styles.icon}
+          onClick={() => setisAddPostOpen(!isAddPostOpen)}
+        />
+      </div>
+      {isAddPostOpen && (
+        <AddPost setisAddPostOpen={() => setisAddPostOpen(!isAddPostOpen)} />
+      )}
     </div>
   );
 };

@@ -12,7 +12,7 @@ const ClientImage = ({ src }: Props) => {
 
   return (
     <img
-      src={src || defaultClientImage}
+      src={`http://localhost:4000/uploads/${src}` || defaultClientImage}
       alt=""
       width={'100%'}
       height={'100%'}

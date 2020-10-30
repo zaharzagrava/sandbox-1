@@ -77,12 +77,8 @@ export default class ClientValidator {
     gender: Joi.string().min(1).max(255),
   });
 
-  static validateUpdate(
-    reqParams: any,
-    reqBody: any,
-    callback: Callback<null>
-  ): void {
-    let response = this.validateGetDeleteUpdateSchemaParams.validate(reqParams);
+  static validateUpdate(reqBody: any, callback: Callback<null>): void {
+    const response = this.validateUpdateSchema.validate(reqBody);
 
     if (response.error) {
       callback({
@@ -103,7 +99,16 @@ export default class ClientValidator {
       return;
     }
 
-    response = this.validateUpdateSchema.validate(reqBody);
+    callback(null, null);
+  }
+
+  private static validateUpdatePasswordSchema = Joi.object({
+    old_password: Joi.string().min(1).max(255),
+    new_password: Joi.string().min(1).max(255),
+  });
+
+  static validateUpdatePassword(reqBody: any, callback: Callback<null>): void {
+    const response = this.validateUpdatePasswordSchema.validate(reqBody);
 
     if (response.error) {
       callback({
