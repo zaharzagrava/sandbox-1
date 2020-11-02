@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 import Form from './Form/Form';
 import LoginPrompt from './LoginPrompt/LoginPrompt';

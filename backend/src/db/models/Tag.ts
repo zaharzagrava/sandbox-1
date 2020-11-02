@@ -33,7 +33,3 @@ export const Tag = sequelize.define<TagModel>(
     tableName: TableNames.TAGS,
   }
 );
-
-// authenticate(password: string) {
-//   return bcrypt.compareSync(password, this.password());
-// }

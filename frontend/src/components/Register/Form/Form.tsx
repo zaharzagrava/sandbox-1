@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Form.module.scss';
 import Button from '../../Button/Button';
-import { sessionActions } from '../../../store/Session';
 import { ClientCreate, SessionPost } from '../../../interfaces';
 import FormError from '../../FormError/FormError';
 import { usersActions } from '../../../store/Users';
@@ -57,8 +56,8 @@ const Form = (props: Props) => {
         onSubmit={onSubmit}
       >
         <FormikForm className={styles.container}>
-          <h1>Instagram</h1>
-          <p className={styles.cta}>
+          <h1 className={styles.field}>Instagram</h1>
+          <p className={`${styles.cta} ${styles.field}`}>
             Sign up to see photos and videos from your friends.
           </p>
           <Field
@@ -101,7 +100,10 @@ const Form = (props: Props) => {
             component={FormError as React.FunctionComponent<{}>}
             name="password"
           />
-          <Button type="submit">Sign Up</Button>
+          <div className={styles.button_field}>
+            <Button type="submit">Sign Up</Button>
+          </div>
+
           <FormError>{error}</FormError>
         </FormikForm>
       </Formik>

@@ -1,13 +1,15 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
+
+import styles from './LoginPrompt.module.scss';
 
 interface Props {
   className: string;
 }
 
-const LoginPrompt = (props: Props) => {
+const LoginPrompt = ({}: Props) => {
   return (
-    <div>
+    <div className={styles.container}>
       Have an account? <NavLink to="/">Log in</NavLink>{' '}
     </div>
   );

@@ -8,13 +8,13 @@ interface Props {
   isActive: boolean;
 }
 
-const Tab = (props: Props) => {
+const Tab = ({ isActive, name, setCurrID }: Props) => {
   return (
     <div
-      className={`${styles.tab} ${props.isActive && styles.active_tab}`}
-      onClick={props.setCurrID}
+      className={`${styles.tab} ${isActive && styles.active_tab}`}
+      onClick={setCurrID}
     >
-      {props.name}
+      {name}
     </div>
   );
 };

@@ -6,11 +6,11 @@ import RegisterPrompt from './RegisterPrompt/RegisterPrompt';
 
 interface Props {}
 
-const Login = (props: Props) => {
+const Login = ({}: Props) => {
   return (
     <div className={styles.container}>
-      <Form className={styles.form} />
-      <RegisterPrompt className={styles.form} />
+      <Form />
+      <RegisterPrompt />
     </div>
   );
 };

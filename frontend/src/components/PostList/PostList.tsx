@@ -7,10 +7,9 @@ import styles from './PostList.module.scss';
 
 interface Props {}
 
-const PostList = (props: Props) => {
+const PostList = ({}: Props) => {
   const dispatch = useDispatch();
 
-  const currUser = useSelector((state) => state.session.user);
   const posts = useSelector((state) => state.posts.posts);
 
   useEffect(() => {

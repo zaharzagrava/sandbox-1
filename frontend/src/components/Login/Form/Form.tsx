@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,9 +9,7 @@ import Button from '../../Button/Button';
 import { sessionActions } from '../../../store/Session';
 import FormError from '../../FormError/FormError';
 
-interface Props {
-  className: string;
-}
+interface Props {}
 
 const initialValues: SessionPost = {
   email: '',
@@ -27,7 +25,7 @@ const validationSchema = yup.object({
     .required('Required'),
 });
 
-const Form = (props: Props) => {
+const Form = ({}: Props) => {
   const dispatch = useDispatch();
   const error = useSelector(
     (state) => state.session.errors.CREATE_SESSION_REQUEST
@@ -45,7 +43,7 @@ const Form = (props: Props) => {
         onSubmit={onSubmit}
       >
         <FormikForm className={styles.container}>
-          <h1>Instagram</h1>
+          <h1 className={styles.field}>Instagram</h1>
 
           <Field
             type="email"
@@ -67,7 +65,9 @@ const Form = (props: Props) => {
             component={FormError as React.FunctionComponent<{}>}
             name="password"
           />
-          <Button type="submit">Log In</Button>
+          <div className={styles.button_field}>
+            <Button type="submit">Log In</Button>
+          </div>
 
           <FormError>{error && error.message}</FormError>
         </FormikForm>

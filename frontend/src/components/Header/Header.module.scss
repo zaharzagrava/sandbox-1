@@ -5,8 +5,12 @@
   border-bottom: 1px solid rgba(38, 38, 38, 0.2);
 }
 
-.container > *,
-.contaienr > *:active {
+.input_container {
+  margin: 5px;
+}
+
+.icons_container {
+  display: flex;
   margin: 5px;
 }
 
@@ -25,16 +29,6 @@
   width: 25px;
   height: 25px;
 }
-
-.icon_container {
-  display: flex;
-}
-
-// .img_container {
-//   display: inline-block;
-//   margin: 10px;
-
-// }
 
 .home {
   color: black;

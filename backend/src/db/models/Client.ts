@@ -1,7 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '.';
 import { ClientModel } from '../../interfaces';
-import bcrypt from 'bcrypt';
 
 export const Client = sequelize.define<ClientModel>(
   'clients',

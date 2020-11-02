@@ -1,4 +1,4 @@
-import { Application, NextFunction, response, Router } from 'express';
+import { Application } from 'express';
 
 import ClientController from '../modules/Client/controller';
 import ClientMiddleware from '../modules/Client/middleware';

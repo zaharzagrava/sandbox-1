@@ -1,10 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
-import { ClientDTO, ClientUpdatePassword } from '../../../interfaces';
-import { AppState } from '../../../store/typedef';
+import { ClientUpdatePassword } from '../../../interfaces';
 import { usersActions } from '../../../store/Users';
 import Button from '../../Button/Button';
 import FormError from '../../FormError/FormError';
@@ -38,7 +37,7 @@ const validationSchema = yup.object({
     }),
 });
 
-const PasswordChange = (props: Props) => {
+const PasswordChange = ({}: Props) => {
   const dispatch = useDispatch();
 
   return (

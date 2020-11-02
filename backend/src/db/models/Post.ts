@@ -38,7 +38,3 @@ export const Post = sequelize.define<PostModel>(
     tableName: TableNames.POSTS,
   }
 );
-
-// authenticate(password: string) {
-//   return bcrypt.compareSync(password, this.password());
-// }

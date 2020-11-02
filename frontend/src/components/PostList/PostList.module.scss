@@ -6,11 +6,9 @@
   align-items: center;
 }
 
-.container > * {
+.post {
   margin-top: 30px;
-}
-
-.container > *:last-child {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  &:last-child {
+    margin-bottom: 30px;
+  }
 }

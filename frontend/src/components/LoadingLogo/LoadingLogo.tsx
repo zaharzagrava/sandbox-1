@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
-import loadingLogo from './loading-logo.png';
+import loadingLogo from '../../assets/icons/loading-logo.png';
 import styles from './LoadingLogo.module.scss';
 
 interface Props {}

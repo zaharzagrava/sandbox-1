@@ -1,4 +1,4 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from '.';
 import { ClientPostModel, TableNames } from '../../interfaces';
 import { Post } from './Post';
@@ -58,20 +58,6 @@ export const ClientPost = sequelize.define<ClientPostModel>(
     tableName: TableNames.CLIENTS_POSTS,
   }
 );
-
-// ClientPost.belongsTo(Post, {
-//   foreignKey: 'post_id',
-// });
-// Post.hasMany(ClientPost, {
-//   foreignKey: { name: 'post_id' },
-// });
-
-// ClientPost.belongsTo(Client, {
-//   foreignKey: 'client_id',
-// });
-// Client.hasMany(ClientPost, {
-//   foreignKey: { name: 'client_id' },
-// });
 
 Client.belongsToMany(Post, {
   through: ClientPost,

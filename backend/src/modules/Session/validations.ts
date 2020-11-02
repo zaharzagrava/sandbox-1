@@ -1,4 +1,4 @@
-import { Callback, ClientGetDeleteUpdateParams } from '../../interfaces';
+import { Callback } from '../../interfaces';
 import Joi from 'joi';
 
 export default class SessionValidator {

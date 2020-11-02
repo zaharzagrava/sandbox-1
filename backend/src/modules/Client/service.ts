@@ -11,7 +11,7 @@ import {
 } from '../../interfaces/';
 import { Op } from 'sequelize';
 import { Client } from '../../db/models/';
-import bcrypt from 'bcrypt';
+import { compareSync, hashSync } from '../../utils/';
 
 export default class ClientService {
   constructor() {}
@@ -62,17 +62,14 @@ export default class ClientService {
     if (client) {
       callback({
         status: 400,
-        message: `Sorry, client with provided email (${client.email}) or username (${client.username}) already exists`,
+        message: `Client with provided email (${client.email}) or username (${client.username}) already exists`,
       });
       return;
     }
 
     const newClient = await Client.create<ClientModel>({
       email: body.email,
-      password: bcrypt.hashSync(
-        body.password,
-        Number(process.env.BCRYPT_SALT_ROUNDS)
-      ),
+      password: hashSync(body.password, Number(process.env.BCRYPT_SALT_ROUNDS)),
       username: body.username,
       full_name: body.full_name,
     });
@@ -155,10 +152,10 @@ export default class ClientService {
       return;
     }
 
-    if (!bcrypt.compareSync(body.old_password, client.password())) {
+    if (!compareSync(body.old_password, client.password())) {
       callback({
         status: 400,
-        message: `Wrong old password`,
+        message: 'Wrong old password',
       });
       return;
     }
@@ -166,7 +163,7 @@ export default class ClientService {
     const [_, updatedClient] = (await Client.update<ClientModel>(
       {
         // @ts-ignore
-        password: bcrypt.hashSync(
+        password: hashSync(
           body.new_password,
           Number(process.env.BCRYPT_SALT_ROUNDS)
         ),

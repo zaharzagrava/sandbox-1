@@ -33,7 +33,3 @@ export const Hashtag = sequelize.define<HashtagModel>(
     tableName: TableNames.HASHTAGS,
   }
 );
-
-// authenticate(password: string) {
-//   return bcrypt.compareSync(password, this.password());
-// }

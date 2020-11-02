@@ -30,7 +30,7 @@ export default class SessionController {
           return;
         }
 
-        response.cookie(`accessToken`, data?.accessToken, {
+        response.cookie('accessToken', data?.accessToken, {
           maxAge: Number(process.env.ACCESS_TOKEN_LIFE),
           httpOnly: true,
           domain: process.env.FRONTEND_DOMAIN,

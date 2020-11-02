@@ -39,10 +39,9 @@ function* create(payload: any) {
 
     // @ts-ignore
     yield put(commentsActions.createCommentSuccess(response.data));
-    console.log('1');
+
     let post = yield select((state) => state.posts.post);
     let posts = yield select((state) => state.posts.posts);
-    console.log('2');
 
     if (post) {
       if (post.id === payload.post_id) {
@@ -51,7 +50,6 @@ function* create(payload: any) {
         yield put(postsActions.getPostSuccess(newPost));
       }
     }
-    console.log('3');
 
     if (posts) {
       for (let i = 0; i < posts.length; i++) {
@@ -66,10 +64,8 @@ function* create(payload: any) {
       }
     }
   } catch (error) {
-    console.error(error);
-
     // @ts-ignore
-    // yield put(commentsActions.createCommentFailure(error.response.data));
+    yield put(commentsActions.createCommentFailure(error.response.data));
   }
 }
 

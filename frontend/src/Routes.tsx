@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Route, Switch } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { useHistory } from 'react-router-dom';
 
 import Footer from './components/Footer/Footer';
@@ -83,7 +83,6 @@ function Routes({}: Props): ReactElement {
 
         <Route path="/accounts" component={Settings} />
         <Route path="/signup" exact component={Register} />
-        {/* <Route path="/direct/inbox" exact component={PostGrid} /> */}
         <Route path="/explore" exact component={PostGrid} />
 
         <Route

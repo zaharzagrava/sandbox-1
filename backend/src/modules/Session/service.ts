@@ -6,10 +6,8 @@ import {
   AccessTokenData,
   SessionLogin,
   Callback,
-  PostCommentModel,
 } from '../../interfaces';
-import bcrypt from 'bcrypt';
-import { PostComment } from 'src/db/models/PostComment';
+import { compareSync } from '../../utils/';
 
 export default class SessionService {
   constructor() {}
@@ -48,15 +46,15 @@ export default class SessionService {
     if (!client) {
       callback({
         status: 400,
-        message: `Client with provided email and password does not exist`,
+        message: `Client with provided email (${sessionLogin.email}) and password (${sessionLogin.password}) does not exist`,
       });
       return;
     }
 
-    if (!bcrypt.compareSync(sessionLogin.password, client.password())) {
+    if (!compareSync(sessionLogin.password, client.password())) {
       callback({
         status: 400,
-        message: `Wrong password`,
+        message: 'Wrong password',
       });
       return;
     }

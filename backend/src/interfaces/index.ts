@@ -1,5 +1,4 @@
-import { number } from 'joi';
-import { Model, Optional } from 'sequelize';
+import { Model } from 'sequelize';
 
 export interface ErrorType {
   status: number;
@@ -7,11 +6,6 @@ export interface ErrorType {
 }
 
 export type Callback<T> = (error: ErrorType | null, data?: T) => void;
-
-type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
-type Constructor<T> = new () => T;
-export type NonAbstractTypeOfModel<T> = Constructor<T> &
-  NonAbstract<typeof Model>;
 
 export enum TableNames {
   CLIENTS = 'clients',

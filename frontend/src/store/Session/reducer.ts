@@ -19,7 +19,7 @@ export type State = {
 const initialState = {
   // currenty logged in user
   user: null,
-  // is anythinh in session slice is loading
+  // is anything in session slice is loading
   loadings: {
     GET_SESSION_REQUEST: true,
     CREATE_SESSION_REQUEST: false,

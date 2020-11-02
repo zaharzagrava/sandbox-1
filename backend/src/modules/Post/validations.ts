@@ -1,4 +1,4 @@
-import { Callback, ClientGetDeleteUpdateParams } from '../../interfaces';
+import { Callback } from '../../interfaces';
 import Joi from 'joi';
 
 export default class PostValidator {
@@ -69,9 +69,6 @@ export default class PostValidator {
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {
-    console.log('@3');
-    console.log(reqBody);
-
     const response = this.validateUpdateCreateSchema.validate(reqBody);
 
     if (response.error) {

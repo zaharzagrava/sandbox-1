@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {}
 
-const EmailsSent = (props: Props) => {
+const EmailsSent = ({}: Props) => {
   return (
     <div style={{ textAlign: 'center' }}>
       Emails from Instagram tab element stub :)

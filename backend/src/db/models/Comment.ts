@@ -33,7 +33,3 @@ export const Comment = sequelize.define<CommentModel>(
     tableName: TableNames.COMMENTS,
   }
 );
-
-// authenticate(password: string) {
-//   return bcrypt.compareSync(password, this.password());
-// }

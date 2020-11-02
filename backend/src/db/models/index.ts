@@ -1,4 +1,4 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 const sequelizeConfig = require('../../../config/sequelize.config');
 

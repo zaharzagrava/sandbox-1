@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { ClientGetDeleteUpdateParams, ErrorType } from '../../interfaces/';
+import { ClientGetDeleteUpdateParams } from '../../interfaces/';
 import ClientService from './service';
 
 export default class ClientController {

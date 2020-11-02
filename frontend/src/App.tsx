@@ -1,5 +1,4 @@
 import React from 'react';
-import { usersActions } from './store/Users';
 
 // --- Importing CSS / Icons
 import './utils/reset.scss';

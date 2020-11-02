@@ -1,13 +1,13 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-interface Props {
-  className: string;
-}
+import styles from './RegisterPrompt.module.scss';
 
-const RegisterPrompt = (props: Props) => {
+interface Props {}
+
+const RegisterPrompt = ({}: Props) => {
   return (
-    <div>
+    <div className={styles.container}>
       Don't have an account? <NavLink to="/signup">Sign up</NavLink>{' '}
     </div>
   );

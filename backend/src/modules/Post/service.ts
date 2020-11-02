@@ -2,22 +2,15 @@ import {
   AccessTokenData,
   Callback,
   ClientPostModel,
-  CommentDTO,
-  CommentModel,
-  CommentRD,
   CreatePost,
   GetPostResponse,
   PostDTO,
   PostGetDeleteUpdateParams,
   PostModel,
   PostUpdate,
-  ClientDTO,
-  PostRD,
   PostGetAllParams,
 } from '../../interfaces/';
 import { Client, ClientPost, Comment, Post } from '../../db/models/';
-import { Model } from 'sequelize/types';
-import { required } from 'joi';
 
 export default class PostService {
   constructor() {}

@@ -6,7 +6,7 @@ import TabElem from './TabElem/TabElem';
 
 interface Props {}
 
-const ManageAccess = (props: Props) => {
+const ManageAccess = ({}: Props) => {
   const [currID, setCurrID] = useState(0);
 
   const tabs = [

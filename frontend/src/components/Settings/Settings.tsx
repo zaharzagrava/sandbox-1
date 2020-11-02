@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router';
 
 import { RouteURLs } from '../../interfaces';
@@ -15,7 +15,7 @@ import Tab from './Tab/Tab';
 
 interface Props {}
 
-const Settings = (props: Props) => {
+const Settings = ({}: Props) => {
   const tabs = [
     {
       name: 'Edit Profile',

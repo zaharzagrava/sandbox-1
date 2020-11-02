@@ -34,7 +34,7 @@ const Post = ({ post, comments }: Props) => {
             <a className={styles.username} href="">
               {post.author.username}
             </a>
-            <span>•</span>
+            <span className={styles.dot}>•</span>
             <button className={styles.follow}>Follow</button>
             <button className={styles.more}>•••</button>
           </div>

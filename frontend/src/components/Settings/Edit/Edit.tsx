@@ -46,7 +46,7 @@ const validationSchema = yup.object({
     .nullable(),
 });
 
-const Edit = (props: Props) => {
+const Edit = ({}: Props) => {
   const dispatch = useDispatch();
   const currUser = useSelector<AppState, ClientDTO>(
     (state) => state.session.user

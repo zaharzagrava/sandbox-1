@@ -1,4 +1,4 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from '.';
 import { PostCommentModel, TableNames } from '../../interfaces';
 import { Post } from './Post';

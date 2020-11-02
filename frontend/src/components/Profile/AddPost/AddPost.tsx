@@ -2,15 +2,7 @@ import React from 'react';
 
 import styles from './AddPost.module.scss';
 import * as yup from 'yup';
-import {
-  ErrorMessage,
-  Field,
-  FieldProps,
-  Form,
-  Formik,
-  FormikFormProps,
-  FormikProps,
-} from 'formik';
+import { ErrorMessage, Field, Formik, FormikProps } from 'formik';
 import { PostCreate } from '../../../interfaces';
 import { useDispatch } from 'react-redux';
 import { postsActions } from '../../../store/Posts';
@@ -38,7 +30,7 @@ const AddPost = ({ setisAddPostOpen }: Props) => {
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={async (values) => {
         let post = new FormData();
 

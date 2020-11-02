@@ -1,6 +1,6 @@
 import React from 'react';
 
-import defaultClientImage from './default-client-image.jpg';
+import defaultClientImage from '../../assets/images/default-client-avatar.jpg';
 import styles from './ClientImage.module.scss';
 
 interface Props {
