@@ -79,32 +79,5 @@ export const Client = sequelize.define<ClientModel>(
     timestamps: true,
     freezeTableName: true,
     tableName: 'clients',
-    hooks: {
-      beforeCreate: async (model: any) => {
-        if (model.changed('password')) {
-          model.password = bcrypt.hashSync(
-            model.password(),
-            Number(process.env.BCRYPT_SALT_ROUNDS)
-          );
-        }
-      },
-      beforeBulkUpdate: async (model: any) => {
-        // console.log('@model');
-        // console.log(model);
-        if (model.changed('password')) {
-          model.password = bcrypt.hashSync(
-            model.password(),
-            Number(process.env.BCRYPT_SALT_ROUNDS)
-          );
-        }
-      },
-    },
   }
 );
-
-Client.prototype.authenticate = function authenticate(
-  password: string,
-  hashedPassword: string
-) {
-  return bcrypt.compareSync(password, hashedPassword);
-};

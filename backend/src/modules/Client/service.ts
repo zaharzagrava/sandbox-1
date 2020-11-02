@@ -10,6 +10,7 @@ import {
   UpdateClientResponse,
 } from '../../interfaces/';
 import { Client } from '../../db/models/';
+import bcrypt from 'bcrypt';
 
 export default class ClientService {
   constructor() {}
@@ -46,7 +47,10 @@ export default class ClientService {
   ): Promise<void> {
     const newClient = await Client.create<ClientModel>({
       email: body.email,
-      password: body.password,
+      password: bcrypt.hashSync(
+        body.password,
+        Number(process.env.BCRYPT_SALT_ROUNDS)
+      ),
       username: body.username,
     });
 
@@ -120,28 +124,30 @@ export default class ClientService {
       },
     })) as ClientModel & ClientDTO;
 
-    // if (!client) {
-    //   callback({
-    //     status: 400,
-    //     message: `Client #${accessTokenData.id} does not exist`,
-    //   });
-    //   return;
-    // }
+    if (!client) {
+      callback({
+        status: 400,
+        message: `Client #${accessTokenData.id} does not exist`,
+      });
+      return;
+    }
 
-    // if (!Client.prototype.authenticate(body.old_password, client.password())) {
-    //   callback({
-    //     status: 400,
-    //     message: `Wrong old password`,
-    //   });
-    //   return;
-    // }
-
-    console.log('@body');
-    console.log(body);
+    if (!bcrypt.compareSync(body.old_password, client.password())) {
+      callback({
+        status: 400,
+        message: `Wrong old password`,
+      });
+      return;
+    }
 
     const [_, updatedClient] = (await Client.update<ClientModel>(
-      // @ts-ignore
-      { password: '123' },
+      {
+        // @ts-ignore
+        password: bcrypt.hashSync(
+          body.new_password,
+          Number(process.env.BCRYPT_SALT_ROUNDS)
+        ),
+      },
       {
         where: {
           id: accessTokenData.id,
