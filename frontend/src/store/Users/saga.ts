@@ -34,6 +34,12 @@ function* create(payload: any) {
 
     // @ts-ignore
     yield put(usersActions.createUserSuccess(response.data));
+    yield put(
+      sessionActions.createSession({
+        email: payload.user.email,
+        password: payload.user.password,
+      })
+    );
   } catch (error) {
     // @ts-ignore
     yield put(usersActions.createUserFailure(error.response.data));

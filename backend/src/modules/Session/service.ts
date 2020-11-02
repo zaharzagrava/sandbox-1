@@ -53,7 +53,13 @@ export default class SessionService {
       return;
     }
 
-    Client.prototype.authenticate(sessionLogin.password, client.password());
+    if (!bcrypt.compareSync(sessionLogin.password, client.password())) {
+      callback({
+        status: 400,
+        message: `Wrong password`,
+      });
+      return;
+    }
 
     const accessTokenData: AccessTokenData = {
       id: client.id,

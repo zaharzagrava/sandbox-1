@@ -9,6 +9,7 @@ import {
   CreateClientDTO,
   UpdateClientResponse,
 } from '../../interfaces/';
+import { Op } from 'sequelize';
 import { Client } from '../../db/models/';
 import bcrypt from 'bcrypt';
 
@@ -45,6 +46,27 @@ export default class ClientService {
     body: CreateClientDTO,
     callback: Callback<ClientModel>
   ): Promise<void> {
+    const client = (await Client.findOne<ClientModel>({
+      where: {
+        [Op.or]: [
+          {
+            username: body.username,
+          },
+          {
+            email: body.email,
+          },
+        ],
+      },
+    })) as ClientModel & ClientDTO;
+
+    if (client) {
+      callback({
+        status: 400,
+        message: `Sorry, client with provided email (${client.email}) or username (${client.username}) already exists`,
+      });
+      return;
+    }
+
     const newClient = await Client.create<ClientModel>({
       email: body.email,
       password: bcrypt.hashSync(
@@ -52,6 +74,7 @@ export default class ClientService {
         Number(process.env.BCRYPT_SALT_ROUNDS)
       ),
       username: body.username,
+      full_name: body.full_name,
     });
 
     callback(null, newClient);

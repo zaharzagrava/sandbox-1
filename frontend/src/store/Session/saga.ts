@@ -23,7 +23,6 @@ function* createSession(payload: any) {
 
     // @ts-ignore
     yield put(sessionActions.createSessionSuccess(response.data));
-    yield put(sessionActions.getSessionSuccess(response.data));
   } catch (error) {
     // @ts-ignore
     yield put(sessionActions.createSessionFailure(error.response.data));

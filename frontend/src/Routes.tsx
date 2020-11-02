@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { useHistory } from 'react-router-dom';
 
 import Footer from './components/Footer/Footer';
@@ -24,7 +24,6 @@ const privateURLs = [/\/accounts.*/g, /explore\//g, /direct\/inbox/g];
 function Routes({}: Props): ReactElement {
   const history = useHistory();
 
-  const currentUser = useSelector((state) => state.session.user);
   const loading = useSelector(
     (state) => state.session.loadings.GET_SESSION_REQUEST
   );
@@ -38,38 +37,35 @@ function Routes({}: Props): ReactElement {
     dispatch(sessionActions.getSession());
   }, []);
 
+  useEffect(() => {
+    if (loading) return;
+
+    if (error) {
+      // Redirects for unauthorized user
+      for (let i = 0; i < privateURLs.length; i++) {
+        const regex = privateURLs[i];
+
+        if (regex.test(window.location.href)) {
+          history.push('/');
+        }
+      }
+    } else {
+      // Redirects for authorized user
+      if (
+        window.location.href.includes('/signup') ||
+        window.location.href.includes('/login')
+      ) {
+        history.push('/');
+      }
+    }
+  }, [loading, error]);
+
   if (loading)
     return (
       <Page>
         <LoadingLogo />
       </Page>
     );
-
-  if (error) {
-    // Redirects for unauthorized user
-    for (let i = 0; i < privateURLs.length; i++) {
-      const regex = privateURLs[i];
-
-      if (regex.test(window.location.href)) {
-        history.push('/');
-        return (
-          <Page>
-            <LoadingLogo />
-          </Page>
-        );
-      }
-    }
-  } else {
-    // Redirects for authorized user
-    if (window.location.href === '/signup') {
-      history.push('/');
-      return (
-        <Page>
-          <LoadingLogo />
-        </Page>
-      );
-    }
-  }
 
   return (
     <Page>

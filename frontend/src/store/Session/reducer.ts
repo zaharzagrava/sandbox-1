@@ -81,10 +81,12 @@ export const sessionReducer = (state = initialState, action: any) => {
         loadings: {
           ...state.loadings,
           CREATE_SESSION_REQUEST: true,
+          GET_SESSION_REQUEST: true,
         },
         errors: {
           ...state.errors,
           CREATE_SESSION_REQUEST: null,
+          GET_SESSION_REQUEST: null,
         },
       };
     case sessionConstants.CREATE_SESSION_SUCCESS:
@@ -94,10 +96,12 @@ export const sessionReducer = (state = initialState, action: any) => {
         loadings: {
           ...state.loadings,
           CREATE_SESSION_REQUEST: false,
+          GET_SESSION_REQUEST: false,
         },
         errors: {
           ...state.errors,
           CREATE_SESSION_REQUEST: null,
+          GET_SESSION_REQUEST: null,
         },
       };
     case sessionConstants.CREATE_SESSION_FAILURE:
@@ -110,6 +114,7 @@ export const sessionReducer = (state = initialState, action: any) => {
         errors: {
           ...state.errors,
           CREATE_SESSION_REQUEST: error,
+          GET_SESSION_REQUEST: error,
         },
       };
 

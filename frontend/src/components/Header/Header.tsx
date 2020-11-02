@@ -10,10 +10,8 @@ import ClientImage from '../ClientImage/ClientImage';
 interface Props {}
 
 const Header = ({}: Props) => {
-  const dispatch = useDispatch();
   const currUser = useSelector((state) => state.session.user);
-  console.log('@currUser');
-  console.log(currUser);
+
   return (
     <div className={styles.container}>
       <div>

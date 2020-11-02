@@ -43,6 +43,7 @@ export default class ClientValidator {
       .min(6)
       .max(255)
       .required(),
+    full_name: Joi.string().min(1).max(255),
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {

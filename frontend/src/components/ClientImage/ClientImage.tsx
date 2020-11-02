@@ -8,11 +8,12 @@ interface Props {
 }
 
 const ClientImage = ({ src }: Props) => {
-  // const defaultClientImageURL = '/images/defaultClientImage'
-
+  const avatarURL = src
+    ? `http://localhost:4000/uploads/${src}`
+    : defaultClientImage;
   return (
     <img
-      src={`http://localhost:4000/uploads/${src}` || defaultClientImage}
+      src={avatarURL}
       alt=""
       width={'100%'}
       height={'100%'}
