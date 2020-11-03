@@ -52,8 +52,8 @@ export default class Routes {
 
     this.app.post(
       '/clients',
-      ClientMiddleware.validateCreate,
       ClientMiddleware.uploads.avatar,
+      ClientMiddleware.validateCreate,
       ClientController.create
     );
 
@@ -97,10 +97,10 @@ export default class Routes {
 
     this.app.post(
       '/posts',
+      PostMiddleware.uploads.multimedia,
       SessionMiddleware.validateVerify,
       SessionController.verify,
       PostMiddleware.validateCreate,
-      PostMiddleware.uploads.multimedia,
       PostController.create
     );
 
@@ -114,10 +114,10 @@ export default class Routes {
 
     this.app.put(
       '/posts/:id',
+      PostMiddleware.uploads.multimedia,
       SessionMiddleware.validateVerify,
       SessionController.verify,
       PostMiddleware.validateUpdate,
-      PostMiddleware.uploads.multimedia,
       PostController.update
     );
 

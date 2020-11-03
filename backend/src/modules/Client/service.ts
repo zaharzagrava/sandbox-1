@@ -1,3 +1,9 @@
+import { Op } from 'sequelize';
+import { promises as fsPromises } from 'fs';
+import path from 'path';
+
+import { Client } from '../../db/models/';
+import { compareSync, hashSync } from '../../utils/';
 import {
   AccessTokenData,
   Callback,
@@ -9,9 +15,6 @@ import {
   CreateClientDTO,
   UpdateClientResponse,
 } from '../../interfaces/';
-import { Op } from 'sequelize';
-import { Client } from '../../db/models/';
-import { compareSync, hashSync } from '../../utils/';
 
 export default class ClientService {
   constructor() {}
@@ -67,12 +70,12 @@ export default class ClientService {
       return;
     }
 
-    const newClient = await Client.create<ClientModel>({
+    const newClient = (await Client.create<ClientModel>({
       email: body.email,
       password: hashSync(body.password, Number(process.env.BCRYPT_SALT_ROUNDS)),
       username: body.username,
       full_name: body.full_name,
-    });
+    })) as ClientModel & ClientDTO;
 
     callback(null, newClient);
   }
@@ -109,11 +112,11 @@ export default class ClientService {
     body: ClientUpdate,
     callback: Callback<UpdateClientResponse>
   ): Promise<void> {
-    const client = await Client.findOne<ClientModel>({
+    const client = (await Client.findOne<ClientModel>({
       where: {
         id: accessTokenData.id,
       },
-    });
+    })) as ClientModel & ClientDTO;
 
     if (!client) {
       callback({
@@ -121,6 +124,35 @@ export default class ClientService {
         message: `Client #${accessTokenData.id} does not exist`,
       });
       return;
+    }
+
+    // body.avatar can only be set by multer, so if it's true,
+    // we can be sure that there is a new avatar uploaded
+    if (body.avatar) {
+      const avatarDir = `./public/uploads/${
+        process.env.NODE_ENV || 'development'
+      }/clients/${client.id}/avatar`;
+
+      try {
+        await fsPromises.mkdir(path.resolve(avatarDir), {
+          recursive: true,
+        });
+
+        const fileNames = await fsPromises.readdir(avatarDir);
+
+        // unlink and rename can run in parallel because of uniqueness of uuid
+        for (const fileName of fileNames) {
+          fsPromises.unlink(path.join(avatarDir, fileName));
+        }
+
+        fsPromises.rename(
+          path.resolve(`./public/uploads/tmp/${body.avatar}`),
+          path.join(avatarDir, body.avatar)
+        );
+      } catch (error) {
+        console.log('@error');
+        console.log(error);
+      }
     }
 
     const [_, updatedClient] = (await Client.update<ClientModel>(body, {

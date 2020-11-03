@@ -134,8 +134,6 @@ export default class CommentService {
       returning: true,
     });
 
-    console.log(JSON.stringify(updatedComment[0]));
-
     callback(null, updatedComment[0]);
   }
 }

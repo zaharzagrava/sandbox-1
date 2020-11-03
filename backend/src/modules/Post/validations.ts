@@ -64,12 +64,13 @@ export default class PostValidator {
     callback(null, null);
   }
 
-  private static validateUpdateCreateSchema = Joi.object({
+  private static validateCreateSchema = Joi.object({
     full_text: Joi.string().min(0).max(2200),
+    multimedia: Joi.array().items(Joi.string().min(1).max(255)).required(),
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {
-    const response = this.validateUpdateCreateSchema.validate(reqBody);
+    const response = this.validateCreateSchema.validate(reqBody);
 
     if (response.error) {
       callback({
@@ -89,6 +90,11 @@ export default class PostValidator {
       callback(null, null);
     }
   }
+
+  private static validateUpdateSchema = Joi.object({
+    full_text: Joi.string().min(0).max(2200),
+    multimedia: Joi.array().items(Joi.string().min(1).max(255)),
+  });
 
   static validateUpdate(
     reqParams: any,
@@ -116,7 +122,7 @@ export default class PostValidator {
       return;
     }
 
-    response = this.validateUpdateCreateSchema.validate(reqBody);
+    response = this.validateUpdateSchema.validate(reqBody);
 
     if (response.error) {
       callback({

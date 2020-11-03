@@ -1,3 +1,6 @@
+import { promises as fsPromises } from 'fs';
+import path from 'path';
+
 import {
   AccessTokenData,
   Callback,
@@ -138,19 +141,48 @@ export default class PostService {
     accessTokenData: AccessTokenData,
     callback: Callback<PostModel>
   ): Promise<void> {
-    console.log('body');
-    console.log(body);
-
     const newPost = (await Post.create<PostModel>({
       full_text: body.full_text,
       multimedia: body.multimedia,
     })) as PostModel & PostDTO;
 
-    ClientPost.create<ClientPostModel>({
+    await ClientPost.create<ClientPostModel>({
       post_id: newPost.id,
       client_id: accessTokenData.id,
       is_author: true,
     });
+
+    if (body.multimedia) {
+      const multimediaDir = `./public/uploads/${
+        process.env.NODE_ENV || 'development'
+      }/posts/${newPost.id}/multimedia`;
+
+      try {
+        await fsPromises.mkdir(path.resolve(multimediaDir), {
+          recursive: true,
+        });
+
+        const fileNames = await fsPromises.readdir(multimediaDir);
+
+        // unlink and rename can run in parallel because of uniqueness of uuid
+        for (let i = 0; i < fileNames.length; i++) {
+          const fileName = fileNames[i];
+          fsPromises.unlink(path.join(multimediaDir, fileName));
+        }
+
+        for (let i = 0; i < body.multimedia.length; i++) {
+          const multimediaElem = body.multimedia[i];
+
+          fsPromises.rename(
+            path.resolve(`./public/uploads/tmp/${multimediaElem}`),
+            path.join(multimediaDir, multimediaElem)
+          );
+        }
+      } catch (error) {
+        console.log('@error');
+        console.log(error);
+      }
+    }
 
     callback(null, newPost);
   }
@@ -187,11 +219,11 @@ export default class PostService {
     body: PostUpdate,
     callback: Callback<PostModel>
   ): Promise<void> {
-    const post = await Post.findOne<PostModel>({
+    const post = (await Post.findOne<PostModel>({
       where: {
         id: params.id,
       },
-    });
+    })) as PostModel & PostDTO;
 
     if (!post) {
       callback({
@@ -201,12 +233,40 @@ export default class PostService {
       return;
     }
 
-    const [_, updatedPost] = await Post.update<PostModel>(body, {
+    if (body.multimedia) {
+      const multimediaDir = `./public/uploads/${
+        process.env.NODE_ENV || 'development'
+      }/posts/${post.id}/multimedia`;
+
+      try {
+        const fileNames = await fsPromises.readdir(multimediaDir);
+
+        // unlink and rename can run in parallel because of uniqueness of uuid
+        for (let i = 0; i < fileNames.length; i++) {
+          const fileName = fileNames[i];
+          fsPromises.unlink(path.join(multimediaDir, fileName));
+        }
+
+        for (let i = 0; i < body.multimedia.length; i++) {
+          const multimediaElem = body.multimedia[i];
+
+          fsPromises.rename(
+            path.resolve(`./public/uploads/tmp/${multimediaElem}`),
+            path.join(multimediaDir, multimediaElem)
+          );
+        }
+      } catch (error) {
+        console.log('@error');
+        console.log(error);
+      }
+    }
+
+    const [_, updatedPost] = (await Post.update<PostModel>(body, {
       where: {
         id: params.id,
       },
       returning: true,
-    });
+    })) as [number, (PostModel & PostDTO)[]];
 
     callback(null, updatedPost[0]);
   }

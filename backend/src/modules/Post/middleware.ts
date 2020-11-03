@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default class PostMiddleware {
   public static storage = multer.diskStorage({
-    destination: './public/uploads',
+    destination: './public/uploads/tmp/',
 
     filename: (req: Request, file: Express.Multer.File, callback) => {
       const fileName = `${uuidv4()}${path.extname(file.originalname)}`;

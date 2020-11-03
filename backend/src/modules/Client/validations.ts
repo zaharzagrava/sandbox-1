@@ -76,6 +76,7 @@ export default class ClientValidator {
     bio: Joi.string().min(1).max(150),
     phone_number: Joi.string().min(1).max(255).email(),
     gender: Joi.string().min(1).max(255),
+    avatar: Joi.string().min(1).max(255),
   });
 
   static validateUpdate(reqBody: any, callback: Callback<null>): void {

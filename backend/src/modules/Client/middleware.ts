@@ -7,13 +7,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default class ClientMiddleware {
   public static storage = multer.diskStorage({
-    destination: './public/uploads',
+    destination: `./public/uploads/tmp/`,
 
     filename: (req: Request, file: Express.Multer.File, callback) => {
       const fileName = `${uuidv4()}${path.extname(file.originalname)}`;
-
       req.body.avatar = fileName;
-
       callback(null, fileName);
     },
   });
@@ -39,7 +37,6 @@ export default class ClientMiddleware {
   }
 
   static validateCreate(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body);
     ClientValidator.validateCreate(req.body, (error) => {
       if (error) {
         res.status(400).send(error);
