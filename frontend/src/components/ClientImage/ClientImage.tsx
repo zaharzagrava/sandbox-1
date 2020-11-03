@@ -3,7 +3,7 @@ import React from 'react';
 import defaultClientImage from '../../assets/images/default-client-avatar.jpg';
 import styles from './ClientImage.module.scss';
 
-const API_URL = `http://localhost:4000`;
+const API_URL = 'http://localhost:4000';
 
 interface Props {
   src?: string;

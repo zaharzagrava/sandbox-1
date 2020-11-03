@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  frontend:
+    build: ../frontend
+    restart: always
+    ports:
+      - '80:80'
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+
+  backend:
+    build: ../backend
+    restart: always
+    ports:
+      - '4000:4000'
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME_PRODUCTION: ${DB_NAME_PRODUCTION}
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
+      ACCESS_TOKEN_LIFE: ${ACCESS_TOKEN_LIFE}
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}

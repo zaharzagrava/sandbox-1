@@ -1,0 +1,4 @@
+node_modules
+public/uploads/development
+public/uploads/tmp
+.env
