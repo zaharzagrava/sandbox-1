@@ -20,7 +20,11 @@ export const api = {
   posts: {
     get: (id: number) => requestManager.get(`posts/${id}`),
     getAll: (params: any) => requestManager.get('posts/', { params }),
-    create: (post: any) => requestManager.post('posts', { data: post }),
+    create: (post: any) => {
+      console.log('@post');
+      console.log(post);
+      return requestManager.post('posts', { data: post });
+    },
     update: (id: number, post: any) =>
       requestManager.put(`posts/${id}`, { data: post }),
     destroy: (id: number) => requestManager.delete(`posts/${id}`),

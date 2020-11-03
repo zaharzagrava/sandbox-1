@@ -149,6 +149,10 @@ export default class ClientService {
           path.resolve(`./public/uploads/tmp/${body.avatar}`),
           path.join(avatarDir, body.avatar)
         );
+
+        body.avatar = `/uploads/${
+          process.env.NODE_ENV || 'development'
+        }/clients/${client.id}/avatar/${body.avatar}`;
       } catch (error) {
         console.log('@error');
         console.log(error);

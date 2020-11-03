@@ -3,14 +3,14 @@ import React from 'react';
 import defaultClientImage from '../../assets/images/default-client-avatar.jpg';
 import styles from './ClientImage.module.scss';
 
+const API_URL = `http://localhost:4000`;
+
 interface Props {
   src?: string;
 }
 
 const ClientImage = ({ src }: Props) => {
-  const avatarURL = src
-    ? `http://localhost:4000/uploads/${src}`
-    : defaultClientImage;
+  const avatarURL = src ? `${API_URL}${src}` : defaultClientImage;
   return (
     <img
       src={avatarURL}

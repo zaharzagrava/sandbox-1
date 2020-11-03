@@ -70,7 +70,13 @@ export default class PostValidator {
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {
+    console.log('@reqBody');
+    console.log(reqBody);
+
     const response = this.validateCreateSchema.validate(reqBody);
+
+    console.log('@response');
+    console.log(response);
 
     if (response.error) {
       callback({

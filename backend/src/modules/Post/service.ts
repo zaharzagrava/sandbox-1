@@ -177,11 +177,28 @@ export default class PostService {
             path.resolve(`./public/uploads/tmp/${multimediaElem}`),
             path.join(multimediaDir, multimediaElem)
           );
+
+          body.multimedia[i] = `/uploads/${
+            process.env.NODE_ENV || 'development'
+          }/posts/${newPost.id}/multimedia/${multimediaElem}`;
         }
       } catch (error) {
         console.log('@error');
         console.log(error);
       }
+
+      const [_, updatedPost] = (await Post.update<PostModel>(
+        { multimedia: body.multimedia },
+        {
+          where: {
+            id: newPost.id,
+          },
+          returning: true,
+        }
+      )) as [number, (PostModel & PostDTO)[]];
+
+      callback(null, updatedPost[0]);
+      return;
     }
 
     callback(null, newPost);

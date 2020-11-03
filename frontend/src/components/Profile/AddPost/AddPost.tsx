@@ -38,8 +38,11 @@ const AddPost = ({ setisAddPostOpen }: Props) => {
 
         post.append('full_text', values.full_text as any);
         for (let i = 0; i < values.multimedia.length; i++) {
-          post.append(`multimedia[${i}]`, values.multimedia[i]);
+          post.append(`multimedia`, values.multimedia[i]);
         }
+
+        console.log('@@post');
+        console.log(post);
 
         dispatch(postsActions.createPost(post));
       }}

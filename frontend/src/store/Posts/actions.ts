@@ -30,9 +30,9 @@ export const postsActions = {
   }),
 
   /* Only current post */
-  createPost: (formData: any) => ({
+  createPost: (post: any) => ({
     type: postsConstants.CREATE_POST_REQUEST,
-    formData,
+    post,
   }),
   createPostSuccess: (post: any) => ({
     type: postsConstants.CREATE_POST_SUCCESS,

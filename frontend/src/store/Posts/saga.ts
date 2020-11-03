@@ -29,6 +29,9 @@ function* fetchAll(payload: any) {
 
 function* create(payload: any) {
   try {
+    console.log('@payload.post');
+    console.log(payload.post);
+
     const response = yield call(api.posts.create, payload.post);
 
     // @ts-ignore

@@ -10,6 +10,9 @@ export default class PostMiddleware {
     destination: './public/uploads/tmp/',
 
     filename: (req: Request, file: Express.Multer.File, callback) => {
+      console.log('@multimedia');
+      console.log(req.body.multimedia);
+
       const fileName = `${uuidv4()}${path.extname(file.originalname)}`;
 
       if (!Array.isArray(req.body.multimedia)) req.body.multimedia = [];
