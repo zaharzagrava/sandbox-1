@@ -2,19 +2,26 @@ version: '3'
 
 services:
   frontend:
-    build: ../frontend
-    restart: always
+    build:
+      context: ../frontend
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
+    image: frontend:latest
     ports:
       - '80:80'
-    environment:
-      REACT_APP_API_URL: ${REACT_APP_API_URL}
 
   backend:
-    build: ../backend
-    restart: always
+    build:
+      context: ../backend
+      args:
+        PORT: ${PORT}
+    image: backend:latest
     ports:
-      - '4000:4000'
+      - '${PORT}:${PORT}'
+    entrypoint: ['/bin/bash', './docker-entrypoint.sh']
     environment:
+      NODE_ENV: production
+      PORT: ${PORT}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_HOST: ${DB_HOST}
@@ -22,10 +29,18 @@ services:
       DB_NAME_PRODUCTION: ${DB_NAME_PRODUCTION}
       ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
       ACCESS_TOKEN_LIFE: ${ACCESS_TOKEN_LIFE}
+    volumes:
+      - ./staticdata:/usr/src/app/build/public
+    depends_on:
+      - db
+
   db:
-    image: postgres:latest
-    restart: always
-    ports:
-      - '5432:5432'
+    image: postgres
     environment:
       POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME_PRODUCTION}
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'

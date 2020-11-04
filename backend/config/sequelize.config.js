@@ -1,12 +1,6 @@
-import { Op, Options } from 'sequelize';
+const { Op } = require('sequelize');
 
-export type DatabaseConfig = {
-  development: Options;
-  test: Options;
-  production: Options;
-};
-
-const commonConfig: Options = {
+const commonConfig = {
   username: 'postgres',
   password: 'og',
   host: 'localhost',
@@ -16,7 +10,7 @@ const commonConfig: Options = {
   operatorsAliases: Op,
 };
 
-export const databaseConfig: DatabaseConfig = {
+const databaseConfig = {
   development: {
     ...commonConfig,
     database: 'instagram-like-app_development',
@@ -37,3 +31,5 @@ export const databaseConfig: DatabaseConfig = {
     dialect: 'postgres',
   },
 };
+
+module.exports = databaseConfig[process.env.NODE_ENV || 'development'];

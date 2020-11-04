@@ -1,18 +1,24 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-// import { API_URL } from "../../constants.ts";
-
-const API_URL = 'http://localhost:4000';
-
 axios.defaults.withCredentials = true;
+
+console.log(process.env.REACT_APP_API_URL);
 
 export const requestManager = {
   get: (path: string, params?: AxiosRequestConfig) =>
-    axios.get(`${API_URL}/${path}`, params),
+    axios.get(`${process.env.REACT_APP_API_URL}/${path}`, params),
   post: (path: string, params?: AxiosRequestConfig) =>
-    axios.post(`${API_URL}/${path}`, params && params.data, params),
+    axios.post(
+      `${process.env.REACT_APP_API_URL}/${path}`,
+      params && params.data,
+      params
+    ),
   put: (path: string, params?: AxiosRequestConfig) =>
-    axios.put(`${API_URL}/${path}`, params && params.data, params),
+    axios.put(
+      `${process.env.REACT_APP_API_URL}/${path}`,
+      params && params.data,
+      params
+    ),
   delete: (path: string, params?: AxiosRequestConfig) =>
-    axios.delete(`${API_URL}/${path}`, params),
+    axios.delete(`${process.env.REACT_APP_API_URL}/${path}`, params),
 };

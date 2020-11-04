@@ -16,6 +16,7 @@ export default class App {
   start() {
     this.app.listen(this.port, () => {
       console.log(`Express server is listening on port ${this.port}`);
+      console.log('Build #1');
     });
   }
 
@@ -23,8 +24,12 @@ export default class App {
     /* Setting up cors */
     const whitelist = [
       'http://localhost:3000', // for dev
+      'http://localhost', // for production
       undefined, // for postman agent
     ];
+
+    console.log('@whitelist');
+    console.log(whitelist);
 
     const corsOptions = {
       origin: function (origin: any, callback: any) {

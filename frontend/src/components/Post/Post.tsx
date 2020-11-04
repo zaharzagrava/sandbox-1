@@ -8,8 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Textsource from './Textsource/Textsource';
 import AddComment from './AddComment/AddComment';
 
-const API_URL = `http://localhost:4000`;
-
 interface Props {
   post: PostDTO;
   comments: CommentDTO[];
@@ -21,7 +19,7 @@ const Post = ({ post, comments }: Props) => {
       <div className={styles.left}>
         <img
           className={styles.img}
-          src={`${API_URL}${post.multimedia[0]}`}
+          src={`${process.env.REACT_APP_API_URL}${post.multimedia[0]}`}
           alt=""
           width={420}
           height={600}
