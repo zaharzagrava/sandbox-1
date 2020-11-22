@@ -1,1 +1,1 @@
-# sandbox-1
+# Instagram clone by @zaharzagrava

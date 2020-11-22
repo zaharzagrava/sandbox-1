@@ -1,0 +1,19 @@
+
+
+
+
+Program State:
+  notes: >
+    1) My code does not make difference between undefined and null, unless I work with third-party tools that do
+  API:
+    /src/resolvers:
+      notes: >
+        In @ObjectType declarations, I provide default values to declared fields only to satisfy TS requirements
+  DB:
+    client:
+      username: varchar(30)
+      bio: varchar(150)
+    comment:
+      text: varchar(300)
+    post:
+      text: varchar(2200)

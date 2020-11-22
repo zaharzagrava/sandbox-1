@@ -1,89 +1,83 @@
+import 'reflect-metadata';
 import express, { Application, NextFunction, Request, Response } from 'express';
-import Routes from './routes/';
-import cookieParser from 'cookie-parser';
+import { ApolloServer } from 'apollo-server-express';
+import compression from 'compression';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import { buildSchema, registerEnumType } from 'type-graphql';
 
-export default class App {
-  constructor(private port: number | undefined, private app: Application) {
-    this.port = port || 4000;
-    this.app = app;
+import { ClientResolver } from './resolvers/client';
+import { Context } from './types';
 
-    this.initRequsetMiddleware();
-    this.initRoutes();
-    this.initErrorMiddleware();
-  }
+import dotenv from 'dotenv';
+dotenv.config();
 
-  start() {
-    this.app.listen(this.port, () => {
-      console.log(`Express server is listening on port ${this.port}`);
-      console.log('Build #1');
-    });
-  }
+const main = async () => {
+  // /* Building type-graphql schema */
+  // const schema = await buildSchema({
+  //   resolvers: [ClientResolver]
+  // });
 
-  private initRequsetMiddleware() {
-    /* Setting up cors */
-    const whitelist = [
-      'http://localhost:3000', // for dev
-      'http://localhost', // for production
-      undefined, // for postman agent
-    ];
+  // /* Building apollo server */
+  // const apolloServer = new ApolloServer({
+  //   schema,
+  //   context: (ctx: Context) => ctx
+  // });
 
-    console.log('@whitelist');
-    console.log(whitelist);
+  const expressServer: Application = express();
 
-    const corsOptions = {
-      origin: function (origin: any, callback: any) {
-        console.log('@origin');
-        console.log(origin);
+  /* Setting up cors */
+  const whitelist = [
+    'http://localhost:3000', // for dev
+    'http://localhost', // for production
+    undefined // for postman agent
+  ];
 
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
-      credentials: true,
-    };
-    this.app.use(cors(corsOptions));
+  const corsOptions = {
+    origin: function (origin: any, callback: any) {
+      console.log('@origin');
+      console.log(origin);
 
-    /* Setting up json */
-    this.app.use(express.json());
-    /* Setting up cookies */
-    this.app.use(cookieParser());
-    /* Setting up static files serving */
-    this.app.use(express.static('./public'));
-
-    /* Setting up logging */
-    this.app.use((req: Request, res: Response, next: NextFunction) => {
-      console.log('@req.url');
-      console.log(req.url);
-
-      console.log('@req.body');
-      console.log(req.body);
-
-      next();
-    });
-  }
-
-  private initRoutes() {
-    new Routes(this.app);
-  }
-
-  private initErrorMiddleware() {
-    this.app.use(
-      (error: Error, req: Request, res: Response, next: NextFunction) => {
-        console.log('@error');
-        console.log(error);
-
-        // res.status(500).json(error);
-        res.status(404).send({
-          message: error.message,
-          name: error.name,
-          stack: error.stack,
-        });
-
-        next();
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
       }
-    );
-  }
-}
+    },
+    credentials: true
+  };
+
+  expressServer.use(cors(corsOptions));
+
+  /* Setting up compression */
+  expressServer.use(compression());
+
+  /* Setting up json */
+  expressServer.use(express.json());
+  /* Setting up cookies */
+  expressServer.use(cookieParser());
+  /* Setting up static files serving */
+  expressServer.use(express.static('./public'));
+
+  /* Setting up logging */
+  expressServer.use((req: Request, res: Response, next: NextFunction) => {
+    console.log('@req.url');
+    console.log(req.url);
+
+    console.log('@req.body');
+    console.log(req.body);
+
+    console.log('@req.query');
+    console.log(req.query);
+
+    next();
+  });
+
+  // apolloServer.applyMiddleware({ app: expressServer, path: '/graphql' });
+
+  expressServer.listen(process.env.PORT || 4001, () => {
+    console.log(`Express server is listening on port ${process.env.PORT || 4001}, on path /graphql`);
+  });
+};
+
+main();
