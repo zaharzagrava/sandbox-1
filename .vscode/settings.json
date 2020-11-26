@@ -20,5 +20,5 @@
   "prettier.jsxBracketSameLine": false,
   "prettier.semi": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
- }
- 
+  "files.insertFinalNewline": true
+}

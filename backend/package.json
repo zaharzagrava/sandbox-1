@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "docker-start": "node ./src/app.js",
-    "docker-dev": "ts-node-dev --respawn ./src/app.ts",
-    "docker-dev-up": "docker-compose -f docker-compose-dev.yaml up",
-    "docker-dev-down": "docker-compose -f docker-compose-dev.yaml down",
-    "docker-dev-rebuild": "docker-compose -f docker-compose-dev.yaml up --build",
+    "start": "node ./src/app.js",
+    "dev": "ts-node-dev --respawn ./src/app.ts",
+    "dev:up": "docker-compose -f docker-compose-dev.yaml up",
+    "dev:down": "docker-compose -f docker-compose-dev.yaml down",
+    "dev:build": "docker-compose -f docker-compose-dev.yaml up --build",
     "build": "npx tsc -p ."
   },
   "author": "",

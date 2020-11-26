@@ -19,11 +19,11 @@ services:
       - DB_PORT=5432
     ports:
       - '4001:4001'
-    command: npm run docker-dev
+    entrypoint: ['/bin/bash', 'docker-entrypoint-dev.sh']
   db:
     image: postgres:13.1-alpine
     volumes:
-      - /var/lib/postgresql/sandbox-1/data:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: werwer
       POSTGRES_USER: postgres
