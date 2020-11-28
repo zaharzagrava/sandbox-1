@@ -22,8 +22,7 @@ yarn-error.log*
 
 # IDEs
 .idea
-.vscode
-.circleci
+**/.vscode/
 
 # Misc
 .DS_Store

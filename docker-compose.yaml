@@ -1,0 +1,32 @@
+# DEVELOPMENT
+version: '3'
+services:
+  project:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - NODE_ENV=development
+      - DB_USERNAME=postgres
+      - DB_NAME=sandbox_1_dev
+      - DB_HOST=db
+      - DB_PORT=5432
+    ports:
+      - '3000:3000'
+      - '4001:4001'
+      - '19002:19002'
+    command: bash -c "sleep infinity"
+  db:
+    image: postgres:13.1-alpine
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: werwer
+      POSTGRES_USER: postgres
+      POSTGRES_DB: sandbox_1_dev
+    ports:
+      - '5432:5432'

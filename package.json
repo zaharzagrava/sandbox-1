@@ -1,0 +1,33 @@
+{
+  "name": "sandbox-1",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Ruslan Plastun",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "docker:exec": "docker exec -it $(docker ps -f name=sandbox1_project_1 -q) /bin/bash",
+    "start:api": "npm run start --prefix ./packages/backend",
+    "start:mobile": "npm run start --prefix ./packages/mobile",
+    "start:web": "npm run start --prefix ./packages/web"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaharzagrava/sandbox-1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zaharzagrava/sandbox-1/issues"
+  },
+  "homepage": "https://github.com/zaharzagrava/sandbox-1#readme",
+  "devDependencies": {
+    "metro-bundler-config-yarn-workspaces": "^1.0.3"
+  },
+  "nohoist": [
+    "**/react-native",
+    "**/react-native/**",
+    "**/expo",
+    "**/expo/**"
+  ]
+}
