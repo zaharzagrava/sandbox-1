@@ -1,15 +1,10 @@
 import { SagaIterator } from '@redux-saga/types';
 
-import { State as UsersState } from './Users/reducer';
-import { State as SessionState } from './Session/reducer';
-import { State as PostsState } from './Posts/reducer';
-import { State as CommentsState } from './Comments/reducer';
-
+import { ClientsState } from './client';
+import { RequestsState } from './request';
 export interface AppState {
-  users: UsersState;
-  posts: PostsState;
-  comments: CommentsState;
-  session: SessionState;
+  clients: ClientsState;
+  requests: RequestsState;
 }
 
 export type AppSaga<ReturnType = void> = SagaIterator<AppState>;

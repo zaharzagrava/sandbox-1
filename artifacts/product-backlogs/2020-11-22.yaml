@@ -9,6 +9,99 @@ Program State:
     /src/resolvers:
       notes: >
         In @ObjectType declarations, I provide default values to declared fields only to satisfy TS requirements
+  Frontend:
+    pages:
+      /:
+        variant-1:
+          MainContainer:
+            Search:
+            HomeLink:
+            DMLink:
+            ExploreLink:
+            InteractionHisttoryLink:
+              history of likes and comments of user's posts:
+            Avatar:
+              create dropdown:
+                ProfileLink:
+                SavedLink:
+                SettingsLink:
+                SwitchAccountsLink:
+                LogOut:
+          list of posts:
+          SecondaryContainer:
+          when: user is logged in
+        variant-2:
+          login page:
+            elements:
+              SecondaryContainer:
+                when: web
+              main:
+                login-form:
+                  prompt user to login as cached user:
+                    when: cache user is present:
+                  login form:
+          when: user is logged out
+      /create-post:
+        when: mobile
+      /direct/inbox:
+        variant-1: 
+          auto-redirect to /:
+          when: user is logged out
+        variant-2:
+          HeaderContainer:
+          DMContainer:
+          FooterContainer:
+            when:
+              icon on the header is clicked
+              url is requested
+      /explore-page:
+        grid of posts:
+      /:user_id:
+        Profile of the session user:
+          Tabs:
+            Posts:
+            IGTV:
+            Saved:
+            Tagged:
+          RightSwippableTab:
+            archive:
+            activity:
+            qr-code:
+            saved:
+            close-friends:
+            interesting-people:
+            /settings:
+            SecondaryContainer:
+            when: mobile
+      /settings:
+        /settings/edit-profile:
+        /settings/change-password:
+        /settings/manage-access:
+        /settings/subscriptions:
+        /settings/contacts:
+        /settings/privacy-and-security:
+        /settings/login-activity:
+        /settings/email-from-instagram:
+      /followers:
+        when: click on followers-link in /:user_id
+    sagas:
+      get_session:
+      post_session:
+      delete_session:
+      get_tables:
+      get_client_myself:
+      get_client_other:
+      get_clients_followers:
+      get_clients_close_friends:
+      get_clients_interesting_people:
+      get_clients_likers:
+      post_client:
+      put_client:
+      delete_client:
+      get_posts_main_feed:
+      get_posts_bookmarked:
+      post_post:
+
   DB:
     client:
       username: varchar(30)

@@ -5,17 +5,36 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { all } from 'redux-saga/effects';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { testa } from 'frontend/store';
+import { AppState } from 'frontend/store/typedef';
+import { ClientReducer, RequestReducer, requestSaga } from 'frontend';
 
-testa('asdf');
+// --- Setting up Redux & Redux Dev Tools
+const sagaMiddleware = createSagaMiddleware();
+
+export const store = createStore(
+  combineReducers({
+    clients: ClientReducer,
+    requests: RequestReducer
+  }),
+  {},
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+);
+
+sagaMiddleware.run(function* () {
+  yield all([requestSaga()]);
+});
 
 ReactDOM.render(
-  // <Provider store={store}>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  // </Provider>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 

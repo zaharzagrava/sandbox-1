@@ -14,21 +14,22 @@ dotenv.config();
 
 const main = async () => {
   // /* Building type-graphql schema */
-  // const schema = await buildSchema({
-  //   resolvers: [ClientResolver]
-  // });
+  const schema = await buildSchema({
+    resolvers: [ClientResolver]
+  });
 
   // /* Building apollo server */
-  // const apolloServer = new ApolloServer({
-  //   schema,
-  //   context: (ctx: Context) => ctx
-  // });
+  const apolloServer = new ApolloServer({
+    schema,
+    context: (ctx: Context) => ctx
+  });
 
   const expressServer: Application = express();
 
   /* Setting up cors */
   const whitelist = [
     'http://localhost:3000', // for dev
+    'http://localhost:4001', // for dev
     'http://localhost', // for production
     undefined // for postman agent
   ];
@@ -61,19 +62,13 @@ const main = async () => {
 
   /* Setting up logging */
   expressServer.use((req: Request, res: Response, next: NextFunction) => {
-    console.log('@req.url');
-    console.log(req.url);
-
-    console.log('@req.body');
-    console.log(req.body);
-
-    console.log('@req.query');
-    console.log(req.query);
+    // console.log('@req.body');
+    // console.log(req.body);
 
     next();
   });
 
-  // apolloServer.applyMiddleware({ app: expressServer, path: '/graphql' });
+  apolloServer.applyMiddleware({ app: expressServer, path: '/graphql' });
 
   expressServer.listen(process.env.PORT || 4001, () => {
     console.log(`Express server is listening on port ${process.env.PORT || 4001}, on path /graphql`);

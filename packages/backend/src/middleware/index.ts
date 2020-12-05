@@ -1,21 +1,14 @@
 import { MiddlewareFn } from 'type-graphql';
 import { Context } from '../types';
-import knex from 'knex';
+import { knexConnection } from '../knex/';
 import { FieldNode } from 'graphql';
-import _ from "lodash";
+import _ from 'lodash';
 
-export const reqWrapper: MiddlewareFn<Context> = async (
-  { root, args, context, info },
-  next
-) => {
+export const reqWrapper: MiddlewareFn<Context> = async ({ root, args, context, info }, next) => {
   try {
     /* Input validation */
-    if (info.fieldNodes.length !== 1)
-      throw new Error('info.fieldNodes.length !== 1');
-    if (
-      info.fieldNodes[0].selectionSet === undefined ||
-      info.fieldNodes[0].selectionSet === null
-    )
+    if (info.fieldNodes.length !== 1) throw new Error('info.fieldNodes.length !== 1');
+    if (info.fieldNodes[0].selectionSet === undefined || info.fieldNodes[0].selectionSet === null)
       throw new Error('info.fieldNodes[0].selectionSet === undefined / null');
 
     const fieldNode = info.fieldNodes[0];
@@ -27,21 +20,11 @@ export const reqWrapper: MiddlewareFn<Context> = async (
         throw new Error('selection.name === undefined / null');
 
       if (selection.name.value === undefined || selection.name === null)
-        throw new Error(
-          `selection.name.value of ${i} fieldNode === undefined / null`
-        );
+        throw new Error(`selection.name.value of ${i} fieldNode === undefined / null`);
     }
 
-    /* Connecting to knex */
-    context.knexConnection = knex({
-      client: 'pg',
-      connection: {
-        host: process.env.PGHOST,
-        user: process.env.PGUSER,
-        password: process.env.PGPASSWORD,
-        database: process.env.PGDATABASE,
-      },
-    });
+    /* Assigning knex connection to context */
+    context.knexConnection = knexConnection;
 
     /* Authorization */
 
@@ -54,16 +37,6 @@ export const reqWrapper: MiddlewareFn<Context> = async (
 
     /* Running the resolver */
     const response = await next();
-
-    /* Disconnecting from knex */
-    context.knexConnection
-      .destroy()
-      .then(() => {
-        console.log('@successfuly disconnected');
-      })
-      .catch(() => {
-        console.error('@unsuccessfuly disconnected');
-      });
 
     return response;
   } catch (error) {

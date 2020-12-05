@@ -8,10 +8,14 @@
     "packages/*"
   ],
   "scripts": {
-    "docker:exec": "docker exec -it $(docker ps -f name=sandbox1_project_1 -q) /bin/bash",
-    "start:api": "npm run start --prefix ./packages/backend",
-    "start:mobile": "npm run start --prefix ./packages/mobile",
-    "start:web": "npm run start --prefix ./packages/web"
+    "up": "docker-compose up",
+    "exec": "docker exec -it $(docker ps -f name=sandbox1_project_1 -q) /bin/bash",
+    "start:api": "yarn --cwd ./packages/backend run start",
+    "start:mobile": "yarn --cwd ./packages/mobile run start",
+    "start:web": "yarn --cwd ./packages/web run start",
+    "knex:install": "yarn global add knex@0.21.12",
+    "migrate": "yarn --cwd ./packages/backend run migrate",
+    "seed": "yarn --cwd ./packages/backend run seed"
   },
   "repository": {
     "type": "git",
