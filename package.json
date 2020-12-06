@@ -4,9 +4,11 @@
   "private": true,
   "author": "Ruslan Plastun",
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "scripts": {
     "up": "docker-compose up",
     "exec": "docker exec -it $(docker ps -f name=sandbox1_project_1 -q) /bin/bash",
@@ -14,6 +16,7 @@
     "start:mobile": "yarn --cwd ./packages/mobile run start",
     "start:web": "yarn --cwd ./packages/web run start",
     "knex:install": "yarn global add knex@0.21.12",
+    "expo-cli:install": "yarn global add expo-cli@4.0.8",
     "migrate": "yarn --cwd ./packages/backend run migrate",
     "seed": "yarn --cwd ./packages/backend run seed"
   },
@@ -25,13 +28,12 @@
     "url": "https://github.com/zaharzagrava/sandbox-1/issues"
   },
   "homepage": "https://github.com/zaharzagrava/sandbox-1#readme",
-  "devDependencies": {
-    "metro-bundler-config-yarn-workspaces": "^1.0.3"
-  },
   "nohoist": [
     "**/react-native",
     "**/react-native/**",
     "**/expo",
-    "**/expo/**"
+    "**/expo/**",
+    "**/@babel/core",
+    "**/@babel/core/**"
   ]
 }

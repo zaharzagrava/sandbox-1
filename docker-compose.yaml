@@ -10,16 +10,19 @@ services:
     volumes:
       - ./:/usr/src/app
     environment:
-      - NODE_ENV=development
-      - DB_USERNAME=postgres
-      - DB_NAME=sandbox_1_dev
-      - DB_HOST=db
-      - DB_PORT=5432
+      REACT_NATIVE_PACKAGER_HOSTNAME: ${LOCAL_IP}
+      NODE_ENV: ${NODE_ENV}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
     ports:
       - '3000:3000'
       - '4001:4001'
+      - '19000:19000'
+      - '19001:19001'
       - '19002:19002'
-    command: bash -c "yarn run knex:install && sleep infinity"
+    command: bash -c "sleep infinity"
   db:
     image: postgres:13.1-alpine
     volumes:
