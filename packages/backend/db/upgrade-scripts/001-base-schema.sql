@@ -1,5 +1,3 @@
-create table _meta ()
-
 create table client (
   id uuid primary key,
   full_name varchar(255) null,
@@ -29,18 +27,23 @@ create table post (
   created_at timestamptz not null
 );
 
+create hashtag (
+  id uuid primary key,
+  text varchar(255) not null
+);
+
 create client_comment (
   id uuid primary key,
-  client_id bigint not null references client(id) ON DELETE CASCADE,
-  comment_id bigint not null references task(id) ON DELETE CASCADE,
+  client_id uuid not null references client(id) ON DELETE CASCADE,
+  comment_id uuid not null references task(id) ON DELETE CASCADE,
   is_liked boolean null,
   is_author boolean null
 );
 
 create client_post (
   id uuid primary key,
-  client_id bigint not null references client(id) ON DELETE CASCADE,
-  post_id bigint not null references task(id) ON DELETE CASCADE,
+  client_id uuid not null references client(id) ON DELETE CASCADE,
+  post_id uuid not null references task(id) ON DELETE CASCADE,
   is_liked boolean null,
   is_author boolean null,
   created_at timestamptz not null
@@ -48,6 +51,25 @@ create client_post (
 
 create post_comment (
   id uuid primary key,
-  client_id bigint not null references client(id) ON DELETE CASCADE,
-  post_id bigint not null references task(id) ON DELETE CASCADE,
+  client_id uuid not null references client(id) ON DELETE CASCADE,
+  post_id uuid not null references post(id) ON DELETE CASCADE
+);
+
+create hashtag_client (
+  id uuid primary key,
+  client_id uuid not null references client(id) ON DELETE CASCADE,
+  tag_id uuid not null references hashtag(id) ON DELETE CASCADE,
+  is_following boolean null
+);
+
+create hashtag_comment (
+  id uuid primary key,
+  post_id uuid not null references post(id) ON DELETE CASCADE,
+  hashtag_id uuid not null references hashtag(id) ON DELETE CASCADE
+);
+
+create hashtag_post (
+  id uuid primary key,
+  post_id uuid not null references post(id) ON DELETE CASCADE,
+  tag_id uuid not null references hashtag(id) ON DELETE CASCADE
 );
