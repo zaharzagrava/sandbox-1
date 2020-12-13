@@ -98,7 +98,7 @@ export class ClientResolver {
     let response: any = (
       await context.knexConnection
         .from('client')
-        // .where('client.id', '413fe')
+        .where('client.id', id)
         .select(context.selectionSet.map(elem => `client.${elem}`))
     )[0];
 

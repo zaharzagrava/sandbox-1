@@ -30,6 +30,7 @@ const main = async () => {
   const whitelist = [
     'http://localhost:3000', // for dev
     'http://localhost:4001', // for dev
+    'http://172.23.0.3:19006', // for dev
     'http://localhost', // for production
     undefined // for postman agent
   ];
@@ -62,8 +63,8 @@ const main = async () => {
 
   /* Setting up logging */
   expressServer.use((req: Request, res: Response, next: NextFunction) => {
-    // console.log('@req.body');
-    // console.log(req.body);
+    console.log('@req.body');
+    console.log(req.body);
 
     next();
   });

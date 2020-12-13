@@ -4,10 +4,7 @@ import { ClientDTO, GetClientMyselfArgs } from '../types';
 
 // --- Setting up Apollo Client
 export const client = new ApolloClient({
-  uri:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:4001/graphql'
-      : 'http://knowledgebase-env.eba-wmjem75f.us-east-1.elasticbeanstalk.com/graphql',
+  uri: process.env.NODE_ENV === 'development' ? 'http://localhost:4001/graphql' : 'production url',
   cache: new InMemoryCache({
     addTypename: false
   }),
@@ -32,8 +29,12 @@ export default {
   getClientMyself: (getClientMyselfArgs: GetClientMyselfArgs) =>
     client.query<{ getClient: ClientDTO[] }, GetClientMyselfArgs>({
       query: gql`
-        query GetClientMyself($id: id!) {
+        query GetClientMyself($id: String!) {
           getClient(id: $id) {
+            full_name
+            username
+            website
+            bio
             email
           }
         }
