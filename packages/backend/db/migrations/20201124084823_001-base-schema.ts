@@ -25,6 +25,7 @@ export async function up(knex: Knex): Promise<void> {
       table.string('gender', 255);
       table.boolean('is_disabled');
       table.string('password', 255).notNullable();
+      table.dateTime('born_at').notNullable();
       table.dateTime('confirmed_at').notNullable();
       table.dateTime('created_at').notNullable();
     });

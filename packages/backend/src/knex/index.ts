@@ -5,5 +5,5 @@ if (constants.NODE_ENV !== 'development') throw new Error('Production is not rea
 
 export const knexConnection = knex({
   client: 'pg',
-  connection: 'postgresql://postgres:werwer@db:5432/sandbox_1_dev'
+  connection: constants.DB_CONNECTION_URL
 });

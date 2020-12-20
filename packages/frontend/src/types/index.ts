@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 export type RootStackParamList = {
   '/login': undefined;
   '/register': undefined;
+  '/storybook': undefined;
 };
 
 export type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, '/login'>;

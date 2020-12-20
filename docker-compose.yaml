@@ -12,10 +12,8 @@ services:
     environment:
       REACT_NATIVE_PACKAGER_HOSTNAME: ${LOCAL_IP}
       NODE_ENV: ${NODE_ENV}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_NAME: ${DB_NAME}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
+      DB_CONNECTION_URL: ${DB_CONNECTION_URL}
+      ELASTICSEARCH_NODE: ${ELASTICSEARCH_NODE}
     ports:
       - '3000:3000'
       - '4001:4001'
@@ -33,3 +31,18 @@ services:
       POSTGRES_DB: sandbox_1_dev
     ports:
       - '5432:5432'
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /elasticsearch/data
+    ports:
+      - '9200:9200'

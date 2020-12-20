@@ -15,6 +15,26 @@ Program State:
         variant-1:
           MainContainer:
             Search:
+              Advanced Search:
+                Focus Points:
+                  post:
+                    filtering:
+                      full-text-search: [text]
+                      date-filtering: [born_at, created_at]
+                      number-of-comments: 
+                  client:
+                    filtering:
+                      full-text-search: [full_name, username, bio, phone_number]
+                      date-filtering: [born_at, created_at]
+                  comment:
+                    filtering:
+                      full-text-search: [text]
+                      date-filtering: [born_at, created_at]
+                Result Points:
+                  post:
+                  client:
+                  comment:
+                  all:
             HomeLink:
             DMLink:
             ExploreLink:

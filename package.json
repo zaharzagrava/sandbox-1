@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "up": "docker-compose up",
+    "up": "docker volume prune -f && docker network prune -f && docker-compose down && docker-compose up",
     "exec": "docker exec -it $(docker ps -f name=sandbox1_project_1 -q) /bin/bash",
     "start:backend": "yarn --cwd ./packages/backend run start",
     "start:frontend": "yarn --cwd ./packages/frontend run start",

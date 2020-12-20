@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
-import { Text } from 'react-native';
-import { Provider, useDispatch } from 'react-redux';
+import React from 'react';
+import { Text, Platform } from 'react-native';
+import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
@@ -15,6 +15,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Login } from './src/components/Login';
 import { Register } from './src/components/Register';
 import requestSaga from './src/store/sagas';
+import { theme } from './src/themes/themes';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from './src/themes/global';
+
+// import StorybookUIRoot from './storybook';
 
 // --- Setting up Redux & Redux Dev Tools
 const sagaMiddleware = createSagaMiddleware();
@@ -35,6 +40,9 @@ sagaMiddleware.run(function* () {
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
+  console.log('@Platform.OS');
+  console.log(Platform.OS);
+
   return (
     <Provider store={store}>
       <NavigationContainer
@@ -43,7 +51,8 @@ export default function App() {
           config: {
             screens: {
               '/login': '/login',
-              '/register': '/register'
+              '/register': '/register',
+              '/storybook': '/storybook'
             }
           }
         }}
@@ -51,7 +60,13 @@ export default function App() {
       >
         <Stack.Navigator initialRouteName="/login">
           <Stack.Screen name="/login" component={Login} options={{ title: 'Login' }} />
+
           <Stack.Screen name="/register" component={Register} options={{ title: 'Register', headerShown: false }} />
+          {/* <Stack.Screen
+            name="/storybook"
+            component={StorybookUIRoot}
+            options={{ title: 'StorybookUIRoot', headerShown: false }}
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
