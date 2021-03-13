@@ -1,0 +1,44 @@
+query getEventRequest {
+  getEvent(id: "cdbfd1e4-2dd3-4633-8878-828acfd35b31") {
+    name
+  }
+}
+
+query getUserRequest {
+  getUser(id: "6152a655-f173-45e1-86a3-7f7dfc4caf72") {
+    email
+    height
+    organizedEvents {
+      id
+      scheduled_at
+    }
+    watchedEvents {
+      name
+      organizer {
+        full_name
+      }
+    }
+  }
+}
+
+query getDocument {
+  getDocument(id: "1e1c7995-72ca-4667-80e0-708d0cac6856") {
+    text
+    author {
+      email
+    }
+  }
+}
+
+query getNotification {
+  getNotification(id: "80063783-3a34-4e0d-b619-490c02753335") {
+    text
+    event {
+      name
+      description
+      organizer {
+        full_name
+      }
+    }
+  }
+}

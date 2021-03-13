@@ -1,5 +1,27 @@
 {
+  // Code settings
+  "editor.fontSize": 13,
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "all",
+  "editor.renderControlCharacters": false,
+  "editor.minimap.enabled": false,
+  // Code style
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.quoteStyle": "single",
+  // Prettier
+  "prettier.singleQuote": true,
+  // Eslint
+  "eslint.workingDirectories": ["web", "api"],
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "eslint.codeActionsOnSave.mode": "all",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.fontSize": 13
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.tsdk": "api/node_modules/typescript/lib"
 }
