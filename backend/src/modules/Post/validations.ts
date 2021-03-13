@@ -2,7 +2,7 @@ import { Callback } from '../../interfaces';
 import Joi from 'joi';
 
 export default class PostValidator {
-  constructor() {}
+  constructor() { }
 
   private static validateGetAllSchemaParams = Joi.object({
     client_id: Joi.number(),
@@ -70,13 +70,7 @@ export default class PostValidator {
   });
 
   static validateCreate(reqBody: any, callback: Callback<null>): void {
-    console.log('@reqBody');
-    console.log(reqBody);
-
     const response = this.validateCreateSchema.validate(reqBody);
-
-    console.log('@response');
-    console.log(response);
 
     if (response.error) {
       callback({

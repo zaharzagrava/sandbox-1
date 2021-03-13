@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import SessionService from './service';
 
 export default class SessionController {
-  constructor() {}
+  constructor() { }
 
   static async get(request: Request, response: Response, next: NextFunction) {
     try {
@@ -31,9 +31,8 @@ export default class SessionController {
         }
 
         response.cookie('accessToken', data?.accessToken, {
-          maxAge: Number(process.env.ACCESS_TOKEN_LIFE),
-          httpOnly: true,
-          domain: process.env.FRONTEND_DOMAIN,
+          maxAge: Number(process.env.ACCESS_TOKEN_LIFE) * 1000,
+          httpOnly: true
         });
         response.status(200).json(data?.client);
       });

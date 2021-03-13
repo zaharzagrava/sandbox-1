@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "cleanup": "docker volume prune -f && docker network prune -f && docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true",
+    "up": "docker-compose up",
+    "up:clean": "yarn run cleanup && docker-compose up",
+    "up:clean:build": "yarn run cleanup && docker-compose up --build",
+    "exec": "docker exec -it $(docker ps -f name=api_1 -q) /bin/bash",
     "docker-start": "node ./src/server.js",
     "start": "node ./build/src/server.js",
     "dev": "ts-node-dev --respawn ./src/server.ts",
+    "db:migrate": "node_modules/.bin/sequelize db:migrate",
+    "db:seed": "node_modules/.bin/sequelize db:seed:all",
+    "db:seed:undo": "node_modules/.bin/sequelize db:seed:undo:all",
     "build": "npx tsc -p ."
   },
   "author": "",

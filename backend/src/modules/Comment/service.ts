@@ -16,7 +16,7 @@ import { Client, ClientComment, Comment } from '../../db/models/';
 import { PostComment } from '../../db/models/PostComment';
 
 export default class CommentService {
-  constructor() {}
+  constructor() { }
 
   static async get(
     params: CommentGetDeleteUpdateParams,
@@ -51,6 +51,7 @@ export default class CommentService {
     accessTokenData: AccessTokenData,
     callback: Callback<CreateCommentResponse>
   ): Promise<void> {
+    console.log('@create');
     const newComment = (await Comment.create<CommentModel>({
       full_text: body.full_text,
     })) as CommentModel & CommentDTO;
@@ -71,6 +72,9 @@ export default class CommentService {
         id: accessTokenData.id,
       },
     })) as any;
+
+    console.log('@callback');
+    console.log(newComment);
 
     callback(null, {
       id: newComment.id,

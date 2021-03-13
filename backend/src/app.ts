@@ -16,7 +16,6 @@ export default class App {
   start() {
     this.app.listen(this.port, () => {
       console.log(`Express server is listening on port ${this.port}`);
-      console.log('Build #1');
     });
   }
 
@@ -28,14 +27,8 @@ export default class App {
       undefined, // for postman agent
     ];
 
-    console.log('@whitelist');
-    console.log(whitelist);
-
     const corsOptions = {
       origin: function (origin: any, callback: any) {
-        console.log('@origin');
-        console.log(origin);
-
         if (whitelist.indexOf(origin) !== -1) {
           callback(null, true);
         } else {
@@ -60,6 +53,9 @@ export default class App {
 
       console.log('@req.body');
       console.log(req.body);
+
+      console.log('@req.cookies');
+      console.log(JSON.stringify(req.cookies, null, 2));
 
       next();
     });

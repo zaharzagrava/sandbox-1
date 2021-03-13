@@ -1,11 +1,11 @@
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 
 const commonConfig = {
-  username: 'postgres',
-  password: 'og',
-  host: 'localhost',
+  username: "postgres",
+  password: "werwer",
+  host: "db",
   port: 5432,
-  dialect: 'postgres',
+  dialect: "postgres",
   logging: console.log,
   operatorsAliases: Op,
 };
@@ -13,13 +13,13 @@ const commonConfig = {
 const databaseConfig = {
   development: {
     ...commonConfig,
-    database: 'instagram-like-app_development',
-    dialect: 'postgres',
+    database: "sandbox_1_dev",
+    dialect: "postgres",
   },
   test: {
     ...commonConfig,
-    database: 'instagram-like-app_test',
-    dialect: 'postgres',
+    database: "sandbox_1_test",
+    dialect: "postgres",
   },
   production: {
     ...commonConfig,
@@ -28,8 +28,8 @@ const databaseConfig = {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
     database: process.env.DB_NAME_PRODUCTION,
-    dialect: 'postgres',
+    dialect: "postgres",
   },
 };
 
-module.exports = databaseConfig[process.env.NODE_ENV || 'development'];
+module.exports = databaseConfig[process.env.NODE_ENV || "development"];

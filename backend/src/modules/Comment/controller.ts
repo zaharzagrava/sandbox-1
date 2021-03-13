@@ -7,7 +7,7 @@ import {
 import CommentService from './service';
 
 export default class CommentController {
-  constructor() {}
+  constructor() { }
 
   static async getAll(
     request: Request,

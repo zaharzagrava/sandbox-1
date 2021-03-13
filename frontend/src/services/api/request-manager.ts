@@ -2,8 +2,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 axios.defaults.withCredentials = true;
 
-console.log(process.env.REACT_APP_API_URL);
-
 export const requestManager = {
   get: (path: string, params?: AxiosRequestConfig) =>
     axios.get(`${process.env.REACT_APP_API_URL}/${path}`, params),

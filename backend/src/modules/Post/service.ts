@@ -16,7 +16,7 @@ import {
 import { Client, ClientPost, Comment, Post } from '../../db/models/';
 
 export default class PostService {
-  constructor() {}
+  constructor() { }
 
   static async get(
     params: PostGetDeleteUpdateParams,
@@ -153,9 +153,8 @@ export default class PostService {
     });
 
     if (body.multimedia) {
-      const multimediaDir = `./public/uploads/${
-        process.env.NODE_ENV || 'development'
-      }/posts/${newPost.id}/multimedia`;
+      const multimediaDir = `./public/uploads/${process.env.NODE_ENV || 'development'
+        }/posts/${newPost.id}/multimedia`;
 
       try {
         await fsPromises.mkdir(path.resolve(multimediaDir), {
@@ -178,9 +177,8 @@ export default class PostService {
             path.join(multimediaDir, multimediaElem)
           );
 
-          body.multimedia[i] = `/uploads/${
-            process.env.NODE_ENV || 'development'
-          }/posts/${newPost.id}/multimedia/${multimediaElem}`;
+          body.multimedia[i] = `/uploads/${process.env.NODE_ENV || 'development'
+            }/posts/${newPost.id}/multimedia/${multimediaElem}`;
         }
       } catch (error) {
         console.log('@error');
@@ -251,9 +249,8 @@ export default class PostService {
     }
 
     if (body.multimedia) {
-      const multimediaDir = `./public/uploads/${
-        process.env.NODE_ENV || 'development'
-      }/posts/${post.id}/multimedia`;
+      const multimediaDir = `./public/uploads/${process.env.NODE_ENV || 'development'
+        }/posts/${post.id}/multimedia`;
 
       try {
         const fileNames = await fsPromises.readdir(multimediaDir);

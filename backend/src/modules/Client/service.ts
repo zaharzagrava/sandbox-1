@@ -17,7 +17,7 @@ import {
 } from '../../interfaces/';
 
 export default class ClientService {
-  constructor() {}
+  constructor() { }
 
   static async get(
     params: ClientGetDeleteUpdateParams,
@@ -129,9 +129,8 @@ export default class ClientService {
     // body.avatar can only be set by multer, so if it's true,
     // we can be sure that there is a new avatar uploaded
     if (body.avatar) {
-      const avatarDir = `./public/uploads/${
-        process.env.NODE_ENV || 'development'
-      }/clients/${client.id}/avatar`;
+      const avatarDir = `./public/uploads/${process.env.NODE_ENV || 'development'
+        }/clients/${client.id}/avatar`;
 
       try {
         await fsPromises.mkdir(path.resolve(avatarDir), {
@@ -150,9 +149,8 @@ export default class ClientService {
           path.join(avatarDir, body.avatar)
         );
 
-        body.avatar = `/uploads/${
-          process.env.NODE_ENV || 'development'
-        }/clients/${client.id}/avatar/${body.avatar}`;
+        body.avatar = `/uploads/${process.env.NODE_ENV || 'development'
+          }/clients/${client.id}/avatar/${body.avatar}`;
       } catch (error) {
         console.log('@error');
         console.log(error);

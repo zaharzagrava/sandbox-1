@@ -21,9 +21,7 @@ export const api = {
     get: (id: number) => requestManager.get(`posts/${id}`),
     getAll: (params: any) => requestManager.get('posts/', { params }),
     create: (post: any) => {
-      console.log('@post');
-      console.log(post);
-      return requestManager.post('posts', { data: post });
+      return requestManager.post('posts', { data: post, headers: { 'content-type': 'multipart/form-data' } });
     },
     update: (id: number, post: any) =>
       requestManager.put(`posts/${id}`, { data: post }),

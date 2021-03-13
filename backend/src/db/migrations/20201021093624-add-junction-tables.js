@@ -1,14 +1,11 @@
-'use strict';
-
-import Sequelize, { QueryInterface } from 'sequelize';
-import { TableNames } from '../../interfaces/';
+"use strict";
 
 module.exports = {
-  up: async (queryInterface: QueryInterface) => {
+  up: async (queryInterface, Sequelize) => {
     /* hashtags_textsources */
     /* table that tells where a hashtag is used in entire Instagram */
     /* using it we can easily implement hashtag-based queries */
-    await queryInterface.createTable(TableNames.HASHTAGS_TEXTSOURCES, {
+    await queryInterface.createTable("hashtags_textsources", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -18,8 +15,8 @@ module.exports = {
       hashtag_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.HASHTAGS,
-          key: 'id',
+          model: "hashtags",
+          key: "id",
         },
         allowNull: false,
       },
@@ -27,8 +24,8 @@ module.exports = {
       client_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.CLIENTS,
-          key: 'id',
+          model: "clients",
+          key: "id",
         },
         allowNull: true,
       },
@@ -41,8 +38,8 @@ module.exports = {
       post_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.POSTS,
-          key: 'id',
+          model: "posts",
+          key: "id",
         },
         allowNull: true,
       },
@@ -55,8 +52,8 @@ module.exports = {
       comment_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.COMMENTS,
-          key: 'id',
+          model: "comments",
+          key: "id",
         },
         allowNull: true,
       },
@@ -80,7 +77,7 @@ module.exports = {
     /* tags_textsources */
     /* table that tells where a tag is used in entire Instagram */
     /* using it we can easily implement tag-based queries */
-    await queryInterface.createTable(TableNames.TAGS_TEXTSOURCES, {
+    await queryInterface.createTable("tags_textsources", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -90,8 +87,8 @@ module.exports = {
       tag_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.TAGS,
-          key: 'id',
+          model: "tags",
+          key: "id",
         },
         allowNull: false,
       },
@@ -99,8 +96,8 @@ module.exports = {
       client_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.CLIENTS,
-          key: 'id',
+          model: "clients",
+          key: "id",
         },
         allowNull: true,
       },
@@ -113,8 +110,8 @@ module.exports = {
       post_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.POSTS,
-          key: 'id',
+          model: "posts",
+          key: "id",
         },
         allowNull: true,
       },
@@ -127,8 +124,8 @@ module.exports = {
       comment_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.COMMENTS,
-          key: 'id',
+          model: "comments",
+          key: "id",
         },
         allowNull: true,
       },
@@ -150,7 +147,7 @@ module.exports = {
     });
 
     /* clients_posts */
-    await queryInterface.createTable(TableNames.CLIENTS_POSTS, {
+    await queryInterface.createTable("clients_posts", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -160,8 +157,8 @@ module.exports = {
       client_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.CLIENTS,
-          key: 'id',
+          model: "clients",
+          key: "id",
         },
         allowNull: false,
       },
@@ -169,8 +166,8 @@ module.exports = {
       post_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.POSTS,
-          key: 'id',
+          model: "posts",
+          key: "id",
         },
         allowNull: false,
       },
@@ -197,7 +194,7 @@ module.exports = {
     });
 
     /* clients_comments */
-    await queryInterface.createTable(TableNames.CLIENTS_COMMENTS, {
+    await queryInterface.createTable("clients_comments", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -207,8 +204,8 @@ module.exports = {
       client_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.CLIENTS,
-          key: 'id',
+          model: "clients",
+          key: "id",
         },
         allowNull: false,
       },
@@ -216,8 +213,8 @@ module.exports = {
       comment_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.COMMENTS,
-          key: 'id',
+          model: "comments",
+          key: "id",
         },
         allowNull: false,
       },
@@ -244,10 +241,10 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable(TableNames.HASHTAGS_TEXTSOURCES);
-    await queryInterface.dropTable(TableNames.TAGS_TEXTSOURCES);
-    await queryInterface.dropTable(TableNames.CLIENTS_POSTS);
-    await queryInterface.dropTable(TableNames.CLIENTS_COMMENTS);
+  down: async (queryInterface) => {
+    await queryInterface.dropTable("hashtags_textsources");
+    await queryInterface.dropTable("tags_textsources");
+    await queryInterface.dropTable("clients_posts");
+    await queryInterface.dropTable("clients_comments");
   },
 };

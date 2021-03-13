@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import styles from './AddPost.module.scss';
-import * as yup from 'yup';
-import { ErrorMessage, Field, Formik, FormikProps } from 'formik';
-import { PostCreate } from '../../../interfaces';
-import { useDispatch } from 'react-redux';
-import { postsActions } from '../../../store/Posts';
-import Button from '../../Button/Button';
-import FormError from '../../FormError/FormError';
+import styles from "./AddPost.module.scss";
+import * as yup from "yup";
+import { ErrorMessage, Field, Formik, FormikProps } from "formik";
+import { PostCreate } from "../../../interfaces";
+import { useDispatch } from "react-redux";
+import { postsActions } from "../../../store/Posts";
+import Button from "../../Button/Button";
+import FormError from "../../FormError/FormError";
 
 interface Props {
   setisAddPostOpen: (
@@ -16,12 +16,12 @@ interface Props {
 }
 
 let initialValues: PostCreate = {
-  full_text: '',
+  full_text: "",
   multimedia: null,
 };
 
 const validationSchema = yup.object({
-  full_text: yup.string().required('Required').max(2200),
+  full_text: yup.string().required("Required").max(2200),
 });
 
 const AddPost = ({ setisAddPostOpen }: Props) => {
@@ -36,13 +36,10 @@ const AddPost = ({ setisAddPostOpen }: Props) => {
 
         if (values.multimedia === null) return;
 
-        post.append('full_text', values.full_text as any);
+        post.append("full_text", values.full_text as any);
         for (let i = 0; i < values.multimedia.length; i++) {
           post.append(`multimedia`, values.multimedia[i]);
         }
-
-        console.log('@@post');
-        console.log(post);
 
         dispatch(postsActions.createPost(post));
       }}
@@ -61,7 +58,7 @@ const AddPost = ({ setisAddPostOpen }: Props) => {
             component={FormError as React.FunctionComponent<{}>}
             name="full_text"
           />
-          <Field name={'multimedia'}>
+          <Field name={"multimedia"}>
             {() => {
               return (
                 <input
@@ -71,7 +68,7 @@ const AddPost = ({ setisAddPostOpen }: Props) => {
                   multiple={true}
                   className={styles.multimedia}
                   onChange={(event) => {
-                    setFieldValue('multimedia', event.target.files);
+                    setFieldValue("multimedia", event.target.files);
                   }}
                 />
               );

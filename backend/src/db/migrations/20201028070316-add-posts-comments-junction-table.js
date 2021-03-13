@@ -1,13 +1,9 @@
-'use strict';
-
-import Sequelize, { QueryInterface } from 'sequelize';
-import { TableNames } from '../../interfaces/';
+"use strict";
 
 module.exports = {
-  up: async (queryInterface: QueryInterface) => {
-
+  up: async (queryInterface, Sequelize) => {
     /* clients_comments */
-    await queryInterface.createTable(TableNames.POSTS_COMMENTS, {
+    await queryInterface.createTable("posts_comments", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -17,8 +13,8 @@ module.exports = {
       post_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.POSTS,
-          key: 'id',
+          model: "posts",
+          key: "id",
         },
         allowNull: false,
       },
@@ -26,8 +22,8 @@ module.exports = {
       comment_id: {
         type: Sequelize.BIGINT,
         references: {
-          model: TableNames.COMMENTS,
-          key: 'id',
+          model: "comments",
+          key: "id",
         },
         allowNull: false,
       },
@@ -44,8 +40,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable(TableNames.POSTS_COMMENTS);
-
-  }
+  down: async (queryInterface) => {
+    await queryInterface.dropTable("posts_comments");
+  },
 };

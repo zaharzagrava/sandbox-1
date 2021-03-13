@@ -1,10 +1,7 @@
-import Sequelize, { QueryInterface } from 'sequelize';
-import { TableNames } from '../../interfaces/';
-
-export default {
-  up: async (queryInterface: QueryInterface) => {
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
     /* clients */
-    await queryInterface.createTable(TableNames.CLIENTS, {
+    await queryInterface.createTable("clients", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -71,7 +68,7 @@ export default {
     });
 
     /* comments */
-    await queryInterface.createTable(TableNames.COMMENTS, {
+    await queryInterface.createTable("comments", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -95,7 +92,7 @@ export default {
     });
 
     /* posts */
-    await queryInterface.createTable(TableNames.POSTS, {
+    await queryInterface.createTable("posts", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -124,7 +121,7 @@ export default {
     });
 
     /* hashtags */
-    await queryInterface.createTable(TableNames.HASHTAGS, {
+    await queryInterface.createTable("hashtags", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -148,7 +145,7 @@ export default {
     });
 
     /* tags */
-    await queryInterface.createTable(TableNames.TAGS, {
+    await queryInterface.createTable("tags", {
       id: {
         type: Sequelize.BIGINT,
         autoIncrement: true,
@@ -172,10 +169,10 @@ export default {
     });
   },
 
-  down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable(TableNames.CLIENTS);
-    await queryInterface.dropTable(TableNames.COMMENTS);
-    await queryInterface.dropTable(TableNames.POSTS);
-    await queryInterface.dropTable(TableNames.TAGS);
+  down: async (queryInterface) => {
+    await queryInterface.dropTable("clients");
+    await queryInterface.dropTable("comments");
+    await queryInterface.dropTable("posts");
+    await queryInterface.dropTable("tags");
   },
 };

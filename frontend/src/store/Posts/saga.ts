@@ -2,6 +2,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 
 import { api } from '../../services/api';
 import { postsConstants, postsActions } from '.';
+import { requestManager } from '../../services/api/request-manager';
 
 function* fetch(payload: any) {
   try {
@@ -29,10 +30,9 @@ function* fetchAll(payload: any) {
 
 function* create(payload: any) {
   try {
-    console.log('@payload.post');
-    console.log(payload.post);
-
-    const response = yield call(api.posts.create, payload.post);
+    const response = yield call(() => {
+      return requestManager.post('posts', { data: payload.post, headers: { 'content-type': 'multipart/form-data' } });
+    });
 
     // @ts-ignore
     yield put(postsActions.createPostSuccess(response.data));
