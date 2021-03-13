@@ -1,8 +1,8 @@
 # sandbox-1
 
-# Пластун Руслан БІ-118
+## Пластун Руслан БІ-118
 
-# Backend env file приклад (створити .env файл в папці backend)
+## Backend env file приклад (створити .env файл в папці backend)
 
 NODE_ENV=development
 
@@ -18,6 +18,6 @@ BCRYPT_SALT_ROUNDS=10
 
 FRONTEND_DOMAIN=http://localhost:3000/
 
-# Backend env file приклад (створити .env файл в папці frontend)
+## Backend env file приклад (створити .env файл в папці frontend)
 
 REACT_APP_API_URL=http://localhost:4001
