@@ -1,11 +1,13 @@
 import {
   Args,
   FieldResolver,
+  Mutation,
   Query,
   Resolver,
   Root,
   UseMiddleware,
 } from 'type-graphql';
+import { v4 as uuidv4 } from 'uuid';
 import { knex } from '../../knex';
 import { EVENT, USER, USER_EVENT } from '../../types';
 
@@ -13,7 +15,7 @@ import { errorWrapper } from '../../middleware';
 import { userFields } from '../../utils';
 
 import { Event, EventReq } from './model';
-import { GetEventArgs } from './args-types';
+import { GetEventArgs, PostEventArgs } from './args-types';
 import { UserReq } from '../user/model';
 
 @Resolver(Event)
@@ -28,6 +30,24 @@ export class EventResolver {
         .select('*')
         .from(EVENT)
         .whereRaw('id = ?', [getEventArgs.id])
+    )[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Event)
+  async postEvent(
+    @Args() postEventArgs: PostEventArgs,
+  ): Promise<EventReq> {
+    return (
+      await knex(EVENT)
+        .insert({
+          id: uuidv4(),
+          name: postEventArgs.name,
+          description: postEventArgs.description,
+          scheduled_at: postEventArgs.scheduled_at,
+          created_at: new Date(),
+        })
+        .returning('*')
     )[0];
   }
 

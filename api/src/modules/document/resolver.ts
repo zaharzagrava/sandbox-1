@@ -1,11 +1,13 @@
 import {
   Args,
   FieldResolver,
+  Mutation,
   Query,
   Resolver,
   Root,
   UseMiddleware,
 } from 'type-graphql';
+import { v4 as uuidv4 } from 'uuid';
 import { knex } from '../../knex';
 import { DOCUMENT, USER, USER_DOCUMENT } from '../../types';
 
@@ -13,7 +15,7 @@ import { errorWrapper } from '../../middleware';
 import { userFields } from '../../utils';
 
 import { Document, DocumentReq } from './model';
-import { GetDocumentArgs } from './args-types';
+import { GetDocumentArgs, PostDocumentArgs } from './args-types';
 import { UserReq } from '../user/model';
 
 @Resolver(Document)
@@ -28,6 +30,22 @@ export class DocumentResolver {
         .select('*')
         .from(DOCUMENT)
         .whereRaw('id = ?', [getDocumentArgs.id])
+    )[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Document)
+  async postDocument(
+    @Args() postDocumentArgs: PostDocumentArgs,
+  ): Promise<DocumentReq> {
+    return (
+      await knex(DOCUMENT)
+        .insert({
+          id: uuidv4(),
+          text: postDocumentArgs.text,
+          created_at: new Date(),
+        })
+        .returning('*')
     )[0];
   }
 

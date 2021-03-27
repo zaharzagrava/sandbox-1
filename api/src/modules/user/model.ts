@@ -27,9 +27,6 @@ export class User {
   @Field(() => String, { nullable: true })
   gender?: string;
 
-  @Field(() => Boolean, { nullable: false })
-  is_enabled!: boolean;
-
   @Field(() => String, { nullable: false })
   password!: string;
 
@@ -73,7 +70,6 @@ export interface UserReq {
   bio: string;
   phone_number: string;
   gender: string;
-  is_enabled: boolean;
   password: string;
   born_at: Date;
   confirmed_at: Date;

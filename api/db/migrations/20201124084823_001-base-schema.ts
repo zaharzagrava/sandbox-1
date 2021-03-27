@@ -36,16 +36,15 @@ export async function up(knex: Knex): Promise<void> {
         table.string('language', 5).notNullable();
         table.string('bio', 150).nullable();
         table.string('phone_number', 255).unique();
-        table.string('gender', 255);
-        table.boolean('is_enabled').notNullable();
+        table.string('gender', 1).notNullable();
         table.string('password', 255).notNullable();
         table.dateTime('born_at').notNullable();
-        table.dateTime('confirmed_at').notNullable();
-        table.dateTime('created_at').notNullable();
         table.boolean('is_athlete').notNullable();
         table.boolean('is_organizer').notNullable();
         table.float('height').nullable();
         table.float('strength').nullable();
+        table.dateTime('confirmed_at');
+        table.dateTime('created_at').notNullable();
       },
     );
   }

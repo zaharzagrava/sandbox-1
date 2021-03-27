@@ -20,7 +20,6 @@ export const userFields = [
   `${USER}.bio`,
   `${USER}.phone_number`,
   `${USER}.gender`,
-  `${USER}.is_enabled`,
   `${USER}.password`,
   `${USER}.born_at`,
   `${USER}.confirmed_at`,

@@ -11,8 +11,6 @@ const constants = {
   REDIS_HOST: process.env.REDIS_HOST,
   REDIS_PORT: process.env.REDIS_PORT,
 
-  ELASTICSEARCH_NODE: process.env.ELASTICSEARCH_NODE,
-
   NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
 };
 

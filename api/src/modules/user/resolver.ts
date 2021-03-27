@@ -2,6 +2,7 @@ import {
   Args,
   FieldResolver,
   Info,
+  Mutation,
   Query,
   Resolver,
   Root,
@@ -9,6 +10,7 @@ import {
 } from 'type-graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { DateTime } from 'luxon';
+import { v4 as uuidv4 } from 'uuid';
 import { eventFields } from '../../utils';
 import { knex } from '../../knex';
 import { EVENT, USER, USER_EVENT } from '../../types';
@@ -16,7 +18,7 @@ import { EVENT, USER, USER_EVENT } from '../../types';
 import { errorWrapper } from '../../middleware';
 
 import { User, UserReq } from './model';
-import { GetUserArgs } from './args-types';
+import { GetUserArgs, PostUserArgs } from './args-types';
 import { Event, EventReq } from '../event/model';
 
 @Resolver(User)
@@ -32,6 +34,33 @@ export class UserResolver {
         .select('*')
         .from(USER)
         .whereRaw('id = ?', [getUserArgs.id])
+    )[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => User)
+  async postUser(
+    @Args() postUserArgs: PostUserArgs,
+  ): Promise<UserReq> {
+    return (
+      await knex(USER)
+        .insert({
+          id: uuidv4(),
+          email: postUserArgs.email,
+          full_name: postUserArgs.full_name,
+          language: postUserArgs.language,
+          bio: postUserArgs.bio || null,
+          phone_number: postUserArgs.phone_number,
+          gender: postUserArgs.gender,
+          password: postUserArgs.password,
+          born_at: postUserArgs.born_at || null,
+          is_athlete: postUserArgs.is_athlete,
+          is_organizer: postUserArgs.is_organizer,
+          height: postUserArgs.height || null,
+          strength: postUserArgs.strength || null,
+          created_at: new Date(),
+        })
+        .returning('*')
     )[0];
   }
 

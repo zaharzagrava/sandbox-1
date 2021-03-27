@@ -1,11 +1,13 @@
 import {
   Args,
   FieldResolver,
+  Mutation,
   Query,
   Resolver,
   Root,
   UseMiddleware,
 } from 'type-graphql';
+import { v4 as uuidv4 } from 'uuid';
 import { knex } from '../../knex';
 import { NOTIFICATION, EVENT, NOTIFICATION_EVENT } from '../../types';
 
@@ -13,7 +15,10 @@ import { errorWrapper } from '../../middleware';
 import { eventFields } from '../../utils';
 
 import { Notification, NotificationReq } from './model';
-import { GetNotificationArgs } from './args-types';
+import {
+  GetNotificationArgs,
+  PostNotificationArgs,
+} from './args-types';
 import { EventReq } from '../event/model';
 
 @Resolver(Notification)
@@ -28,6 +33,22 @@ export class NotificationResolver {
         .select('*')
         .from(NOTIFICATION)
         .whereRaw('id = ?', [getNotificationArgs.id])
+    )[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Notification)
+  async postNotification(
+    @Args() postNotificationArgs: PostNotificationArgs,
+  ): Promise<NotificationReq> {
+    return (
+      await knex(NOTIFICATION)
+        .insert({
+          id: uuidv4(),
+          text: postNotificationArgs.text,
+          created_at: new Date(),
+        })
+        .returning('*')
     )[0];
   }
 

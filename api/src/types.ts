@@ -16,7 +16,6 @@ export enum UserFields {
   BIO = 'bio',
   PHONE_NUMBER = 'phone_number',
   GENDER = 'gender',
-  IS_ENABLED = 'is_enabled',
   PASSWORD = 'password',
   BORN_AT = 'born_at',
   CONFIRMED_AT = 'confirmed_at',
