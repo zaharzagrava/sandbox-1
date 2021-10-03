@@ -1,30 +1,30 @@
-import bcrypt from 'bcrypt';
-import { EVENT, USER } from '../types';
+import bcrypt from "bcrypt";
+import { DBTable } from "../types";
 
 export const { compareSync } = bcrypt;
 export const { hashSync } = bcrypt;
 
 export const eventFields = [
-  `${EVENT}.id`,
-  `${EVENT}.name`,
-  `${EVENT}.description`,
-  `${EVENT}.scheduled_at`,
-  `${EVENT}.created_at`,
+  `${DBTable.EVENT}.id`,
+  `${DBTable.EVENT}.name`,
+  `${DBTable.EVENT}.description`,
+  `${DBTable.EVENT}.scheduled_at`,
+  `${DBTable.EVENT}.created_at`,
 ];
 
 export const userFields = [
-  `${USER}.id`,
-  `${USER}.email`,
-  `${USER}.full_name`,
-  `${USER}.language`,
-  `${USER}.bio`,
-  `${USER}.phone_number`,
-  `${USER}.gender`,
-  `${USER}.password`,
-  `${USER}.born_at`,
-  `${USER}.confirmed_at`,
-  `${USER}.created_at`,
-  `${USER}.created_at`,
-  `${USER}.is_athlete`,
-  `${USER}.is_organizer`,
+  `${DBTable.USER}.id`,
+  `${DBTable.USER}.email`,
+  `${DBTable.USER}.full_name`,
+  `${DBTable.USER}.language`,
+  `${DBTable.USER}.bio`,
+  `${DBTable.USER}.phone_number`,
+  `${DBTable.USER}.gender`,
+  `${DBTable.USER}.password`,
+  `${DBTable.USER}.born_at`,
+  `${DBTable.USER}.confirmed_at`,
+  `${DBTable.USER}.created_at`,
+  `${DBTable.USER}.created_at`,
+  `${DBTable.USER}.is_athlete`,
+  `${DBTable.USER}.is_organizer`,
 ];

@@ -1,11 +1,11 @@
-query getEventRequest {
-  getEvent(id: "cdbfd1e4-2dd3-4633-8878-828acfd35b31") {
+query GetEvent {
+  getEvent(id: "94a8d215-ce32-4379-b18e-2aebf0794882") {
     name
   }
 }
 
-query getUserRequest {
-  getUser(id: "6152a655-f173-45e1-86a3-7f7dfc4caf72") {
+query GetUser {
+  getUser(id: "bb463b8b-b76c-4f6a-9726-65ab5730b69b") {
     email
     height
     organizedEvents {
@@ -21,8 +21,8 @@ query getUserRequest {
   }
 }
 
-query getDocument {
-  getDocument(id: "1e1c7995-72ca-4667-80e0-708d0cac6856") {
+query GetDocument {
+  getDocument(id: "13a7e8b6-7270-4c99-81e9-9d752e0c295c") {
     text
     author {
       email
@@ -30,8 +30,8 @@ query getDocument {
   }
 }
 
-query getNotification {
-  getNotification(id: "80063783-3a34-4e0d-b619-490c02753335") {
+query GetNotification {
+  getNotification(id: "c1c93379-b46e-439f-baad-f0e408619f23") {
     text
     event {
       name
@@ -40,5 +40,42 @@ query getNotification {
         full_name
       }
     }
+  }
+}
+
+mutation PostEvent {
+  postEvent(
+    name: "Test Event #1"
+    description: "Description of test event #1"
+    scheduled_at: "2021-09-29"
+  ) {
+    id
+  }
+}
+
+mutation PostUser {
+  postUser(
+    email: "petro-test@gmail.com"
+    full_name: "Petro Testovych"
+    language: "EN"
+    gender: "M"
+    password: "123123"
+    born_at: "2021-09-29"
+    is_athlete: true
+    is_organizer: false
+  ) {
+    id
+  }
+}
+
+mutation PostDocument {
+  postDocument(text: "Another Test Document") {
+    id
+  }
+}
+
+mutation PostNotification {
+  postNotification(text: "Another Test Notification") {
+    id
   }
 }

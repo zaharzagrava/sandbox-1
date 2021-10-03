@@ -15,7 +15,6 @@ rules:
     prettier/prettier: 1,
     no-unused-vars: 1,
     no-param-reassign: 0,
-    max-len: "off",
     require-jsdoc: "off",
     object-shorthand: "off",
     new-cap: "off",
@@ -27,4 +26,6 @@ rules:
     "@typescript-eslint/no-unused-vars": "off",
     no-restricted-syntax: "off",
     no-continue: "off",
+    curly: ["warn", "multi"],
+    max-len: ["warn", { "code": 120}]
   }

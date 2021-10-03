@@ -1,29 +1,20 @@
 /* eslint no-console: 0, no-await-in-loop: 0, @typescript-eslint/no-unused-vars: 0, @typescript-eslint/naming-convention: 0, no-constant-condition: 0 */
-import * as Knex from 'knex';
-import { v4 as uuidv4 } from 'uuid';
-import faker from 'faker';
+import * as Knex from "knex";
+import { v4 as uuidv4 } from "uuid";
+import faker from "faker";
 
-import {
-  USER,
-  EVENT,
-  USER_DOCUMENT,
-  USER_EVENT,
-  NOTIFICATION,
-  NOTIFICATION_EVENT,
-  NOTIFICATION_USER,
-  DOCUMENT,
-} from '../../../src/types';
+import { DBTable } from "../../../src/types";
 
 export async function seed(knex: Knex): Promise<void> {
   faker.seed(123);
 
   while (true) {
     try {
-      const result = await knex.raw('select 1+1 as result');
+      const result = await knex.raw("select 1+1 as result");
 
       if (result) break;
     } catch (error) {
-      console.log('testing knex connection has failed');
+      console.log("testing knex connection has failed");
     }
   }
 
@@ -43,13 +34,13 @@ export async function seed(knex: Knex): Promise<void> {
     [
       {
         id: faker.datatype.uuid(),
-        email: 'johnsmith@test.com',
-        full_name: 'John Smith',
-        language: 'en',
-        bio: 'The bio of John Smith',
-        phone_number: '+3800943232371',
-        gender: 'M',
-        password: 'smith1pass',
+        email: "johnsmith@test.com",
+        full_name: "John Smith",
+        language: "en",
+        bio: "The bio of John Smith",
+        phone_number: "+3800943232371",
+        gender: "M",
+        password: "smith1pass",
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),
@@ -58,13 +49,13 @@ export async function seed(knex: Knex): Promise<void> {
       },
       {
         id: faker.datatype.uuid(),
-        email: 'johngiligan@test.com',
-        full_name: 'John Giligan',
-        language: 'en',
-        bio: 'The bio of John Giligan',
-        phone_number: '+3800973232371',
-        gender: 'M',
-        password: 'smith1pass',
+        email: "johngiligan@test.com",
+        full_name: "John Giligan",
+        language: "en",
+        bio: "The bio of John Giligan",
+        phone_number: "+3800973232371",
+        gender: "M",
+        password: "smith1pass",
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),
@@ -73,13 +64,13 @@ export async function seed(knex: Knex): Promise<void> {
       },
       {
         id: faker.datatype.uuid(),
-        email: 'arianaportman@test.com',
-        full_name: 'Ariana Portman',
-        language: 'en',
-        bio: 'The bio of Ariana Portman',
-        phone_number: '+380094321461',
-        gender: 'M',
-        password: 'smith1pass',
+        email: "arianaportman@test.com",
+        full_name: "Ariana Portman",
+        language: "en",
+        bio: "The bio of Ariana Portman",
+        phone_number: "+380094321461",
+        gender: "M",
+        password: "smith1pass",
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),
@@ -88,13 +79,13 @@ export async function seed(knex: Knex): Promise<void> {
       },
       {
         id: faker.datatype.uuid(),
-        email: 'emilyblunsh@test.com',
-        full_name: 'Emily Blunsh',
-        language: 'en',
-        bio: 'The bio of Emily Blunsh',
-        phone_number: '+3800948232376',
-        gender: 'M',
-        password: 'smith1pass',
+        email: "emilyblunsh@test.com",
+        full_name: "Emily Blunsh",
+        language: "en",
+        bio: "The bio of Emily Blunsh",
+        phone_number: "+3800948232376",
+        gender: "M",
+        password: "smith1pass",
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),
@@ -102,7 +93,7 @@ export async function seed(knex: Knex): Promise<void> {
         is_organizer: true,
       },
     ],
-    '*',
+    "*"
   );
 
   // Inserts seed entries
@@ -110,48 +101,48 @@ export async function seed(knex: Knex): Promise<void> {
     [
       {
         id: faker.datatype.uuid(),
-        name: 'Test Event #1',
-        description: 'Description of test event #1',
+        name: "Test Event #1",
+        description: "Description of test event #1",
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        name: 'Test Event #2',
-        description: 'Description of test event #2',
+        name: "Test Event #2",
+        description: "Description of test event #2",
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        name: 'Test Event #3',
-        description: 'Description of test event #3',
+        name: "Test Event #3",
+        description: "Description of test event #3",
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        name: 'Test Event #4',
-        description: 'Description of test event #4',
+        name: "Test Event #4",
+        description: "Description of test event #4",
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        name: 'Test Event #5',
-        description: 'Description of test event #5',
+        name: "Test Event #5",
+        description: "Description of test event #5",
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        name: 'Test Event #6',
-        description: 'Description of test event #6',
+        name: "Test Event #6",
+        description: "Description of test event #6",
         scheduled_at: new Date(),
         created_at: new Date(),
       },
     ],
-    '*',
+    "*"
   );
 
   // Inserts seed entries
@@ -159,36 +150,36 @@ export async function seed(knex: Knex): Promise<void> {
     [
       {
         id: faker.datatype.uuid(),
-        text: 'This is document #0',
+        text: "This is document #0",
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        text: 'This is document #1',
+        text: "This is document #1",
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        text: 'This is document #2',
+        text: "This is document #2",
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        text: 'This is document #3',
+        text: "This is document #3",
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        text: 'This is document #4',
+        text: "This is document #4",
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        text: 'This is document #5',
+        text: "This is document #5",
         created_at: new Date(),
       },
     ],
-    '*',
+    "*"
   );
 
   // Inserts seed entries
@@ -196,21 +187,21 @@ export async function seed(knex: Knex): Promise<void> {
     [
       {
         id: faker.datatype.uuid(),
-        text: 'This is notification #0',
+        text: "This is notification #0",
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        text: 'This is notification #1',
+        text: "This is notification #1",
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
-        text: 'This is notification #2',
+        text: "This is notification #2",
         created_at: new Date(),
       },
     ],
-    '*',
+    "*"
   );
 
   // Inserts seed entries
