@@ -15,8 +15,15 @@ import { errorWrapper } from "../../middleware";
 import { userFields } from "../../utils";
 
 import { Document, DocumentReq } from "./model";
-import { GetDocumentArgs, PostDocumentArgs } from "./args-types";
+import {
+  DeleteDocumentArgs,
+  GetDocumentArgs,
+  PostDocumentArgs,
+  PutDocumentArgs,
+  PutDocumentFields,
+} from "./args-types";
 import { UserReq } from "../user/model";
+import { ErrorCodes, Errors } from "../../error";
 
 @Resolver(Document)
 export class DocumentResolver {
@@ -47,6 +54,40 @@ export class DocumentResolver {
         })
         .returning("*")
     )[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Document)
+  async putDocument(
+    @Args() putDocumentArgs: PutDocumentArgs
+  ): Promise<DocumentReq> {
+    const updateDocument: PutDocumentFields = {};
+    for (const [key, value] of Object.entries(putDocumentArgs.fields))
+      if (value !== undefined)
+        updateDocument[key as keyof PutDocumentFields] = value;
+
+    let updatedDocument = null;
+    [updatedDocument] = await knex<DocumentReq>(DBTable.DOCUMENT)
+      .update(updateDocument)
+      .where("id", putDocumentArgs.id)
+      .returning("*");
+
+    return updatedDocument;
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Boolean)
+  async deleteDocument(
+    @Args() deleteDocumentArgs: DeleteDocumentArgs
+  ): Promise<Boolean> {
+    const document = (await knex
+      .delete("*")
+      .where("id", deleteDocumentArgs.id)
+      .from(DBTable.DOCUMENT)) as Document;
+
+    if (!document) throw new Errors([ErrorCodes.DOCUMENT_NOT_FOUND]);
+
+    return true;
   }
 
   @UseMiddleware(errorWrapper)

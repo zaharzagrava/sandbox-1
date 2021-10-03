@@ -8,6 +8,7 @@ import {
   UseMiddleware,
 } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
+import { Errors, ErrorCodes } from "../../error";
 import { knex } from "../../knex";
 import { DBTable } from "../../types";
 
@@ -15,7 +16,13 @@ import { errorWrapper } from "../../middleware";
 import { eventFields } from "../../utils";
 
 import { Notification, NotificationReq } from "./model";
-import { GetNotificationArgs, PostNotificationArgs } from "./args-types";
+import {
+  DeleteNotificationArgs,
+  GetNotificationArgs,
+  PostNotificationArgs,
+  PutNotificationArgs,
+  PutNotificationFields,
+} from "./args-types";
 import { EventReq } from "../event/model";
 
 @Resolver(Notification)
@@ -47,6 +54,40 @@ export class NotificationResolver {
         })
         .returning("*")
     )[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Notification)
+  async putNotification(
+    @Args() putNotificationArgs: PutNotificationArgs
+  ): Promise<NotificationReq> {
+    const updateNotification: PutNotificationFields = {};
+    for (const [key, value] of Object.entries(putNotificationArgs.fields))
+      if (value !== undefined)
+        updateNotification[key as keyof PutNotificationFields] = value;
+
+    let updatedNotification = null;
+    [updatedNotification] = await knex<NotificationReq>(DBTable.NOTIFICATION)
+      .update(updateNotification)
+      .where("id", putNotificationArgs.id)
+      .returning("*");
+
+    return updatedNotification;
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Boolean)
+  async deleteNotification(
+    @Args() deleteNotificationArgs: DeleteNotificationArgs
+  ): Promise<Boolean> {
+    const notification = (await knex
+      .delete("*")
+      .where("id", deleteNotificationArgs.id)
+      .from(DBTable.NOTIFICATION)) as Notification;
+
+    if (!notification) throw new Errors([ErrorCodes.NOTIFICAION_NOT_FOUND]);
+
+    return true;
   }
 
   @UseMiddleware(errorWrapper)

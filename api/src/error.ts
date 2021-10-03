@@ -20,6 +20,32 @@ export class Errors extends Error {
  */
 export enum ErrorCodes {
   USER_EMAIL_TAKEN = "USER_EMAIL_TAKEN",
+
   USER_NOT_FOUND = "USER_NOT_FOUND",
+  NOTIFICAION_NOT_FOUND = "USER_NOT_FOUND",
+  EVENT_NOT_FOUND = "USER_NOT_FOUND",
+  DOCUMENT_NOT_FOUND = "USER_NOT_FOUND",
+
   INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR",
 }
+
+export enum KnexErrorType {
+  EMAIL_TAKEN = "EMAIL_TAKEN",
+}
+
+export const processKnexError = (
+  error: any,
+  params: { [key in KnexErrorType]: ErrorCodes }
+) => {
+  // if it is knex-specific error
+  if (error.detail && typeof error.detail === "string") {
+    const errorDetail = error.detail as string;
+
+    // if it is email taken error
+    if (Object.keys(params).includes(KnexErrorType.EMAIL_TAKEN)) {
+      if (/.*email.*already exists/g.test(errorDetail)) {
+        throw new Errors([params[KnexErrorType.EMAIL_TAKEN]]);
+      }
+    }
+  }
+};

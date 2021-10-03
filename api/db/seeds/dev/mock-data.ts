@@ -19,18 +19,18 @@ export async function seed(knex: Knex): Promise<void> {
   }
 
   // Deletes all existing entries
-  await knex(USER).del();
-  await knex(EVENT).del();
-  await knex(DOCUMENT).del();
-  await knex(NOTIFICATION).del();
+  await knex(DBTable.USER).del();
+  await knex(DBTable.EVENT).del();
+  await knex(DBTable.DOCUMENT).del();
+  await knex(DBTable.NOTIFICATION).del();
 
-  await knex(NOTIFICATION_EVENT).del();
-  await knex(NOTIFICATION_USER).del();
-  await knex(USER_DOCUMENT).del();
-  await knex(USER_EVENT).del();
+  await knex(DBTable.NOTIFICATION_EVENT).del();
+  await knex(DBTable.NOTIFICATION_USER).del();
+  await knex(DBTable.USER_DOCUMENT).del();
+  await knex(DBTable.USER_EVENT).del();
 
   // Inserts seed entries
-  const users = await knex(USER).insert(
+  const users = await knex(DBTable.USER).insert(
     [
       {
         id: faker.datatype.uuid(),
@@ -97,7 +97,7 @@ export async function seed(knex: Knex): Promise<void> {
   );
 
   // Inserts seed entries
-  const events = await knex(EVENT).insert(
+  const events = await knex(DBTable.EVENT).insert(
     [
       {
         id: faker.datatype.uuid(),
@@ -146,7 +146,7 @@ export async function seed(knex: Knex): Promise<void> {
   );
 
   // Inserts seed entries
-  const documents = await knex(DOCUMENT).insert(
+  const documents = await knex(DBTable.DOCUMENT).insert(
     [
       {
         id: faker.datatype.uuid(),
@@ -183,7 +183,7 @@ export async function seed(knex: Knex): Promise<void> {
   );
 
   // Inserts seed entries
-  const notifications = await knex(NOTIFICATION).insert(
+  const notifications = await knex(DBTable.NOTIFICATION).insert(
     [
       {
         id: faker.datatype.uuid(),
@@ -205,7 +205,7 @@ export async function seed(knex: Knex): Promise<void> {
   );
 
   // Inserts seed entries
-  const users_events = await knex(USER_EVENT).insert([
+  const users_events = await knex(DBTable.USER_EVENT).insert([
     {
       id: faker.datatype.uuid(),
       user_id: users[0].id,
@@ -263,7 +263,7 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
 
   // Inserts seed entries
-  const users_documents = await knex(USER_DOCUMENT).insert([
+  const users_documents = await knex(DBTable.USER_DOCUMENT).insert([
     {
       id: faker.datatype.uuid(),
       user_id: users[0].id,
@@ -291,7 +291,7 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
 
   // Inserts seed entries
-  const notifications_events = await knex(NOTIFICATION_EVENT).insert([
+  const notifications_events = await knex(DBTable.NOTIFICATION_EVENT).insert([
     {
       id: faker.datatype.uuid(),
       notification_id: notifications[0].id,

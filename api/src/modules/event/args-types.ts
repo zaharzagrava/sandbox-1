@@ -1,4 +1,4 @@
-import { ArgsType, Field } from 'type-graphql';
+import { ArgsType, Field, ID, InputType } from "type-graphql";
 
 @ArgsType()
 export class GetEventArgs {
@@ -16,4 +16,28 @@ export class PostEventArgs {
 
   @Field(() => Date, { nullable: false })
   scheduled_at!: Date;
+}
+
+@InputType()
+export class PutEventFields {
+  @Field(() => String, { nullable: true })
+  name?: string;
+
+  @Field(() => String, { nullable: true })
+  description?: string;
+}
+
+@ArgsType()
+export class PutEventArgs {
+  @Field(() => String, { nullable: false })
+  id!: string;
+
+  @Field(() => PutEventFields, { nullable: false })
+  fields!: PutEventFields;
+}
+
+@ArgsType()
+export class DeleteEventArgs {
+  @Field(() => ID, { nullable: false })
+  id!: string[];
 }

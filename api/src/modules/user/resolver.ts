@@ -11,7 +11,12 @@ import {
 import { GraphQLResolveInfo } from "graphql";
 import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
-import { ErrorCodes, Errors } from "../../error";
+import {
+  ErrorCodes,
+  Errors,
+  KnexErrorType,
+  processKnexError,
+} from "../../error";
 import { eventFields } from "../../utils";
 import { knex } from "../../knex";
 import { DBTable } from "../../types";
@@ -86,13 +91,9 @@ export class UserResolver {
         .where("id", putUserArgs.id)
         .returning("*");
     } catch (error) {
-      // if it is knex-specific error
-      if (error.detail && typeof error.detail === "string") {
-        const errorDetail = error.detail as string;
-        // if it is email taken error
-        if (/.*email.*already exists/g.test(errorDetail))
-          throw new Errors([ErrorCodes.USER_EMAIL_TAKEN]);
-      }
+      processKnexError(error, {
+        [KnexErrorType.EMAIL_TAKEN]: ErrorCodes.USER_EMAIL_TAKEN,
+      });
 
       throw error;
     }
