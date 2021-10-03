@@ -30,3 +30,9 @@ services:
       POSTGRES_DB: ${DB_DB_NAME}
     ports:
       - '5432:5432'
+  redis:
+    image: redis:6.2.5
+    read_only: true
+    user: redis
+    ports:
+      - '6379:6379'

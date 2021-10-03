@@ -23,7 +23,7 @@ export class PostUserArgs {
   @Field(() => String, { nullable: true })
   phone_number?: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: false })
   gender!: string;
 
   @Field(() => String, { nullable: false })

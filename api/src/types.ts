@@ -1,6 +1,21 @@
 import { Request, Response } from 'express';
 import Knex from 'knex';
 
+export enum Constants {
+  NODE_ENV = 'NODE_ENV',
+  DB_PASSWORD = 'DB_PASSWORD',
+  DB_USER = 'DB_USER',
+  DB_DB_NAME = 'DB_DB_NAME',
+  DB_HOST = 'DB_HOST',
+  SESSION_SECRET = 'SESSION_SECRET',
+  REDIS_HOST = 'REDIS_HOST',
+  REDIS_PORT = 'REDIS_PORT',
+  NEW_RELIC_LICENSE_KEY = 'NEW_RELIC_LICENSE_KEY',
+
+  /** Dev-only constants */
+  FRONT_IP_HOST = 'FRONT_IP_HOST',
+}
+
 export interface Context {
   req: Request;
   res: Response;

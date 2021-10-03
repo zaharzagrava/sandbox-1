@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import 'newrelic';
+// import 'newrelic';
 
 // @ts-ignore
-import newRelicApolloServerPlugin from '@newrelic/apollo-server-plugin';
+// import newRelicApolloServerPlugin from '@newrelic/apollo-server-plugin';
 import express, {
   Application,
   NextFunction,
@@ -44,7 +44,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     context: (ctx: Context) => ctx,
-    plugins: [newRelicApolloServerPlugin],
+    // plugins: [newRelicApolloServerPlugin],
   });
 
   const whitelist = [

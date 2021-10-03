@@ -1,6 +1,7 @@
 /* eslint no-console: 0, no-await-in-loop: 0, @typescript-eslint/no-unused-vars: 0, @typescript-eslint/naming-convention: 0, no-constant-condition: 0 */
 import * as Knex from 'knex';
 import { v4 as uuidv4 } from 'uuid';
+import faker from 'faker';
 
 import {
   USER,
@@ -14,6 +15,8 @@ import {
 } from '../../../src/types';
 
 export async function seed(knex: Knex): Promise<void> {
+  faker.seed(123);
+
   while (true) {
     try {
       const result = await knex.raw('select 1+1 as result');
@@ -39,7 +42,7 @@ export async function seed(knex: Knex): Promise<void> {
   const users = await knex(USER).insert(
     [
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         email: 'johnsmith@test.com',
         full_name: 'John Smith',
         language: 'en',
@@ -54,7 +57,7 @@ export async function seed(knex: Knex): Promise<void> {
         is_organizer: true,
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         email: 'johngiligan@test.com',
         full_name: 'John Giligan',
         language: 'en',
@@ -69,7 +72,7 @@ export async function seed(knex: Knex): Promise<void> {
         is_organizer: true,
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         email: 'arianaportman@test.com',
         full_name: 'Ariana Portman',
         language: 'en',
@@ -84,7 +87,7 @@ export async function seed(knex: Knex): Promise<void> {
         is_organizer: true,
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         email: 'emilyblunsh@test.com',
         full_name: 'Emily Blunsh',
         language: 'en',
@@ -106,42 +109,42 @@ export async function seed(knex: Knex): Promise<void> {
   const events = await knex(EVENT).insert(
     [
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         name: 'Test Event #1',
         description: 'Description of test event #1',
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         name: 'Test Event #2',
         description: 'Description of test event #2',
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         name: 'Test Event #3',
         description: 'Description of test event #3',
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         name: 'Test Event #4',
         description: 'Description of test event #4',
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         name: 'Test Event #5',
         description: 'Description of test event #5',
         scheduled_at: new Date(),
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         name: 'Test Event #6',
         description: 'Description of test event #6',
         scheduled_at: new Date(),
@@ -155,32 +158,32 @@ export async function seed(knex: Knex): Promise<void> {
   const documents = await knex(DOCUMENT).insert(
     [
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is document #0',
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is document #1',
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is document #2',
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is document #3',
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is document #4',
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is document #5',
         created_at: new Date(),
       },
@@ -192,17 +195,17 @@ export async function seed(knex: Knex): Promise<void> {
   const notifications = await knex(NOTIFICATION).insert(
     [
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is notification #0',
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is notification #1',
         created_at: new Date(),
       },
       {
-        id: uuidv4(),
+        id: faker.datatype.uuid(),
         text: 'This is notification #2',
         created_at: new Date(),
       },
@@ -213,7 +216,7 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   const users_events = await knex(USER_EVENT).insert([
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[0].id,
       event_id: events[0].id,
       is_organizer: true,
@@ -222,7 +225,7 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[1].id,
       event_id: events[1].id,
       is_organizer: true,
@@ -231,7 +234,7 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[0].id,
       event_id: events[1].id,
       is_organizer: false,
@@ -240,7 +243,7 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[0].id,
       event_id: events[2].id,
       is_organizer: true,
@@ -249,7 +252,7 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[0].id,
       event_id: events[3].id,
       is_organizer: false,
@@ -258,7 +261,7 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[3].id,
       event_id: events[3].id,
       is_organizer: true,
@@ -271,25 +274,25 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   const users_documents = await knex(USER_DOCUMENT).insert([
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[0].id,
       document_id: documents[0].id,
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[1].id,
       document_id: documents[1].id,
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[2].id,
       document_id: documents[2].id,
       created_at: new Date(),
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       user_id: users[3].id,
       document_id: documents[3].id,
       created_at: new Date(),
@@ -299,17 +302,17 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   const notifications_events = await knex(NOTIFICATION_EVENT).insert([
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       notification_id: notifications[0].id,
       event_id: events[0].id,
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       notification_id: notifications[1].id,
       event_id: events[0].id,
     },
     {
-      id: uuidv4(),
+      id: faker.datatype.uuid(),
       notification_id: notifications[2].id,
       event_id: events[0].id,
     },
