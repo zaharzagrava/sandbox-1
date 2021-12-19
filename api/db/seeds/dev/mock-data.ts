@@ -3,6 +3,8 @@ import * as Knex from "knex";
 import { v4 as uuidv4 } from "uuid";
 import faker from "faker";
 
+import { hash } from "bcrypt";
+import constants from "../../../src/constants";
 import { DBTable } from "../../../src/types";
 
 export async function seed(knex: Knex): Promise<void> {
@@ -40,7 +42,7 @@ export async function seed(knex: Knex): Promise<void> {
         bio: "The bio of John Smith",
         phone_number: "+3800943232371",
         gender: "M",
-        password: "smith1pass",
+        password: await hash("smith1pass", constants.BCRYPT_SALT_ROUNDS),
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),
@@ -55,7 +57,7 @@ export async function seed(knex: Knex): Promise<void> {
         bio: "The bio of John Giligan",
         phone_number: "+3800973232371",
         gender: "M",
-        password: "smith1pass",
+        password: await hash("smith1pass", constants.BCRYPT_SALT_ROUNDS),
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),
@@ -70,7 +72,7 @@ export async function seed(knex: Knex): Promise<void> {
         bio: "The bio of Ariana Portman",
         phone_number: "+380094321461",
         gender: "M",
-        password: "smith1pass",
+        password: await hash("smith1pass", constants.BCRYPT_SALT_ROUNDS),
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),
@@ -85,7 +87,7 @@ export async function seed(knex: Knex): Promise<void> {
         bio: "The bio of Emily Blunsh",
         phone_number: "+3800948232376",
         gender: "M",
-        password: "smith1pass",
+        password: await hash("smith1pass", constants.BCRYPT_SALT_ROUNDS),
         born_at: new Date(),
         confirmed_at: new Date(),
         created_at: new Date(),

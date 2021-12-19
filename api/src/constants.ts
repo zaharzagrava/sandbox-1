@@ -1,4 +1,4 @@
-import { Constants } from './types';
+import { Constants } from "./types";
 
 const constants = {
   NODE_ENV: process.env.NODE_ENV,
@@ -8,10 +8,14 @@ const constants = {
   DB_DB_NAME: process.env.DB_DB_NAME,
   DB_HOST: process.env.DB_HOST,
 
-  SESSION_SECRET: process.env.SESSION_SECRET,
+  SESSION_SECRET: process.env.SESSION_SECRET as string,
 
   REDIS_HOST: process.env.REDIS_HOST,
-  REDIS_PORT: process.env.REDIS_PORT,
+  REDIS_PORT: (process.env.REDIS_PORT as unknown) as number,
+
+  BCRYPT_SALT_ROUNDS: Number(process.env.BCRYPT_SALT_ROUNDS) as number,
+
+  PORT: Number(process.env.PORT) as number,
 };
 
 const devOnlyConstants = [Constants.FRONT_IP_HOST];
@@ -24,14 +28,14 @@ const undefinedEnvs: string[] = [];
 for (const [key, constant] of Object.entries(constants)) {
   if (
     devOnlyConstants.includes(key as Constants) &&
-    constants.NODE_ENV !== 'development'
+    constants.NODE_ENV !== "development"
   ) {
     unpermittedDevEnvs.push(key);
     continue;
   }
   if (
     prodOnlyConstants.includes(key as Constants) &&
-    constants.NODE_ENV !== 'production'
+    constants.NODE_ENV !== "production"
   ) {
     unpermittedProdEnvs.push(key);
     continue;
@@ -45,8 +49,8 @@ if (unpermittedDevEnvs.length !== 0) {
     `There are unpermittedDevEnvs: ${JSON.stringify(
       unpermittedDevEnvs,
       null,
-      2,
-    )}`,
+      2
+    )}`
   );
 }
 if (unpermittedProdEnvs.length !== 0) {
@@ -54,18 +58,14 @@ if (unpermittedProdEnvs.length !== 0) {
     `There are unpermittedProdEnvs: ${JSON.stringify(
       unpermittedProdEnvs,
       null,
-      2,
-    )}`,
+      2
+    )}`
   );
 }
 
 if (undefinedEnvs.length !== 0) {
   throw new Error(
-    `There are undefined envs: ${JSON.stringify(
-      undefinedEnvs,
-      null,
-      2,
-    )}`,
+    `There are undefined envs: ${JSON.stringify(undefinedEnvs, null, 2)}`
   );
 }
 

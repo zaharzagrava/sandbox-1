@@ -83,9 +83,10 @@ export class DocumentResolver {
     const document = (await knex
       .delete("*")
       .where("id", deleteDocumentArgs.id)
-      .from(DBTable.DOCUMENT)) as Document;
+      .from(DBTable.DOCUMENT)) as Document[];
 
-    if (!document) throw new Errors([ErrorCodes.DOCUMENT_NOT_FOUND]);
+    if (document.length === 0)
+      throw new Errors([ErrorCodes.DOCUMENT_NOT_FOUND]);
 
     return true;
   }

@@ -1,6 +1,15 @@
 import { ArgsType, Field, ID, InputType } from "type-graphql";
 
 @ArgsType()
+export class LoginUserArgs {
+  @Field(() => String, { nullable: false })
+  email!: string;
+
+  @Field(() => String, { nullable: false })
+  password!: string;
+}
+
+@ArgsType()
 export class GetUserArgs {
   @Field(() => String, { nullable: false })
   id!: string;

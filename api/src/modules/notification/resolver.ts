@@ -83,9 +83,10 @@ export class NotificationResolver {
     const notification = (await knex
       .delete("*")
       .where("id", deleteNotificationArgs.id)
-      .from(DBTable.NOTIFICATION)) as Notification;
+      .from(DBTable.NOTIFICATION)) as Notification[];
 
-    if (!notification) throw new Errors([ErrorCodes.NOTIFICAION_NOT_FOUND]);
+    if (notification.length === 0)
+      throw new Errors([ErrorCodes.NOTIFICAION_NOT_FOUND]);
 
     return true;
   }

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Knex from "knex";
+import { User } from "./modules/user/model";
 
 export enum Constants {
   NODE_ENV = "NODE_ENV",
@@ -16,11 +17,17 @@ export enum Constants {
   FRONT_IP_HOST = "FRONT_IP_HOST",
 }
 
+declare module "express-session" {
+  // eslint-disable-next-line
+  interface SessionData {
+    userId: string;
+  }
+}
+
 export interface Context {
   req: Request;
   res: Response;
-  clientId: number;
-  knex: Knex<any, unknown[]>;
+  sessionUser?: User;
 }
 
 export enum UserFields {
@@ -51,3 +58,5 @@ export enum DBTable {
   NOTIFICATION_EVENT = "notitifcation_event",
   NOTIFICATION_USER = "notification_user",
 }
+
+export const SID = "sid";

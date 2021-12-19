@@ -1,3 +1,5 @@
+### !
+
 query GetEvent {
   getEvent(id: "94a8d215-ce32-4379-b18e-2aebf0794882") {
     name
@@ -43,6 +45,8 @@ query GetNotification {
   }
 }
 
+### !
+
 mutation PostEvent {
   postEvent(
     name: "Test Event #1"
@@ -55,13 +59,13 @@ mutation PostEvent {
 
 mutation PostUser {
   postUser(
-    email: "petro-test@gmail.com"
-    full_name: "Petro Testovych"
-    language: "EN"
-    gender: "M"
-    password: "123123"
-    born_at: "2021-09-29"
-    is_athlete: true
+    email: "petro-test@gmail.com",
+    full_name: "Petro Testovych",
+    language: "EN",
+    gender: "M",
+    password: "123123",
+    born_at: "2021-09-29",
+    is_athlete: true,
     is_organizer: false
   ) {
     id
@@ -69,13 +73,140 @@ mutation PostUser {
 }
 
 mutation PostDocument {
-  postDocument(text: "Another Test Document") {
+  postDocument(
+  	text: "Another Test Document",
+  ) {
     id
   }
 }
 
+
 mutation PostNotification {
-  postNotification(text: "Another Test Notification") {
+  postNotification(
+  	text: "Another Test Notification",
+  ) {
     id
   }
 }
+
+### !
+
+mutation PutUser {
+  putUser(
+  	id: "bb463b8b-b76c-4f6a-9726-65ab5730b69b"
+    fields: {
+      full_name: "Changed Name"
+    }
+  ) {
+    id
+  }
+}
+
+mutation DeleteUser {
+  deleteUser(
+  	id: "bb463b8b-b76c-4f6a-9726-65ab5730b69b"
+  )
+}
+
+### !
+
+mutation PutNotification {
+  putNotification(
+  	id: "c1c93379-b46e-439f-baad-f0e408619f23"
+    fields: {
+      text: "Changed Not Text"
+    }
+  ) {
+    id
+  }
+}
+
+mutation DeleteNotification {
+  deleteNotification(
+  	id: "c1c93379-b46e-439f-baad-f0e408619f23"
+  )
+}
+
+### !
+
+mutation PutEvent {
+  putEvent(
+  	id: "94a8d215-ce32-4379-b18e-2aebf0794882"
+    fields: {
+      name: "Changed Event #1"
+      description: "Changed description of test event #1"
+    }
+  ) {
+    id
+  }
+}
+
+mutation DeleteEvent {
+  deleteEvent(
+  	id: "94a8d215-ce32-4379-b18e-2aebf0794882"
+  )
+}
+
+### !
+
+mutation PutDocument {
+  putDocument(
+  	id: "13a7e8b6-7270-4c99-81e9-9d752e0c295c"
+    fields: {
+      text: "Changed document text #1"
+    }
+  ) {
+    id
+  }
+}
+
+mutation DeleteDocument {
+  deleteDocument(
+  	id: "13a7e8b6-7270-4c99-81e9-9d752e0c295c"
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

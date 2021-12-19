@@ -1,5 +1,6 @@
 import {
   Args,
+  Ctx,
   FieldResolver,
   Info,
   Mutation,
@@ -11,6 +12,7 @@ import {
 import { GraphQLResolveInfo } from "graphql";
 import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
+import { compare } from "bcrypt";
 import {
   ErrorCodes,
   Errors,
@@ -19,7 +21,7 @@ import {
 } from "../../error";
 import { eventFields } from "../../utils";
 import { knex } from "../../knex";
-import { DBTable } from "../../types";
+import { Context, DBTable } from "../../types";
 
 import { errorWrapper } from "../../middleware";
 
@@ -30,13 +32,35 @@ import {
   PostUserArgs,
   PutUserArgs,
   PutUserFields,
+  LoginUserArgs,
 } from "./args-types";
 import { Event, EventReq } from "../event/model";
 
-type Keys = keyof PutUserArgs;
-
 @Resolver(User)
 export class UserResolver {
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => User)
+  async loginUser(
+    @Args() loginEnduser: LoginUserArgs,
+    @Ctx() ctx: Context
+  ): Promise<UserReq | null> {
+    const enduser = ((
+      await knex
+        .select("*")
+        .where("email", loginEnduser.email)
+        .from(DBTable.USER)
+    )[0] as unknown) as UserReq;
+
+    if (!enduser) throw new Errors([ErrorCodes.USER_INCORRECT_EMAIL]);
+
+    if (!(await compare(loginEnduser.password, enduser.password)))
+      throw new Errors([ErrorCodes.USER_INCORRECT_PASSWORD]);
+
+    ctx.req.session.userId = enduser.id;
+
+    return enduser;
+  }
+
   @UseMiddleware(errorWrapper)
   @Query(() => User)
   async getUser(
@@ -53,9 +77,14 @@ export class UserResolver {
 
   @UseMiddleware(errorWrapper)
   @Mutation(() => User)
-  async postUser(@Args() postUserArgs: PostUserArgs): Promise<UserReq> {
-    return (
-      await knex(DBTable.USER)
+  async postUser(
+    @Args() postUserArgs: PostUserArgs,
+    @Ctx() ctx: Context
+  ): Promise<UserReq> {
+    let newEnduser = null;
+
+    try {
+      [newEnduser] = await knex(DBTable.USER)
         .insert({
           id: uuidv4(),
           email: postUserArgs.email,
@@ -72,8 +101,18 @@ export class UserResolver {
           strength: postUserArgs.strength || null,
           created_at: new Date(),
         })
-        .returning("*")
-    )[0];
+        .returning("*");
+    } catch (error) {
+      processKnexError(error, {
+        [KnexErrorType.EMAIL_TAKEN]: ErrorCodes.USER_EMAIL_TAKEN,
+      });
+
+      throw error;
+    }
+
+    ctx.req.session.userId = newEnduser.id;
+
+    return newEnduser;
   }
 
   @UseMiddleware(errorWrapper)
@@ -107,9 +146,9 @@ export class UserResolver {
     const user = (await knex
       .delete("*")
       .where("id", deleteUserArgs.id)
-      .from(DBTable.USER)) as User;
+      .from(DBTable.USER)) as User[];
 
-    if (!user) throw new Errors([ErrorCodes.USER_NOT_FOUND]);
+    if (user.length === 0) throw new Errors([ErrorCodes.USER_NOT_FOUND]);
 
     return true;
   }

@@ -78,9 +78,9 @@ export class EventResolver {
     const event = (await knex
       .delete("*")
       .where("id", deleteEventArgs.id)
-      .from(DBTable.EVENT)) as Event;
+      .from(DBTable.EVENT)) as Event[];
 
-    if (!event) throw new Errors([ErrorCodes.EVENT_NOT_FOUND]);
+    if (event.length === 0) throw new Errors([ErrorCodes.EVENT_NOT_FOUND]);
 
     return true;
   }
