@@ -1,9 +1,9 @@
-import { Field, ID, ObjectType } from 'type-graphql';
-// eslint-disable-next-line
-import { User } from '../user/model';
+import { Field, ID, ObjectType } from "type-graphql";
+import { Notification } from "../notification/model";
+import { User } from "../user/model";
 
 /* event table model */
-@ObjectType({ description: 'Event' })
+@ObjectType({ description: "Event" })
 export class Event {
   @Field(() => ID, { nullable: false })
   id!: string;
@@ -23,6 +23,9 @@ export class Event {
   /* GraphQL-generated */
   @Field(() => User, { nullable: false })
   organizer!: User;
+
+  @Field(() => [Notification], { nullable: false })
+  notifications!: Notification[];
 }
 
 export interface EventReq {

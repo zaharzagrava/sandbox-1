@@ -13,6 +13,7 @@ import { GraphQLResolveInfo } from "graphql";
 import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
 import { compare } from "bcrypt";
+import { redis } from "../../redis";
 import {
   ErrorCodes,
   Errors,
@@ -21,7 +22,7 @@ import {
 } from "../../error";
 import { eventFields } from "../../utils";
 import { knex } from "../../knex";
-import { Context, DBTable } from "../../types";
+import { Context, DBTable, SID } from "../../types";
 
 import { errorWrapper } from "../../middleware";
 
@@ -33,8 +34,11 @@ import {
   PutUserArgs,
   PutUserFields,
   LoginUserArgs,
+  ConfirmUserArgs,
 } from "./args-types";
 import { Event, EventReq } from "../event/model";
+import { SecurityService } from "../security/service";
+import { EmailService } from "../email/service";
 
 @Resolver(User)
 export class UserResolver {
@@ -62,11 +66,40 @@ export class UserResolver {
   }
 
   @UseMiddleware(errorWrapper)
+  @Mutation(() => Boolean)
+  async logoutUser(@Ctx() ctx: Context): Promise<Boolean> {
+    if (!ctx.sessionUser) throw new Errors([ErrorCodes.USER_UNAUTHORIZED]);
+
+    return new Promise((res) => {
+      // clear from backend redis
+      ctx.req.session.destroy((err) => {
+        if (err) {
+          throw err;
+        }
+
+        // clear from user's browser
+        ctx.res.clearCookie(SID);
+        return res(true);
+      });
+    });
+  }
+
+  @UseMiddleware(errorWrapper)
   @Query(() => User)
-  async getUser(
-    @Args() getUserArgs: GetUserArgs,
-    @Info() info: GraphQLResolveInfo
-  ): Promise<UserReq> {
+  async getMe(@Ctx() ctx: Context): Promise<UserReq> {
+    if (!ctx.sessionUser) throw new Errors([ErrorCodes.USER_UNAUTHORIZED]);
+
+    return (
+      await knex
+        .select("*")
+        .from(DBTable.USER)
+        .whereRaw("id = ?", [ctx.sessionUser.id])
+    )[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Query(() => User)
+  async getUser(@Args() getUserArgs: GetUserArgs): Promise<UserReq> {
     return (
       await knex
         .select("*")
@@ -81,10 +114,10 @@ export class UserResolver {
     @Args() postUserArgs: PostUserArgs,
     @Ctx() ctx: Context
   ): Promise<UserReq> {
-    let newEnduser = null;
+    let newEnduser: UserReq | null = null;
 
     try {
-      [newEnduser] = await knex(DBTable.USER)
+      [newEnduser] = (await knex(DBTable.USER)
         .insert({
           id: uuidv4(),
           email: postUserArgs.email,
@@ -93,7 +126,7 @@ export class UserResolver {
           bio: postUserArgs.bio || null,
           phone_number: postUserArgs.phone_number,
           gender: postUserArgs.gender,
-          password: postUserArgs.password,
+          password: await SecurityService.hash(postUserArgs.password),
           born_at: postUserArgs.born_at || null,
           is_athlete: postUserArgs.is_athlete,
           is_organizer: postUserArgs.is_organizer,
@@ -101,7 +134,7 @@ export class UserResolver {
           strength: postUserArgs.strength || null,
           created_at: new Date(),
         })
-        .returning("*");
+        .returning("*")) as UserReq[];
     } catch (error) {
       processKnexError(error, {
         [KnexErrorType.EMAIL_TAKEN]: ErrorCodes.USER_EMAIL_TAKEN,
@@ -110,9 +143,36 @@ export class UserResolver {
       throw error;
     }
 
+    // Send confirmation email
+    if (postUserArgs.is_organizer) {
+      EmailService.sendConfirmationEmail({ userId: newEnduser.id });
+    }
+
+    // Authorize user
     ctx.req.session.userId = newEnduser.id;
 
     return newEnduser;
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Mutation(() => Boolean)
+  async confirmUser(
+    @Args() confirmEnduserArgs: ConfirmUserArgs
+  ): Promise<boolean> {
+    const userId = await redis.get(
+      `${EmailService.confirmationPrefix}${confirmEnduserArgs.token}`
+    );
+
+    if (!userId) throw new Errors([ErrorCodes.CONFIRMATION_TOKEN_IS_NOT_FOUND]);
+
+    await knex<UserReq>(DBTable.USER)
+      .update({ confirmed_at: new Date() })
+      .where("id", userId);
+    await redis.del(
+      `${EmailService.confirmationPrefix}${confirmEnduserArgs.token}`
+    );
+
+    return true;
   }
 
   @UseMiddleware(errorWrapper)

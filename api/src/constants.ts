@@ -16,6 +16,11 @@ const constants = {
   BCRYPT_SALT_ROUNDS: Number(process.env.BCRYPT_SALT_ROUNDS) as number,
 
   PORT: Number(process.env.PORT) as number,
+
+  AWS_SES_FROM_EMAIL: process.env.AWS_SES_FROM_EMAIL as string,
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID as string,
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY as string,
+  AWS_REGION: process.env.AWS_REGION as string,
 };
 
 const devOnlyConstants = [Constants.FRONT_IP_HOST];

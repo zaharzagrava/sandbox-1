@@ -8,12 +8,13 @@ import {
   UseMiddleware,
 } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
+import { EmailService } from "../email/service";
 import { ErrorCodes, Errors } from "../../error";
 import { knex } from "../../knex";
-import { DBTable } from "../../types";
+import { DBTable, EventFields } from "../../types";
 
 import { errorWrapper } from "../../middleware";
-import { userFields } from "../../utils";
+import { notificationFields, userFields } from "../../utils";
 
 import { Event, EventReq } from "./model";
 import {
@@ -24,9 +25,26 @@ import {
   PutEventFields,
 } from "./args-types";
 import { UserReq } from "../user/model";
+import { Notification, NotificationReq } from "../notification/model";
 
+type Beta = keyof EventResolver;
 @Resolver(Event)
 export class EventResolver {
+  @UseMiddleware(errorWrapper)
+  @Query(() => [Event])
+  async getAllEvents(): Promise<EventReq[]> {
+    return knex.select("*").from(DBTable.EVENT);
+  }
+
+  @UseMiddleware(errorWrapper)
+  @Query(() => [Event])
+  async getLatestEvents(): Promise<EventReq[]> {
+    return knex
+      .select("*")
+      .from(DBTable.EVENT)
+      .orderBy(EventFields.SCHEDULED_AT, "desc");
+  }
+
   @UseMiddleware(errorWrapper)
   @Query(() => Event)
   async getEvent(@Args() getEventArgs: GetEventArgs): Promise<EventReq> {
@@ -101,5 +119,26 @@ export class EventResolver {
       .from(DBTable.EVENT);
 
     return response[0];
+  }
+
+  @UseMiddleware(errorWrapper)
+  @FieldResolver()
+  async notifications(@Root() event: EventReq): Promise<Notification[]> {
+    const response = await knex
+      .select(notificationFields)
+      .join(
+        DBTable.NOTIFICATION_EVENT,
+        `${DBTable.EVENT}.id`,
+        `${DBTable.NOTIFICATION_EVENT}.event_id`
+      )
+      .join(
+        DBTable.NOTIFICATION,
+        `${DBTable.NOTIFICATION_EVENT}.notification_id`,
+        `${DBTable.NOTIFICATION}.id`
+      )
+      .where(`${DBTable.EVENT}.id`, event.id)
+      .from(DBTable.EVENT);
+
+    return response;
   }
 }

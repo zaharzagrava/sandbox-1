@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import faker from "faker";
 
 import { hash } from "bcrypt";
+import { DateTime } from "luxon";
 import constants from "../../../src/constants";
 import { DBTable } from "../../../src/types";
 
@@ -105,42 +106,42 @@ export async function seed(knex: Knex): Promise<void> {
         id: faker.datatype.uuid(),
         name: "Test Event #1",
         description: "Description of test event #1",
-        scheduled_at: new Date(),
+        scheduled_at: DateTime.utc(2021, 12, 19),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
         name: "Test Event #2",
         description: "Description of test event #2",
-        scheduled_at: new Date(),
+        scheduled_at: DateTime.utc(2021, 12, 18),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
         name: "Test Event #3",
         description: "Description of test event #3",
-        scheduled_at: new Date(),
+        scheduled_at: DateTime.utc(2021, 12, 18),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
         name: "Test Event #4",
         description: "Description of test event #4",
-        scheduled_at: new Date(),
+        scheduled_at: DateTime.utc(2021, 12, 17),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
         name: "Test Event #5",
         description: "Description of test event #5",
-        scheduled_at: new Date(),
+        scheduled_at: DateTime.utc(2021, 12, 16),
         created_at: new Date(),
       },
       {
         id: faker.datatype.uuid(),
         name: "Test Event #6",
         description: "Description of test event #6",
-        scheduled_at: new Date(),
+        scheduled_at: DateTime.utc(2021, 12, 19),
         created_at: new Date(),
       },
     ],

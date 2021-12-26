@@ -1,8 +1,4 @@
 import "reflect-metadata";
-// import 'newrelic';
-
-// @ts-ignore
-// import newRelicApolloServerPlugin from '@newrelic/apollo-server-plugin';
 import express, { Application, NextFunction, Request, Response } from "express";
 
 import { Server } from "socket.io";
@@ -43,7 +39,6 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     context: (ctx: Context) => ctx,
-    // plugins: [newRelicApolloServerPlugin],
   });
 
   const whitelist = [

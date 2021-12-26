@@ -27,5 +27,12 @@ rules:
     no-restricted-syntax: "off",
     no-continue: "off",
     # curly: ["warn", "multi"],
-    max-len: ["warn", { "code": 120}]
+    max-len: ["warn", { "code": 120}],
+  }
+overrides:
+  - {
+    files: ["model.ts"],
+    rules: {
+      'import/no-cycle': 0
+    }
   }

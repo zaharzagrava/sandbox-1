@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import Knex from "knex";
 import { User } from "./modules/user/model";
 
 export enum Constants {
@@ -11,7 +10,6 @@ export enum Constants {
   SESSION_SECRET = "SESSION_SECRET",
   REDIS_HOST = "REDIS_HOST",
   REDIS_PORT = "REDIS_PORT",
-  NEW_RELIC_LICENSE_KEY = "NEW_RELIC_LICENSE_KEY",
 
   /** Dev-only constants */
   FRONT_IP_HOST = "FRONT_IP_HOST",
@@ -46,6 +44,14 @@ export enum UserFields {
   IS_ORGANIZER = "is_organizer",
   HEIGHT = "height",
   STRENGTH = "strength",
+}
+
+export enum EventFields {
+  ID = "id",
+  NAME = "name",
+  DESCRIPTION = "description",
+  SCHEDULED_AT = "scheduled_at",
+  CREATED_AT = "created_at",
 }
 
 export enum DBTable {

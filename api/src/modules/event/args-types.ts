@@ -1,6 +1,18 @@
 import { ArgsType, Field, ID, InputType } from "type-graphql";
 
 @ArgsType()
+export class GetEventsArgs {
+  @Field(() => String, { nullable: false })
+  id!: string;
+}
+
+@ArgsType()
+export class GetLatestEventsArgs {
+  @Field(() => String, { nullable: false })
+  id!: string;
+}
+
+@ArgsType()
 export class GetEventArgs {
   @Field(() => String, { nullable: false })
   id!: string;

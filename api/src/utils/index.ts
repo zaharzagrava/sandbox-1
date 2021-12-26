@@ -28,3 +28,9 @@ export const userFields = [
   `${DBTable.USER}.is_athlete`,
   `${DBTable.USER}.is_organizer`,
 ];
+
+export const notificationFields = [
+  `${DBTable.NOTIFICATION}.id`,
+  `${DBTable.NOTIFICATION}.text`,
+  `${DBTable.NOTIFICATION}.created_at`,
+];
