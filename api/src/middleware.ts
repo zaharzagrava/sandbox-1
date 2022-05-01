@@ -24,7 +24,9 @@ export const errorWrapper: MiddlewareFn<Context> = async (args, next) => {
       args.context.res.clearCookie(SID);
     }
 
-    // Authentication stuff
+    /**
+     * Authentication stuff
+     */
     if (
       [
         // DocumentResolver
@@ -41,14 +43,16 @@ export const errorWrapper: MiddlewareFn<Context> = async (args, next) => {
         "postEvent",
         "putEvent",
         "deleteEvent",
+        "participants",
         "organizer",
         // UserResolver
         "getUser",
         // "loginUser",
         // "logoutUser",
-        "postUser",
+        // "postUser",
         // "confirmUser",
-        "putUser",
+        "organizedEvents",
+        "watchedEvents",
       ].includes(args.info.fieldName)
     ) {
       console.log("@is organizer check");
@@ -67,13 +71,13 @@ export const errorWrapper: MiddlewareFn<Context> = async (args, next) => {
         "postNotification",
         "putNotification",
         "deleteNotification",
+        // EventResolver
         "notifications",
         // UserResolver
+        "putMe",
         "getMe",
         "deleteUser",
         "age",
-        "organizedEvents",
-        "watchedEvents",
       ].includes(args.info.fieldName)
     ) {
       console.log("@is logged in check");

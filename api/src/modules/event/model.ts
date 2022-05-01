@@ -21,6 +21,9 @@ export class Event {
   created_at!: Date;
 
   /* GraphQL-generated */
+  @Field(() => [User], { nullable: false })
+  participants!: User[];
+
   @Field(() => User, { nullable: false })
   organizer!: User;
 

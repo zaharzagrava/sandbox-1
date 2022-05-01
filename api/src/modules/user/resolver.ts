@@ -31,7 +31,7 @@ import {
   DeleteUserArgs,
   GetUserArgs,
   PostUserArgs,
-  PutUserArgs,
+  PutMeArgs,
   PutUserFields,
   LoginUserArgs,
   ConfirmUserArgs,
@@ -177,17 +177,22 @@ export class UserResolver {
 
   @UseMiddleware(errorWrapper)
   @Mutation(() => User)
-  async putUser(@Args() putUserArgs: PutUserArgs): Promise<UserReq> {
+  async putMe(
+    @Args() putMeArgs: PutMeArgs,
+    @Ctx() ctx: Context
+  ): Promise<UserReq> {
+    if (!ctx.sessionUser) throw new Errors([ErrorCodes.USER_UNAUTHORIZED]);
+
     let updatedUser = null;
 
     const updateUser: PutUserFields = {};
-    for (const [key, value] of Object.entries(putUserArgs.fields))
+    for (const [key, value] of Object.entries(putMeArgs.fields))
       if (value !== undefined) updateUser[key as keyof PutUserFields] = value;
 
     try {
       [updatedUser] = await knex<UserReq>(DBTable.USER)
         .update(updateUser)
-        .where("id", putUserArgs.id)
+        .where("id", ctx.sessionUser.id)
         .returning("*");
     } catch (error) {
       processKnexError(error, {

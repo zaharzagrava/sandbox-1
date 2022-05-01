@@ -100,10 +100,7 @@ export class PutUserFields {
 }
 
 @ArgsType()
-export class PutUserArgs {
-  @Field(() => String, { nullable: false })
-  id!: string;
-
+export class PutMeArgs {
   @Field(() => PutUserFields, { nullable: false })
   fields!: PutUserFields;
 }

@@ -19,6 +19,12 @@ export class GetEventArgs {
 }
 
 @ArgsType()
+export class RegisterForEventArgs {
+  @Field(() => String, { nullable: false })
+  event_id!: string;
+}
+
+@ArgsType()
 export class PostEventArgs {
   @Field(() => String, { nullable: false })
   name!: string;
